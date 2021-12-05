@@ -17,7 +17,7 @@ type releaseInfoT = {
 type releaseT = { tag: string, commit_ref: string, prev_tag: string, error?: string };
 type responseReleaseT = RestEndpointMethodTypes["repos"]["listReleases"]["response"]['data'][0];
 
-const release_info_url = 'https://raw.githubusercontent.com/konveyor/move2kube/gh-pages/_data/releaseinfo.json';
+const release_info_url = 'https://raw.githubusercontent.com/konveyor/move2kube-website/main/_data/releaseinfo.json';
 const owner = 'konveyor';
 const repo = 'move2kube';
 const owner_repos = [
@@ -151,7 +151,7 @@ async function publish_releases(owner_repo_ids: { owner: string, repo: string, r
         console.error(err);
         document.querySelector('#publish-release-release-drafts')!.classList.add('hidden');
         const ele = document.querySelector('#publish-release-result-error')!;
-        ele.textContent = err;
+        ele.textContent = `${err}`;
         ele.classList.remove('hidden');
         document.querySelector('#publish-release-result')!.classList.remove('hidden');
     }
@@ -172,7 +172,7 @@ async function delete_releases(owner_repo_ids: { owner: string, repo: string, re
         console.error(err);
         document.querySelector('#publish-release-release-drafts')!.classList.add('hidden');
         const ele = document.querySelector('#publish-release-result-error')!;
-        ele.textContent = err;
+        ele.textContent = `${err}`;
         ele.classList.remove('hidden');
         document.querySelector('#publish-release-result')!.classList.remove('hidden');
     }
@@ -283,7 +283,7 @@ async function create_release_draft(release: releaseT): Promise<void> {
         console.error(err);
         document.querySelector('#create-release-release-types')!.classList.add('hidden');
         const ele = document.querySelector('#create-release-result-error')!;
-        ele.textContent = err;
+        ele.textContent = `${err}`;
         ele.classList.remove('hidden');
         document.querySelector('#create-release-result')!.classList.remove('hidden');
     }
