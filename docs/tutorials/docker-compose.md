@@ -269,9 +269,9 @@ Since this is a pre-containerized environment, container files are already there
    service/web configured
 
    The services are accessible on the following paths:
-   web : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/web
+   web : http://myproject.my.k8s.cluster.domain.com/web
    ```
 
-   * web service is accesible on the path- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/web`
+   * web service is accesible on the path- `http://myproject.my.k8s.cluster.domain.com/web`
 
    ![service-endpoint](../../assets/images/samples/docker-compose/single-service.png)

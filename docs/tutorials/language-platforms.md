@@ -452,37 +452,37 @@ Many scripts like *buildimages.sh* and *deploy.sh* are also present inside the *
 
 
    The services are accessible on the following paths:
-   golang : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/golang
-   java-maven : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-maven
-   nodejs : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/nodejs
-   php : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/php
-   python : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/python
-   ruby : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/ruby
+   golang : http://myproject.my.k8s.cluster.domain.com/golang
+   java-maven : http://myproject.my.k8s.cluster.domain.com/java-maven
+   nodejs : http://myproject.my.k8s.cluster.domain.com/nodejs
+   php : http://myproject.my.k8s.cluster.domain.com/php
+   python : http://myproject.my.k8s.cluster.domain.com/python
+   ruby : http://myproject.my.k8s.cluster.domain.com/ruby
    ```
 
 Now, all our applications are accessible on the paths given below.
 
-  * golang app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/golang`
+  * golang app- `http://myproject.my.k8s.cluster.domain.com/golang`
 
      ![golang](../../assets/images/samples/language-platforms/go.png)
 
-  * java-maven app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-maven`
+  * java-maven app- `http://myproject.my.k8s.cluster.domain.com/java-maven`
 
      ![java-maven](../../assets/images/samples/language-platforms/java-maven.png)
 
-  * nodejs app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/nodejs`
+  * nodejs app- `http://myproject.my.k8s.cluster.domain.com/nodejs`
 
      ![nodejs](../../assets/images/samples/language-platforms/nodejs.png)
 
-  * php app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/php`
+  * php app- `http://myproject.my.k8s.cluster.domain.com/php`
 
      ![php](../../assets/images/samples/language-platforms/php.png)
 
-  * python app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/python`
+  * python app- `http://myproject.my.k8s.cluster.domain.com/python`
 
      ![python](../../assets/images/samples/language-platforms/python.png)
 
-  * ruby app- `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/ruby`
+  * ruby app- `http://myproject.my.k8s.cluster.domain.com/ruby`
 
      ![ruby](../../assets/images/samples/language-platforms/ruby.png)
 

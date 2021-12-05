@@ -468,10 +468,10 @@ So, here it has created all the deployment artifacts. It was an OpenShift cluste
     service/move2kube-demo-cf configured
 
     The services are accessible on the following paths:
-    move2kube-demo-cf : http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/move2kube-demo-cf
+    move2kube-demo-cf : http://myproject.my.k8s.cluster.domain.com/move2kube-demo-cf
 
     ```
-Now, our `move2kube-demo-cf` application is accessible at `http://myproject.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/move2kube-demo-cf`.
+Now, our `move2kube-demo-cf` application is accessible at `http://myproject.my.k8s.cluster.domain.com/move2kube-demo-cf`.
 
     ![move2kube-demo-cf](../../assets/images/samples/cloud-foundry/cloud-foundry-app.png)
 
