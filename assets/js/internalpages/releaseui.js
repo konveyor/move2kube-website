@@ -30,7 +30,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const semver = __importStar(require("semver"));
 const rest_1 = require("@octokit/rest");
-const release_info_url = 'https://raw.githubusercontent.com/konveyor/move2kube/gh-pages/_data/releaseinfo.json';
+const release_info_url = 'https://raw.githubusercontent.com/konveyor/move2kube-website/main/_data/releaseinfo.json';
 const owner = 'konveyor';
 const repo = 'move2kube';
 const owner_repos = [
@@ -163,7 +163,7 @@ function publish_releases(owner_repo_ids) {
             console.error(err);
             document.querySelector('#publish-release-release-drafts').classList.add('hidden');
             const ele = document.querySelector('#publish-release-result-error');
-            ele.textContent = err;
+            ele.textContent = `${err}`;
             ele.classList.remove('hidden');
             document.querySelector('#publish-release-result').classList.remove('hidden');
         }
@@ -185,7 +185,7 @@ function delete_releases(owner_repo_ids) {
             console.error(err);
             document.querySelector('#publish-release-release-drafts').classList.add('hidden');
             const ele = document.querySelector('#publish-release-result-error');
-            ele.textContent = err;
+            ele.textContent = `${err}`;
             ele.classList.remove('hidden');
             document.querySelector('#publish-release-result').classList.remove('hidden');
         }
@@ -289,7 +289,7 @@ function create_release_draft(release) {
             console.error(err);
             document.querySelector('#create-release-release-types').classList.add('hidden');
             const ele = document.querySelector('#create-release-result-error');
-            ele.textContent = err;
+            ele.textContent = `${err}`;
             ele.classList.remove('hidden');
             document.querySelector('#create-release-result').classList.remove('hidden');
         }
