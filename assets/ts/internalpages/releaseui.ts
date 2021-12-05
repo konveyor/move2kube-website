@@ -17,7 +17,7 @@ type releaseInfoT = {
 type releaseT = { tag: string, commit_ref: string, prev_tag: string, error?: string };
 type responseReleaseT = RestEndpointMethodTypes["repos"]["listReleases"]["response"]['data'][0];
 
-const release_info_url = 'https://raw.githubusercontent.com/konveyor/move2kube-website/main/_data/releaseinfo.json';
+const release_info_url = 'https://move2kube.konveyor.io/releaseinfo.json';
 const owner = 'konveyor';
 const repo = 'move2kube';
 const owner_repos = [
