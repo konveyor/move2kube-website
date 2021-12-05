@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 remote_theme: pmarsceill/just-the-docs
-title: Konveyor MoveKube
+title: Konveyor Move2Kube
 description: A tool that accelerates the process of re-platforming to Kubernetes
 # baseurl: "/" # the subpath of your site, e.g. /blog
 # url: "" #"konveyor.github.io/move2kube" # the base hostname & protocol for your site, e.g. http://example.com

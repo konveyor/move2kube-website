@@ -406,44 +406,44 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 
 
    The services are accessible on the following paths:
-   golang : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/golang
-   java-gradle : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-gradle
-   java-gradle-war : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-gradle-war
-   java-maven : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-maven
-   java-maven-war : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-maven-war
-   nodejs : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/nodejs
-   php : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/php
-   python : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/python
-   ruby : http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/ruby
+   golang : http://project-1.my.k8s.cluster.domain.com/golang
+   java-gradle : http://project-1.my.k8s.cluster.domain.com/java-gradle
+   java-gradle-war : http://project-1.my.k8s.cluster.domain.com/java-gradle-war
+   java-maven : http://project-1.my.k8s.cluster.domain.com/java-maven
+   java-maven-war : http://project-1.my.k8s.cluster.domain.com/java-maven-war
+   nodejs : http://project-1.my.k8s.cluster.domain.com/nodejs
+   php : http://project-1.my.k8s.cluster.domain.com/php
+   python : http://project-1.my.k8s.cluster.domain.com/python
+   ruby : http://project-1.my.k8s.cluster.domain.com/ruby
    ```
 
 Now all our applications are accessible on the paths given below.
 
-* golang app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/golang`
+* golang app- `http://project-1.my.k8s.cluster.domain.com/golang`
 
    ![golang](../../assets/images/samples/ui/go.png)
 
-* java-gradle app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-gradle`
+* java-gradle app- `http://project-1.my.k8s.cluster.domain.com/java-gradle`
 
   ![java-gradle](../../assets/images/samples/ui/java-gradle.png)
 
-* java-maven app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/java-maven`
+* java-maven app- `http://project-1.my.k8s.cluster.domain.com/java-maven`
 
    ![java-maven](../../assets/images/samples/ui/java-maven.png)
 
-* nodejs app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/nodejs`
+* nodejs app- `http://project-1.my.k8s.cluster.domain.com/nodejs`
 
    ![nodejs](../../assets/images/samples/ui/nodejs.png)
 
-* php app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/php`
+* php app- `http://project-1.my.k8s.cluster.domain.com/php`
 
    ![php](../../assets/images/samples/ui/php.png)
 
-* python app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/python`
+* python app- `http://project-1.my.k8s.cluster.domain.com/python`
 
    ![python](../../assets/images/samples/ui/python.png)
 
-* ruby app- `http://project-1.irlhc12-cf7808d3396a7c1915bd1818afbfb3c0-0000.us-south.containers.appdomain.cloud/ruby`
+* ruby app- `http://project-1.my.k8s.cluster.domain.com/ruby`
 
    ![ruby](../../assets/images/samples/ui/ruby.png)
 
