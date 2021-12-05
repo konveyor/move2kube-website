@@ -1,0 +1,195 @@
+apiVersion: v1
+entries:
+  move2kube:
+  - apiVersion: v2
+    appVersion: v0.3.0-beta.0
+    created: "2021-12-01T07:55:47.165598542Z"
+    description: A generated Helm Chart for move2kube
+    digest: 52d59a475a1c6ad2073f4f8e9be97f30d7a848b95c4d708b7c501392bc8a5556
+    icon: https://raw.githubusercontent.com/konveyor/community/main/brand/logo/konveyor-logo-move2kube.svg
+    keywords:
+    - move2kube
+    name: move2kube
+    type: application
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-beta.0/move2kube-v0.3.0-beta.0.tgz
+    version: v0.3.0-beta.0
+  - apiVersion: v2
+    appVersion: v0.3.0-alpha.4
+    created: "2021-10-28T08:22:35.184916971Z"
+    description: A generated Helm Chart for move2kube
+    digest: 939d2e9eb0946cbb3ead90b14db3efc3909ad9495a38ead73b7d53a43f103814
+    icon: https://raw.githubusercontent.com/konveyor/community/main/brand/logo/konveyor-logo-move2kube.svg
+    keywords:
+    - move2kube
+    name: move2kube
+    type: application
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-alpha.4/move2kube-v0.3.0-alpha.4.tgz
+    version: v0.3.0-alpha.4
+  - apiVersion: v2
+    appVersion: v0.3.0-alpha.3
+    created: "2021-08-06T19:13:25.48535641Z"
+    description: A generated Helm Chart for move2kube
+    digest: cc327acac1d11c9a7df2e4e19ebdd8317533836826183086f1ff98d3183da49f
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-alpha.3/move2kube-v0.3.0-alpha.3.tgz
+    version: v0.3.0-alpha.3
+  - apiVersion: v2
+    appVersion: v0.3.0-alpha.2
+    created: "2021-08-06T11:54:51.788549186Z"
+    description: A generated Helm Chart for move2kube
+    digest: 40c227f1bb26f2515b154b64145eb917ad9af0eb5c3a847141e98ac3b58c765e
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-alpha.2/move2kube-v0.3.0-alpha.2.tgz
+    version: v0.3.0-alpha.2
+  - apiVersion: v2
+    appVersion: v0.3.0-alpha.1
+    created: "2021-08-04T14:35:41.597377261Z"
+    description: A generated Helm Chart for move2kube
+    digest: b0271d1b093e3f096b38d0fef764b1067f8a301ffe699b2e9530a6d12745b72d
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-alpha.1/move2kube-v0.3.0-alpha.1.tgz
+    version: v0.3.0-alpha.1
+  - apiVersion: v2
+    appVersion: v0.3.0-alpha.0
+    created: "2021-07-20T07:38:42.651818218Z"
+    description: A generated Helm Chart for move2kube
+    digest: c7d689b3458ee849ea64480a22da31836aa3a4fa81122a6a6244938ab1daf6fa
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.3.0-alpha.0/move2kube-v0.3.0-alpha.0.tgz
+    version: v0.3.0-alpha.0
+  - apiVersion: v2
+    appVersion: v0.2.0
+    created: "2021-06-21T23:29:42.097331822Z"
+    description: A generated Helm Chart for move2kube
+    digest: af8fdf344190a2953595dd2dc26b205d76ef1bce9267b3dfdd616b92d5a217ef
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0/move2kube-v0.2.0.tgz
+    version: v0.2.0
+  - apiVersion: v2
+    appVersion: v0.2.0-rc.0
+    created: "2021-06-21T14:55:20.554060432Z"
+    description: A generated Helm Chart for move2kube
+    digest: 18d6a765d94fe1e6a28f98077e0541febfe2f9049d7431950d52fe84540559a3
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-rc.0/move2kube-v0.2.0-rc.0.tgz
+    version: v0.2.0-rc.0
+  - apiVersion: v2
+    appVersion: v0.2.0-beta.0
+    created: "2021-06-14T11:15:43.985018789Z"
+    description: A generated Helm Chart for move2kube
+    digest: 4b03634e85d0f150e558685eb7742daa51e4d9da3221a1c01708f66665d4d7e6
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-beta.0/move2kube-v0.2.0-beta.0.tgz
+    version: v0.2.0-beta.0
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.6
+    created: "2021-05-12T16:46:37.781140344Z"
+    description: A generated Helm Chart for move2kube
+    digest: 329993f68fa1ead5c328b1ef35deeca45a0c01b02b8f5b01aa765ee7a14e60d4
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.6/move2kube-v0.2.0-alpha.6.tgz
+    version: v0.2.0-alpha.6
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.5
+    created: "2021-04-05T08:30:15.569843049Z"
+    description: A generated Helm Chart for move2kube
+    digest: 0e3ce7b93a0559df866f2b090be300c96d7470c969eb8dfe56199b0d5acb909d
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.5/move2kube-v0.2.0-alpha.5.tgz
+    version: v0.2.0-alpha.5
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.4
+    created: "2021-03-15T17:27:59.452966564Z"
+    description: A generated Helm Chart for move2kube
+    digest: 5fd902f61c6ca75a96fa735794e666222afa8c596460051ffd94cb867281bf8a
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.4/move2kube-v0.2.0-alpha.4.tgz
+    version: v0.2.0-alpha.4
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.3
+    created: "2021-03-05T14:26:59.940532967Z"
+    description: A generated Helm Chart for move2kube
+    digest: ab076c7aaafc5bdacc99fb97e3d2609f656f728c6e42b3039993e4d19be3c605
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.3/move2kube-v0.2.0-alpha.3.tgz
+    version: v0.2.0-alpha.3
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.2
+    created: "2021-03-03T18:48:01.604862117Z"
+    description: A generated Helm Chart for move2kube
+    digest: becdc853c30d91577ac93c5f8683c4569345db98c8286f8f974573ff251dfec0
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.2/move2kube-v0.2.0-alpha.2.tgz
+    version: v0.2.0-alpha.2
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.1
+    created: "2021-02-14T09:07:18.382304133Z"
+    description: A generated Helm Chart for move2kube
+    digest: b5b54328eacacec74306785aac559d407fa1b933e9ce2059fa87782a7d42aacd
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.1/move2kube-v0.2.0-alpha.1.tgz
+    version: v0.2.0-alpha.1
+  - apiVersion: v2
+    appVersion: v0.2.0-alpha.0
+    created: "2021-02-04T12:22:57.111019605Z"
+    description: A generated Helm Chart for move2kube
+    digest: fdd25715b04ae6f59c1c63182b7180ccbc94f46101adcddb856d9a621348e03a
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.2.0-alpha.0/move2kube-v0.2.0-alpha.0.tgz
+    version: v0.2.0-alpha.0
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2021-01-07T20:00:53.153128+05:30"
+    description: A generated Helm Chart for move2kube
+    digest: e08610fe118bb797bb89b2e71618b09c8fe907acbfc1280cb475b2db18acec32
+    keywords:
+    - move2kube
+    name: move2kube
+    urls:
+    - https://github.com/konveyor/move2kube-operator/releases/download/v0.1.0/move2kube-v0.1.0.tgz
+    version: v0.1.0
+generated: "2021-12-01T07:55:47.163956722Z"

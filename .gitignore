@@ -1,0 +1,15 @@
+*.gem
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+_site
+.DS_store
+internal
+.bundle
+.ruby-version
+node_modules
+bin/
+coverage.txt
+.vscode/
+_dist/
+vendor/

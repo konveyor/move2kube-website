@@ -1,0 +1,34 @@
+{
+  "name": "move2kube-website",
+  "version": "0.3.0",
+  "description": "This repository holds the code that generates the Move2Kube Project's web page https://movekube.konveyor.io/",
+  "repository": "https://github.com/konveyor/move2kube",
+  "license": "Apache-2.0",
+  "bugs": "https://github.com/konveyor/move2kube/issues",
+  "devDependencies": {
+    "@octokit/types": "^6.1.2",
+    "@primer/css": "^14.4.0",
+    "@types/semver": "^7.3.4",
+    "@vercel/ncc": "^0.26.1",
+    "browserify": "^17.0.0",
+    "prettier": "^2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-primer": "^9.0.0",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-selector-no-utility": "^1.7.0",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "test": "stylelint '**/*.scss'",
+    "format": "prettier --write '**/*.{scss,js,json}'",
+    "stylelint-check": "stylelint-config-prettier-check",
+    "build": "yarn install && tsc",
+    "bundle": "\"$(yarn bin browserify)\" -o assets/js/internalpages/releaseui-bundle.js assets/js/internalpages/releaseui.js",
+    "start": "bundle exec jekyll serve",
+    "all": "yarn run build && yarn run bundle && yarn run start"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.0.12"
+  }
+}
