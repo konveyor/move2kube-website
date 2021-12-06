@@ -8,6 +8,7 @@ has_children: true
 
 # Tutorials
 
-![Move2Kube Usecases]({{ site.baseurl }}/assets/images/m2k-usecases.png)
-
 Tutorials about using Move2Kube to generate target artifacts for various source platforms can be found below.
+
+<img src="{{ site.baseurl }}/assets/images/m2k-usecases.png" width="60%"/>
+
