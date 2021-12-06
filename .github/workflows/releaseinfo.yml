@@ -11,7 +11,7 @@ jobs:
         with:
           owner: konveyor
           repo: move2kube
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.MOVE2KUBE_PATOKEN }}
       - uses: actions/checkout@v2
       - run: echo '${{ steps.info.outputs.release_info }}' > _data/releaseinfo.json
       - id: get_asset_url
@@ -30,7 +30,7 @@ jobs:
             const asset = assets[0];
             core.setOutput('url', asset.url);
       - run: |
-          curl -L -o index.yaml -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' -H 'Accept: application/octet-stream' ${{ steps.get_asset_url.outputs.url }}
+          curl -L -o index.yaml -H 'Authorization: token ${{ secrets.MOVE2KUBE_PATOKEN }}' -H 'Accept: application/octet-stream' ${{ steps.get_asset_url.outputs.url }}
       - uses: EndBug/add-and-commit@v6
         with:
           add: '["_data/releaseinfo.json", "index.yaml"]'
