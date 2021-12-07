@@ -3,7 +3,7 @@ layout: default
 title: "Using Move2Kube UI"
 permalink: /tutorials/move2kube-ui/
 parent: Tutorials
-nav_order: 4
+nav_order: 2
 ---
 
 # Using Move2Kube UI
@@ -18,7 +18,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 
 1. Download [language-platforms.zip](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms.zip) which we will be using for this tutorial. The language-platforms.zip file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
 
-## Steps to generate target artifacts
+## Steps to use the UI to do a transformation
 
 1. Do a `docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui`.  
     ```console
@@ -94,7 +94,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
     ![Transformation finished]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/35-transformation-finished.png)
     ![Download output]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/36-download-output.jpeg)
 
-## Deploying the application to Kubernetes with the generated target artifacts
+## Deploying the application to Kubernetes with the generated artifacts
 
 1. After extracting the output zip file, let's go inside the extracted `output` directory.
 
@@ -298,15 +298,18 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
     For production usage use the CI/CD pipelines for deployment.
     ```
 
-2. Next we run the `buildimages.sh` script. Make sure to run this from the `project-1` directory. This step may take some time to complete.
+1. Next we run the `buildimages.sh` script. Make sure to run this from the `project-1` directory. This step may take some time to complete.
 
     ```console
     $ cd project-1/
     $ ./scripts/buildimages.sh
     ```
 
-3. Now using the `pushimages.sh` script we can push our applications images to the registry that we specified during the `transform` phase. For this step, you are required to log in to the Docker registry. To log in to IBM Cloud `us.icr.io` registry refer [here](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_access#registry_access_apikey_auth_docker).
+1. Now using the `pushimages.sh` script we can push our container images to the registry that we specified during the transformation. For this step we need to login into a container registry from the terminal. Instructions for:
+    - [Quay https://docs.quay.io/solution/getting-started.html](https://docs.quay.io/solution/getting-started.html)
+    - [Docker Hub https://docs.docker.com/engine/reference/commandline/login/](https://docs.docker.com/engine/reference/commandline/login/)
 
+    After login we can push the images.
     ```console
     $ ./scripts/pushimages.sh
     The push refers to repository [us.icr.io/m2k-tutorial/java-gradle]
@@ -380,7 +383,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
     latest: digest: sha256:524b1308fb013f37570db1eb9375d2a71340d01c85e438b206cbec90a542086b size: 1158
     ```
 
-4. Finally we are going to deploy the applications using the `deploy.sh` script. If the deploy script is missing, you can also deploy by doing `kubectl apply -f ./deploy/yamls`
+1. Finally we can deploy the applications using the `deploy.sh` script. If the deploy script is missing, you can also deploy by doing `kubectl apply -f ./deploy/yamls`
 
    ```console
    $ ./scripts/deploy.sh
@@ -447,4 +450,4 @@ Now all our applications are accessible on the paths given below.
 
    ![ruby](../../assets/images/samples/ui/ruby.png)
 
-So, you can have a very diverse source environment, like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) having multiple applications in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. All the features in the Move2Kube Command-line tool are available through the UI tool.
+So, you can have a very diverse source environment, like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) having multiple applications in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. All the features of the Move2Kube CLI tool are available through the UI tool.

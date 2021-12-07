@@ -29,15 +29,13 @@ With Move2Kube, generating the Kubernetes/OpenShift deployment artifacts for you
 
    ```console
    $ wget -P samples/docker-compose/ https://raw.githubusercontent.com/konveyor/move2kube-demos/main/samples/docker-compose/single-service/docker-compose.yaml
-
    $ cd samples
-
-   $ move2kube translate -s docker-compose
+   $ move2kube transform -s docker-compose
    ```
 1. Answer the questions and you will get the yaml files required for deploying the Docker Compose files in Kubernetes inside the `myproject` directory.
 
 <p align="center">
-<asciinema-player src="{{ site.baseurl }}/assets/asciinema/demo-transform.cast" poster="npt:0:13" rows=20 cols=88 title="Transforming different languages to run on Kubernetes"></asciinema-player>
+<asciinema-player src="{{ site.baseurl }}/assets/asciinema//docker-compose-transformation.cast" poster="npt:0:13" rows=20 cols=88 title="Transforming different languages to run on Kubernetes"></asciinema-player>
 </p>
 
 ## Usage
@@ -48,7 +46,6 @@ Move2Kube takes as input the source artifacts and outputs the target deployment 
 
 For more detailed information :
 * [Installation]({{ site.baseurl }}{% link docs/installation/install.md %})
-* [Getting Started]({{ site.baseurl }}{% link docs/getting-started/GettingStarted.md %})
 * [Tutorials]({{ site.baseurl }}{% link docs/tutorials/Tutorial.md %})
 
 ## Discussion
