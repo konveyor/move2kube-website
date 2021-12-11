@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Using Move2Kube CLI"
-permalink: /tutorials/move2kube-cli/
+permalink: /tutorials/cli/
 parent: Tutorials
 nav_order: 1
 ---
@@ -115,119 +115,119 @@ Move2Kube to analyze the sourcd code inside the `language-platforms` directory a
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: Plan
     metadata:
-    name: myproject
+        name: myproject
     spec:
-    rootDir: language-platforms
-    services:
-        app:
-        - artifact: Ruby-Dockerfile
-            paths:
-            ProjectPath:
-                - ruby
-        main:
-        - artifact: Nodejs-Dockerfile
-            paths:
-            ProjectPath:
-                - nodejs
-        myproject-java-gradle-war:
-        - artifact: WarAnalyser
-            paths:
-            ProjectPath:
-                - java-gradle-war
-            War:
-                - java-gradle-war/java-gradle-war.war
-            configs:
-            War:
-                deploymentFile: java-gradle-war.war
-                javaVersion: ""
-                buildContainerName: ""
-                deploymentFileDirInBuildContainer: ""
-                envVariables: {}
-        myproject-java-maven-war:
-        - artifact: WarAnalyser
-            paths:
-            ProjectPath:
-                - java-maven-war
-            War:
-                - java-maven-war/java-maven-war.war
-            configs:
-            War:
-                deploymentFile: java-maven-war.war
-                javaVersion: ""
-                buildContainerName: ""
-                deploymentFileDirInBuildContainer: ""
-                envVariables: {}
-        myproject-php:
-        - artifact: PHP-Dockerfile
-            paths:
-            ProjectPath:
-                - php/php
-        myproject-python:
-        - artifact: Python-Dockerfile
-            paths:
-            MainPythonFilesPathType: []
-            ProjectPath:
-                - python
-            PythonFilesPathType:
-                - python/main.py
-            RequirementsTxtPathType:
-                - python/requirements.txt
-            configs:
-            PythonConfig:
-                IsDjangoProject: false
-        simplewebapp:
-        - artifact: Maven
-            paths:
-            MavenPom:
-                - java-maven/pom.xml
-            ProjectPath:
-                - java-maven
-            configs:
-            Maven:
-                mavenAppName: simplewebapp
-                artifactType: war
-    targetCluster:
-        type: Kubernetes
-    configuration:
-        transformers:
-        Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
-        CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
-        ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
-        ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
-        ContainerImagesBuildScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagesbuildscript/containerimagesbuildscript.yaml
-        ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
-        DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
-        DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
-        DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
-        DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
-        EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
-        EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
-        EurekaReplaceEngine: m2kassets/inbuilt/transformers/dockerfilegenerator/java/eurekareplaceengine/eureka.yaml
-        Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
-        Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
-        Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
-        Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
-        Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
-        Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
-        Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
-        Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
-        PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
-        Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizers/parameterizers.yaml
-        Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
-        ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
-        Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
-        Rust: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
-        Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
-        Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
-        WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
-        WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
-        WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
-        WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
-        WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
-        ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
-        targetClusters:
-        Kubernetes: m2kassets/inbuilt/clusters/kubernetes.yaml
-        Openshift: m2kassets/inbuilt/clusters/openshift.yaml
+        rootDir: language-platforms
+        services:
+            app:
+                - artifact: Ruby-Dockerfile
+                    paths:
+                    ProjectPath:
+                        - ruby
+            main:
+                - artifact: Nodejs-Dockerfile
+                    paths:
+                    ProjectPath:
+                        - nodejs
+            myproject-java-gradle-war:
+                - artifact: WarAnalyser
+                    paths:
+                    ProjectPath:
+                        - java-gradle-war
+                    War:
+                        - java-gradle-war/java-gradle-war.war
+                    configs:
+                    War:
+                        deploymentFile: java-gradle-war.war
+                        javaVersion: ""
+                        buildContainerName: ""
+                        deploymentFileDirInBuildContainer: ""
+                        envVariables: {}
+            myproject-java-maven-war:
+                - artifact: WarAnalyser
+                    paths:
+                    ProjectPath:
+                        - java-maven-war
+                    War:
+                        - java-maven-war/java-maven-war.war
+                    configs:
+                    War:
+                        deploymentFile: java-maven-war.war
+                        javaVersion: ""
+                        buildContainerName: ""
+                        deploymentFileDirInBuildContainer: ""
+                        envVariables: {}
+            myproject-php:
+                - artifact: PHP-Dockerfile
+                    paths:
+                    ProjectPath:
+                        - php/php
+            myproject-python:
+                - artifact: Python-Dockerfile
+                    paths:
+                    MainPythonFilesPathType: []
+                    ProjectPath:
+                        - python
+                    PythonFilesPathType:
+                        - python/main.py
+                    RequirementsTxtPathType:
+                        - python/requirements.txt
+                    configs:
+                    PythonConfig:
+                        IsDjangoProject: false
+            simplewebapp:
+                - artifact: Maven
+                    paths:
+                    MavenPom:
+                        - java-maven/pom.xml
+                    ProjectPath:
+                        - java-maven
+                    configs:
+                    Maven:
+                        mavenAppName: simplewebapp
+                        artifactType: war
+        targetCluster:
+            type: Kubernetes
+        configuration:
+            transformers:
+            Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
+            CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
+            ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
+            ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
+            ContainerImagesBuildScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagesbuildscript/containerimagesbuildscript.yaml
+            ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
+            DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
+            DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
+            DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
+            DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
+            EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
+            EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
+            EurekaReplaceEngine: m2kassets/inbuilt/transformers/dockerfilegenerator/java/eurekareplaceengine/eureka.yaml
+            Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
+            Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
+            Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
+            Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
+            Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
+            Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
+            Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
+            Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
+            PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
+            Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizers/parameterizers.yaml
+            Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
+            ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
+            Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
+            Rust: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
+            Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
+            Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
+            WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
+            WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
+            WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
+            WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
+            WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
+            ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
+            targetClusters:
+            Kubernetes: m2kassets/inbuilt/clusters/kubernetes.yaml
+            Openshift: m2kassets/inbuilt/clusters/openshift.yaml
     ```
 
 1. Now let's run the transformation using `move2kube transform`. This will do the transformation according to the plan we generated. By default Move2Kube looks for a plan file in the current directory. If you want to specify the path to a different plan file you can do so using the `-p` flag.
