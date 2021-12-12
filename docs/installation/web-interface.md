@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Web Interface"
-permalink: /installation/web-interface/
+permalink: /installation/ui
 parent: Installation
 nav_order: 2
 ---

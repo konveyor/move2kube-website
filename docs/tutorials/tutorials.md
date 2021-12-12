@@ -1,14 +1,13 @@
 ---
 layout: default
 title: Tutorials
-permalink: /docs/tutorial
-nav_order: 4
+permalink: /tutorials
+nav_order: 3
 has_children: true
 ---
 
 # Tutorials
 
-Tutorials about using Move2Kube to generate target artifacts for various source platforms can be found below.
+Below we can see some of the source platforms that Move2Kube supports.
 
 <img src="{{ site.baseurl }}/assets/images/m2k-usecases.png" width="60%"/>
-

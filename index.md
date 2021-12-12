@@ -9,15 +9,15 @@ permalink: /
 
 ## What is Move2Kube?
 
-A tool that accelerates the process of re-platforming to Kubernetes by analyzing source artifacts.
+A tool that accelerates the process of re-platforming to Kubernetes by analyzing source files.
 
 ![move2kube](assets/images/move2kube.png)
 
-Move2Kube is a tool that uses source artifacts such as Docker Compose files or Cloud Foundry manifest files, and even source code, to generate Kubernetes deployment artifacts including object yaml, Helm charts, and operators.
+Move2Kube is a tool that uses source files such as Docker Compose files or Cloud Foundry manifest files, and even source code, to generate Kubernetes deployment files including object yaml, Helm charts, and operators.
 
 ## A quick start with Move2Kube
 
-With Move2Kube, generating the Kubernetes/OpenShift deployment artifacts for your source platform artifacts is now simple. You can try out Move2Kube in [Katacoda](https://www.katacoda.com/move2kube) or follow the steps mentioned below for trying out Move2Kube on your local machine.
+With Move2Kube, generating the Kubernetes/OpenShift deployment files for your source platform files is now simple. You can try out Move2Kube in [Katacoda](https://www.katacoda.com/move2kube) or follow the steps mentioned below for trying out Move2Kube on your local machine.
 
 
 1. Install Move2Kube
@@ -40,13 +40,14 @@ With Move2Kube, generating the Kubernetes/OpenShift deployment artifacts for you
 
 ## Usage
 
-Move2Kube takes as input the source artifacts and outputs the target deployment artifacts.
+Move2Kube takes as input the source files and outputs the target deployment files.
 
 ![Move2Kube-Usage](assets/images/usage.png)
 
 For more detailed information :
-* [Installation]({{ site.baseurl }}{% link docs/installation/install.md %})
-* [Tutorials]({{ site.baseurl }}{% link docs/tutorials/Tutorial.md %})
+* [Installation](/installation)
+* [Tutorials](/tutorials)
+* [Documentation](/documentation)
 
 ## Discussion
 
