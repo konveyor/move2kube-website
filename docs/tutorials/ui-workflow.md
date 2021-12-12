@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Using Move2Kube UI"
-permalink: /tutorials/move2kube-ui/
+permalink: /tutorials/ui
 parent: Tutorials
 nav_order: 2
 ---
@@ -14,7 +14,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 
 ## Prerequisites
 
-1. Install [Docker Engine](https://www.docker.com/get-started).
+1. Install [Docker](https://www.docker.com/get-started).
 
 1. Download [language-platforms.zip](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms.zip) which we will be using for this tutorial. The language-platforms.zip file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
 

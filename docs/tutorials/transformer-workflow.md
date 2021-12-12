@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Using a custom transformer"
-permalink: /tutorials/cli/
+permalink: /tutorials/custom-transformer
 parent: Tutorials
 nav_order: 3
 ---
@@ -25,8 +25,8 @@ For this tutorial we will take the simple use case of adding an annotation to th
 There are several ways to accomplish this but here we will show how it can be done with a Starlark script.
 
 > Note about Starlark: Starlark is a more restricted form of Python that allows it to be embedded in other programs.
-See https://github.com/bazelbuild/starlark#tour for an example.
-For more details https://github.com/bazelbuild/starlark/blob/master/spec.md
+See [https://github.com/bazelbuild/starlark#tour](https://github.com/bazelbuild/starlark#tour) for an example.
+For more details [https://github.com/bazelbuild/starlark/blob/master/spec.md](https://github.com/bazelbuild/starlark/blob/master/spec.md)
 
 ## Prerequisites
 
@@ -685,7 +685,7 @@ We can take a look at the Ingress that was generated.
 
 ### Transformer YAML
 
-  Let start with `ingress-annotator.yaml` file https://github.com/konveyor/move2kube-transformers/blob/main/add-annotation-simple/ingress-annotator.yaml
+  Let start with the [ingress-annotator.yaml](https://github.com/konveyor/move2kube-transformers/blob/main/add-annotation-simple/ingress-annotator.yaml) file.
 
   ```yaml
   apiVersion: move2kube.konveyor.io/v1alpha1
@@ -701,7 +701,7 @@ We can take a look at the Ingress that was generated.
       starFile: "ingress-annotator.star"
   ```
 
-  If you are not familiar with the YAML format then here's a quick tutorial https://www.redhat.com/en/topics/automation/what-is-yaml  
+  If you are not familiar with the YAML format then here's a quick tutorial [https://www.redhat.com/en/topics/automation/what-is-yaml](https://www.redhat.com/en/topics/automation/what-is-yaml)  
   If you are familar with Kubernetes YAML files then the first 5 lines should be look familiar to you.
   The `apiVersion` specifies the version of Move2Kube API that we are using. When we write transformers we can leave it as `move2kube.konveyor.io/v1alpha1` and not worry about it.
   The `kind` specifies the type of resource this file is about. In our case we are creating a `Transformer` to add an annotation.
@@ -717,7 +717,7 @@ We can take a look at the Ingress that was generated.
 
 ### Transformer Starlark script
 
-  Now let's look at the Starlark script https://github.com/konveyor/move2kube-transformers/blob/main/add-annotation-simple/ingress-annotator.star
+  Now let's look at the Starlark script [ingress-annotator.star](https://github.com/konveyor/move2kube-transformers/blob/main/add-annotation-simple/ingress-annotator.star)
 
   ```python
   def transform(new_artifacts, old_artifacts):
