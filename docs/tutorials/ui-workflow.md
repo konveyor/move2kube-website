@@ -68,7 +68,22 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 
     ![No outputs]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/16-no-project-outputs.png)
 
-1. Move2Kube will ask some questions to aid in the transfomation process. You can keep clicking the `Next` button and go with the default answers for now.
+1. Move2Kube will ask some questions to aid in the transfomation process.
+
+    For the question about container registry, specify the container registry where you want to push the images.
+    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/30-qa-14.jpeg)
+
+    Same for the question about container registry namespace.
+    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/31-qa-15.jpeg)
+
+    If your container registry requires authentication for pulling images, then specify that in the question about container registry login.
+    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/32-qa-16.jpeg)
+
+    For the question about ingress host, specify the hostname of the Kubernetes cluster. If you are deploying to Minikube then specify `localhost` as the hostname and leave the TLS secret blank.
+    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/33-qa-17.jpeg)
+    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/34-qa-18.jpeg)
+
+    For all other questions we can keep clicking the `Next` button and go with the default answers. 
 
     ![Start transformation]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/17-qa-1.png)
     ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/18-qa-2.jpeg)
@@ -83,371 +98,17 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
     ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/27-qa-11.jpeg)
     ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/28-qa-12.jpeg)
     ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/29-qa-13.jpeg)
-    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/30-qa-14.jpeg)
-    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/31-qa-15.jpeg)
-    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/32-qa-16.jpeg)
-    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/33-qa-17.jpeg)
-    ![Transformation QA]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/34-qa-18.jpeg)
 
 1. After the questions are finished wait a few minutes for it to finish processing. Once it's done, you can click on the output to download the generated artifacts as a zip file (here `workspace-1-project-1-output-1989fd2d-4be1-4316-b368-309f5349cfad.zip`), extract it and browse them. The applications can now be deployed to Kubernetes using these generated artifacts.
 
     ![Transformation finished]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/35-transformation-finished.png)
     ![Download output]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/36-download-output.jpeg)
 
-## Deploying the application to Kubernetes with the generated artifacts
+Now we can build and push the container images and deploy to Kubernetes using the output we downloaded.  
+The steps for doing that are same as for the [CLI tutorial]({{ site.baseurl }}/tutorials/cli#deploying-the-application-to-kubernetes-with-the-generated-artifacts).  
 
-1. After extracting the output zip file, let's go inside the extracted `output` directory.
+## Conclusion
 
-    ![Downloaded zip file]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/37-output-zip-file-in-finder.png)
-    ![Output extracted]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/38-output-extracted-in-finder.png)
-    ![Output extracted]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/39-inside-output-folder-in-finder.png)
-
-1. Looking at the output folder in VSCode we can see the following structure:
-
-    ![Output file structure]({{ site.baseurl }}/assets/images/new-m2k-ui-screenshots/40-output-folder-in-vscode.jpeg)
-
-    The full structure of the `output` folder can be seen by executing the `tree` command.
-
-    ```console
-    $ cd output/
-    $ tree
-    .
-    ├── m2k.plan
-    ├── m2kconfig.yaml
-    ├── m2kqacache.yaml
-    └── project-1
-        ├── Readme.md
-        ├── deploy
-        │   ├── cicd
-        │   │   ├── tekton
-        │   │   │   ├── project-1-clone-build-push-pipeline.yaml
-        │   │   │   ├── project-1-clone-push-serviceaccount.yaml
-        │   │   │   ├── project-1-git-event-triggerbinding.yaml
-        │   │   │   ├── project-1-git-repo-eventlistener.yaml
-        │   │   │   ├── project-1-image-registry-secret.yaml
-        │   │   │   ├── project-1-ingress.yaml
-        │   │   │   ├── project-1-run-clone-build-push-triggertemplate.yaml
-        │   │   │   ├── project-1-tekton-triggers-admin-role.yaml
-        │   │   │   ├── project-1-tekton-triggers-admin-rolebinding.yaml
-        │   │   │   └── project-1-tekton-triggers-admin-serviceaccount.yaml
-        │   │   └── tekton-parameterized
-        │   │       ├── helm-chart
-        │   │       │   └── project-1
-        │   │       │       ├── Chart.yaml
-        │   │       │       └── templates
-        │   │       │           ├── project-1-clone-build-push-pipeline.yaml
-        │   │       │           ├── project-1-clone-push-serviceaccount.yaml
-        │   │       │           ├── project-1-git-event-triggerbinding.yaml
-        │   │       │           ├── project-1-git-repo-eventlistener.yaml
-        │   │       │           ├── project-1-image-registry-secret.yaml
-        │   │       │           ├── project-1-ingress.yaml
-        │   │       │           ├── project-1-run-clone-build-push-triggertemplate.yaml
-        │   │       │           ├── project-1-tekton-triggers-admin-role.yaml
-        │   │       │           ├── project-1-tekton-triggers-admin-rolebinding.yaml
-        │   │       │           └── project-1-tekton-triggers-admin-serviceaccount.yaml
-        │   │       ├── kustomize
-        │   │       │   └── base
-        │   │       │       ├── kustomization.yaml
-        │   │       │       ├── project-1-clone-build-push-pipeline.yaml
-        │   │       │       ├── project-1-clone-push-serviceaccount.yaml
-        │   │       │       ├── project-1-git-event-triggerbinding.yaml
-        │   │       │       ├── project-1-git-repo-eventlistener.yaml
-        │   │       │       ├── project-1-image-registry-secret.yaml
-        │   │       │       ├── project-1-ingress.yaml
-        │   │       │       ├── project-1-run-clone-build-push-triggertemplate.yaml
-        │   │       │       ├── project-1-tekton-triggers-admin-role.yaml
-        │   │       │       ├── project-1-tekton-triggers-admin-rolebinding.yaml
-        │   │       │       └── project-1-tekton-triggers-admin-serviceaccount.yaml
-        │   │       └── openshift-template
-        │   │           └── template.yaml
-        │   ├── compose
-        │   │   └── docker-compose.yaml
-        │   ├── knative
-        │   │   ├── app-service.yaml
-        │   │   ├── main-service.yaml
-        │   │   ├── project-1-php-service.yaml
-        │   │   └── project-1-python-service.yaml
-        │   ├── knative-parameterized
-        │   │   ├── helm-chart
-        │   │   │   └── project-1
-        │   │   │       ├── Chart.yaml
-        │   │   │       └── templates
-        │   │   │           ├── app-service.yaml
-        │   │   │           ├── main-service.yaml
-        │   │   │           ├── project-1-php-service.yaml
-        │   │   │           └── project-1-python-service.yaml
-        │   │   ├── kustomize
-        │   │   │   └── base
-        │   │   │       ├── app-service.yaml
-        │   │   │       ├── kustomization.yaml
-        │   │   │       ├── main-service.yaml
-        │   │   │       ├── project-1-php-service.yaml
-        │   │   │       └── project-1-python-service.yaml
-        │   │   └── openshift-template
-        │   │       └── template.yaml
-        │   ├── yamls
-        │   │   ├── app-deployment.yaml
-        │   │   ├── app-service.yaml
-        │   │   ├── main-deployment.yaml
-        │   │   ├── main-service.yaml
-        │   │   ├── project-1-ingress.yaml
-        │   │   ├── project-1-php-deployment.yaml
-        │   │   ├── project-1-php-service.yaml
-        │   │   ├── project-1-python-deployment.yaml
-        │   │   └── project-1-python-service.yaml
-        │   └── yamls-parameterized
-        │       ├── helm-chart
-        │       │   └── project-1
-        │       │       ├── Chart.yaml
-        │       │       └── templates
-        │       │           ├── app-deployment.yaml
-        │       │           ├── app-service.yaml
-        │       │           ├── main-deployment.yaml
-        │       │           ├── main-service.yaml
-        │       │           ├── project-1-ingress.yaml
-        │       │           ├── project-1-php-deployment.yaml
-        │       │           ├── project-1-php-service.yaml
-        │       │           ├── project-1-python-deployment.yaml
-        │       │           └── project-1-python-service.yaml
-        │       ├── kustomize
-        │       │   └── base
-        │       │       ├── app-deployment.yaml
-        │       │       ├── app-service.yaml
-        │       │       ├── kustomization.yaml
-        │       │       ├── main-deployment.yaml
-        │       │       ├── main-service.yaml
-        │       │       ├── project-1-ingress.yaml
-        │       │       ├── project-1-php-deployment.yaml
-        │       │       ├── project-1-php-service.yaml
-        │       │       ├── project-1-python-deployment.yaml
-        │       │       └── project-1-python-service.yaml
-        │       └── openshift-template
-        │           └── template.yaml
-        ├── scripts
-        │   ├── builddockerimages.bat
-        │   ├── builddockerimages.sh
-        │   ├── buildimages.bat
-        │   ├── buildimages.sh
-        │   ├── pushimages.bat
-        │   └── pushimages.sh
-        └── source
-            └── language-platforms
-                └── language-platforms
-                    ├── golang
-                    │   └── main.go
-                    ├── java-gradle
-                    │   ├── build.gradle
-                    │   └── src
-                    │       └── main
-                    │           ├── java
-                    │           │   └── simplewebapp
-                    │           │       └── MainServlet.java
-                    │           └── webapp
-                    │               └── WEB-INF
-                    │                   └── web.xml
-                    ├── java-gradle-war
-                    │   └── java-gradle-war.war
-                    ├── java-maven
-                    │   ├── pom.xml
-                    │   └── src
-                    │       └── main
-                    │           └── webapp
-                    │               ├── WEB-INF
-                    │               │   └── web.xml
-                    │               └── index.jsp
-                    ├── java-maven-war
-                    │   └── java-maven-war.war
-                    ├── nodejs
-                    │   ├── Dockerfile
-                    │   ├── main.js
-                    │   └── package.json
-                    ├── php
-                    │   └── php
-                    │       ├── Dockerfile
-                    │       └── index.php
-                    ├── python
-                    │   ├── Dockerfile
-                    │   ├── main.py
-                    │   └── requirements.txt
-                    └── ruby
-                        ├── Dockerfile
-                        ├── Gemfile
-                        ├── app.rb
-                        ├── config.ru
-                        └── views
-                            └── main.erb
-
-    53 directories, 111 files
-    ```
-
-    The UI has created Kubernetes YAMLs for us which are stored inside the `project-1/deploy/yamls` directory. For each of the folders and the services identified, it has created the deployment artifacts, service artifacts and the ingress as required.  The `project-1/scripts` folder contains the scripts for building the images for the applications using Dockerfiles.
-
-    Many scripts like `buildimages.sh` and `pushimages.sh` are also present inside the folder. It has also created a simple `project-1/deploy/compose/docker-compose.yaml` for you, so that you can test the images locally if you want. It has also created Tekton artifacts inside the `project-1/deploy/cicd/tekton` directory that are required if you want to use Tekton as your CI/CD pipeline.
-
-    The `Readme.md` file guides on the next steps to be followed.
-
-    ```
-    Move2Kube
-    ---------
-    Congratulations! Move2Kube has generated the necessary build artfiacts for moving all your application components to Kubernetes. Using the artifacts in this directory you can deploy your application in a kubernetes cluster.
-
-    Next Steps
-    ----------
-    To try locally use the scripts in the "./scripts" directory, to build, push and deploy. 
-
-    For production usage use the CI/CD pipelines for deployment.
-    ```
-
-1. Next we run the `buildimages.sh` script. Make sure to run this from the `project-1` directory. This step may take some time to complete.
-
-    ```console
-    $ cd project-1/
-    $ ./scripts/buildimages.sh
-    ```
-
-1. Now using the `pushimages.sh` script we can push our container images to the registry that we specified during the transformation. For this step we need to login into a container registry from the terminal. Instructions for:
-    - [Quay https://docs.quay.io/solution/getting-started.html](https://docs.quay.io/solution/getting-started.html)
-    - [Docker Hub https://docs.docker.com/engine/reference/commandline/login/](https://docs.docker.com/engine/reference/commandline/login/)
-
-    After login we can push the images.
-    ```console
-    $ ./scripts/pushimages.sh
-    The push refers to repository [us.icr.io/m2k-tutorial/java-gradle]
-    ffa6465f54ab: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:ed342fa94468694ffe008b086118f73e12a8632fe3660bf55bcdd18c927d9b24 size: 1159
-    The push refers to repository [us.icr.io/m2k-tutorial/php]
-    dd6584782bd2: Layer already exists
-    a0866fd3790f: Layer already exists
-    af0415ae8e8e: Layer already exists
-    37330a2a1954: Layer already exists
-    d6ec160dc60f: Layer already exists
-    latest: digest: sha256:df7667a28d9f4f61882d3d766bfe81d5c3d825779037a530f860c18660af7b91 size: 1363
-    The push refers to repository [us.icr.io/m2k-tutorial/golang]
-    733c29e84165: Layer already exists
-    37330a2a1954: Layer already exists
-    d6ec160dc60f: Layer already exists
-    latest: digest: sha256:333f0c18ea6eef935d7c0d4b7fbb4cf5dec86daedb9df487eda4319c9a5f2d94 size: 948
-    The push refers to repository [us.icr.io/m2k-tutorial/ruby]
-    f16699d2aa6e: Layer already exists
-    5f70bf18a086: Layer already exists
-    4e831229fd04: Layer already exists
-    b2d4bf2f278b: Layer already exists
-    b06524155a81: Layer already exists
-    cdfb3bbd8e3d: Layer already exists
-    4a037f2b85d2: Layer already exists
-    059ed1793a98: Layer already exists
-    712264374d24: Layer already exists
-    475b4eb79695: Layer already exists
-    f3be340a54b9: Layer already exists
-    114ca5b7280f: Layer already exists
-    latest: digest: sha256:1a006f3e79d166f6b7c3fbca605e2f86455daae84bea56dd9764495eb0e31b47 size: 3041
-    The push refers to repository [us.icr.io/m2k-tutorial/java-gradle-war]
-    1355509f8056: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:13bd95d8e2c75be32bde6a0517800f178e56ae7a404704ee34eb8f3d412c5de4 size: 1159
-    The push refers to repository [us.icr.io/m2k-tutorial/java-maven-war]
-    f17093c7b214: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:8b93e8b77dfb1d3f22006256f11a7fd4651f87eda47dd7ccbf635d328c2a8a27 size: 1158
-    The push refers to repository [us.icr.io/m2k-tutorial/python]
-    9d8df9196737: Layer already exists
-    cf00287de132: Layer already exists
-    4f21df0c5ff4: Layer already exists
-    3523d1de2809: Layer already exists
-    7a9f4af0a3a5: Layer already exists
-    af7dc60e1bfb: Layer already exists
-    37ab7f712dcb: Layer already exists
-    0b5feeefca25: Layer already exists
-    latest: digest: sha256:8bc990dcd6aa41b8bbbf9f64c06edc3560d99876f804368118740c867d05f9a8 size: 1999
-    The push refers to repository [us.icr.io/m2k-tutorial/nodejs]
-    24f1b33525cc: Layer already exists
-    241d3736dfbf: Layer already exists
-    e5702422d6b2: Layer already exists
-    7a9f4af0a3a5: Layer already exists
-    af7dc60e1bfb: Layer already exists
-    37ab7f712dcb: Layer already exists
-    0b5feeefca25: Layer already exists
-    latest: digest: sha256:7f67917e2e90e4ee9d5f28152bf97c7272787a22befd8645f5e3adf50895949a size: 1789
-    The push refers to repository [us.icr.io/m2k-tutorial/java-maven]
-    eb4fde40c423: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:524b1308fb013f37570db1eb9375d2a71340d01c85e438b206cbec90a542086b size: 1158
-    ```
-
-1. Finally we can deploy the applications using the `deploy.sh` script. If the deploy script is missing, you can also deploy by doing `kubectl apply -f ./deploy/yamls`
-
-   ```console
-   $ ./scripts/deploy.sh
-   deployment.apps/golang configured
-   service/golang configured
-   deployment.apps/java-gradle configured
-   service/java-gradle configured
-   deployment.apps/java-gradle-war configured
-   service/java-gradle-war configured
-   deployment.apps/java-maven configured
-   service/java-maven configured
-   deployment.apps/java-maven-war configured
-   service/java-maven-war configured
-   deployment.apps/nodejs configured
-   service/nodejs configured
-   deployment.apps/php configured
-   service/php configured
-   deployment.apps/python configured
-   service/python configured
-   deployment.apps/ruby configured
-   service/ruby configured
-   ingress.networking.k8s.io/project-1 configured
-
-
-   The services are accessible on the following paths:
-   golang : http://project-1.my.k8s.cluster.domain.com/golang
-   java-gradle : http://project-1.my.k8s.cluster.domain.com/java-gradle
-   java-gradle-war : http://project-1.my.k8s.cluster.domain.com/java-gradle-war
-   java-maven : http://project-1.my.k8s.cluster.domain.com/java-maven
-   java-maven-war : http://project-1.my.k8s.cluster.domain.com/java-maven-war
-   nodejs : http://project-1.my.k8s.cluster.domain.com/nodejs
-   php : http://project-1.my.k8s.cluster.domain.com/php
-   python : http://project-1.my.k8s.cluster.domain.com/python
-   ruby : http://project-1.my.k8s.cluster.domain.com/ruby
-   ```
-
-Now all our applications are accessible on the paths given below.
-
-* golang app- `http://project-1.my.k8s.cluster.domain.com/golang`
-
-   ![golang](../../assets/images/samples/ui/go.png)
-
-* java-gradle app- `http://project-1.my.k8s.cluster.domain.com/java-gradle`
-
-  ![java-gradle](../../assets/images/samples/ui/java-gradle.png)
-
-* java-maven app- `http://project-1.my.k8s.cluster.domain.com/java-maven`
-
-   ![java-maven](../../assets/images/samples/ui/java-maven.png)
-
-* nodejs app- `http://project-1.my.k8s.cluster.domain.com/nodejs`
-
-   ![nodejs](../../assets/images/samples/ui/nodejs.png)
-
-* php app- `http://project-1.my.k8s.cluster.domain.com/php`
-
-   ![php](../../assets/images/samples/ui/php.png)
-
-* python app- `http://project-1.my.k8s.cluster.domain.com/python`
-
-   ![python](../../assets/images/samples/ui/python.png)
-
-* ruby app- `http://project-1.my.k8s.cluster.domain.com/ruby`
-
-   ![ruby](../../assets/images/samples/ui/ruby.png)
-
-So, you can have a very diverse source environment, like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) having multiple applications in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. All the features of the Move2Kube CLI tool are available through the UI tool.
+We have seen how easy it is to to do a transformation using the UI. All the features of the Move2Kube CLI are available through the UI as well.
+In addition, the UI can be hosted on a common server and used by different teams using different workspaces.
+It also has authentication and authorization capabilities to restrict access to particular workspaces.

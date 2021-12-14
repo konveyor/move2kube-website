@@ -230,10 +230,42 @@ Move2Kube to analyze the sourcd code inside the `language-platforms` directory a
             Openshift: m2kassets/inbuilt/clusters/openshift.yaml
     ```
 
-1. Now let's run the transformation using `move2kube transform`. This will do the transformation according to the plan we generated. By default Move2Kube looks for a plan file in the current directory. If you want to specify the path to a different plan file you can do so using the `-p` flag.
+1. Now let's run the transformation using `move2kube transform`. This will do the transformation according to the plan we generated. By default Move2Kube looks for a plan file in the current directory. If you want to specify the path to a different plan file you can do so using the `-p` flag. During transformation Move2Kube will ask us several questions to help guide the transformation process.
+    
+    For the question about container registry, specify the container registry where you want to push the images.
+    ```console
+    ? Enter the URL of the image registry : 
+    Hints:
+    [You can always change it later by changing the yamls.]
+    us.icr.io
+    ```
+    Same for the question about container registry namespace.
+    ```console
+    ? Enter the namespace where the new images should be pushed : 
+    Hints:
+    [Ex : myproject]
+    m2k-tutorial
+    ```
+    If your container registry requires authentication for pulling images, then specify that in the question about container registry login.
+    ```console
+    ? [quay.io] What type of container registry login do you want to use?
+    Hints:
+    [Docker login from config mode, will use the default config from your local machine.]
+    No authentication
+    ```
+    For the question about ingress host, specify the hostname of the Kubernetes cluster. If you are deploying to Minikube then specify `localhost` as the hostname and leave the TLS secret blank.
+    ```console
+    ? Provide the ingress host domain
+    Hints:
+    [Ingress host domain is part of service URL]
+    localhost
+    ? Provide the TLS secret for ingress
+    Hints:
+    [Leave empty to use http]
 
-    During transformation Move2Kube will ask us several questions to help guide the transformation process. For now we will go with the default answers by pressing `Enter` for each question.
+    ```
 
+    For all other questions we will go with the default answers by pressing `Enter` for each question.
     ```console
     $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/user/Desktop/temp/m2k.plan. Will transform using this plan. 
@@ -328,11 +360,11 @@ Move2Kube to analyze the sourcd code inside the `language-platforms` directory a
     ? Enter the URL of the image registry : 
     Hints:
     [You can always change it later by changing the yamls.]
-    quay.io
+    us.icr.io
     ? Enter the namespace where the new images should be pushed : 
     Hints:
     [Ex : myproject]
-    myproject
+    m2k-tutorial
     ? [quay.io] What type of container registry login do you want to use?
     Hints:
     [Docker login from config mode, will use the default config from your local machine.]
@@ -358,7 +390,7 @@ Move2Kube to analyze the sourcd code inside the `language-platforms` directory a
     ? Provide the ingress host domain
     Hints:
     [Ingress host domain is part of service URL]
-    myproject.com
+    localhost
     ? Provide the TLS secret for ingress
     Hints:
     [Leave empty to use http]
@@ -714,145 +746,63 @@ The name of the output directory is the same as the project name (by default `my
     - [Quay https://docs.quay.io/solution/getting-started.html](https://docs.quay.io/solution/getting-started.html)
     - [Docker Hub https://docs.docker.com/engine/reference/commandline/login/](https://docs.docker.com/engine/reference/commandline/login/)
 
-    After login we can push the images.
+    After we login, we can push the images.
     ```console
     $ ./scripts/pushimages.sh
-    The push refers to repository [us.icr.io/m2k-tutorial/java-gradle]
-    ffa6465f54ab: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:ed342fa94468694ffe008b086118f73e12a8632fe3660bf55bcdd18c927d9b24 size: 1159
-    The push refers to repository [us.icr.io/m2k-tutorial/php]
-    dd6584782bd2: Layer already exists
-    a0866fd3790f: Layer already exists
-    af0415ae8e8e: Layer already exists
-    37330a2a1954: Layer already exists
-    d6ec160dc60f: Layer already exists
-    latest: digest: sha256:df7667a28d9f4f61882d3d766bfe81d5c3d825779037a530f860c18660af7b91 size: 1363
-    The push refers to repository [us.icr.io/m2k-tutorial/golang]
-    733c29e84165: Layer already exists
-    37330a2a1954: Layer already exists
-    d6ec160dc60f: Layer already exists
-    latest: digest: sha256:333f0c18ea6eef935d7c0d4b7fbb4cf5dec86daedb9df487eda4319c9a5f2d94 size: 948
-    The push refers to repository [us.icr.io/m2k-tutorial/ruby]
-    f16699d2aa6e: Layer already exists
-    5f70bf18a086: Layer already exists
-    4e831229fd04: Layer already exists
-    b2d4bf2f278b: Layer already exists
-    b06524155a81: Layer already exists
-    cdfb3bbd8e3d: Layer already exists
-    4a037f2b85d2: Layer already exists
-    059ed1793a98: Layer already exists
-    712264374d24: Layer already exists
-    475b4eb79695: Layer already exists
-    f3be340a54b9: Layer already exists
-    114ca5b7280f: Layer already exists
-    latest: digest: sha256:1a006f3e79d166f6b7c3fbca605e2f86455daae84bea56dd9764495eb0e31b47 size: 3041
-    The push refers to repository [us.icr.io/m2k-tutorial/java-gradle-war]
-    1355509f8056: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:13bd95d8e2c75be32bde6a0517800f178e56ae7a404704ee34eb8f3d412c5de4 size: 1159
-    The push refers to repository [us.icr.io/m2k-tutorial/java-maven-war]
-    f17093c7b214: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:8b93e8b77dfb1d3f22006256f11a7fd4651f87eda47dd7ccbf635d328c2a8a27 size: 1158
-    The push refers to repository [us.icr.io/m2k-tutorial/python]
-    9d8df9196737: Layer already exists
-    cf00287de132: Layer already exists
-    4f21df0c5ff4: Layer already exists
-    3523d1de2809: Layer already exists
-    7a9f4af0a3a5: Layer already exists
-    af7dc60e1bfb: Layer already exists
-    37ab7f712dcb: Layer already exists
-    0b5feeefca25: Layer already exists
-    latest: digest: sha256:8bc990dcd6aa41b8bbbf9f64c06edc3560d99876f804368118740c867d05f9a8 size: 1999
-    The push refers to repository [us.icr.io/m2k-tutorial/nodejs]
-    24f1b33525cc: Layer already exists
-    241d3736dfbf: Layer already exists
-    e5702422d6b2: Layer already exists
-    7a9f4af0a3a5: Layer already exists
-    af7dc60e1bfb: Layer already exists
-    37ab7f712dcb: Layer already exists
-    0b5feeefca25: Layer already exists
-    latest: digest: sha256:7f67917e2e90e4ee9d5f28152bf97c7272787a22befd8645f5e3adf50895949a size: 1789
-    The push refers to repository [us.icr.io/m2k-tutorial/java-maven]
-    eb4fde40c423: Layer already exists
-    86b4d79b8cb0: Layer already exists
-    02ff5ceaada2: Layer already exists
-    0e270d27988f: Layer already exists
-    latest: digest: sha256:524b1308fb013f37570db1eb9375d2a71340d01c85e438b206cbec90a542086b size: 1158
     ```
 
-1. Finally we can deploy the applications using the `deploy.sh` script. If the deploy script is missing, you can also deploy by doing `kubectl apply -f ./deploy/yamls`
+1. Finally we can deploy the applications using `kubectl apply -f ./deploy/yamls`
 
    ```console
-   $ ./scripts/deploy.sh
-   deployment.apps/golang configured
-   service/golang configured
-   deployment.apps/java-gradle configured
-   service/java-gradle configured
-   deployment.apps/java-gradle-war configured
-   service/java-gradle-war configured
-   deployment.apps/java-maven configured
-   service/java-maven configured
-   deployment.apps/java-maven-war configured
-   service/java-maven-war configured
-   deployment.apps/nodejs configured
-   service/nodejs configured
-   deployment.apps/php configured
-   service/php configured
-   deployment.apps/python configured
-   service/python configured
-   deployment.apps/ruby configured
-   service/ruby configured
-   ingress.networking.k8s.io/myproject configured
-
-
-   The services are accessible on the following paths:
-   golang : http://myproject.my.k8s.cluster.domain.com/golang
-   java-gradle : http://myproject.my.k8s.cluster.domain.com/java-gradle
-   java-gradle-war : http://myproject.my.k8s.cluster.domain.com/java-gradle-war
-   java-maven : http://myproject.my.k8s.cluster.domain.com/java-maven
-   java-maven-war : http://myproject.my.k8s.cluster.domain.com/java-maven-war
-   nodejs : http://myproject.my.k8s.cluster.domain.com/nodejs
-   php : http://myproject.my.k8s.cluster.domain.com/php
-   python : http://myproject.my.k8s.cluster.domain.com/python
-   ruby : http://myproject.my.k8s.cluster.domain.com/ruby
+   $ kubectl apply -f ./deploy/yamls
+    deployment.apps/golang created
+    service/golang created
+    deployment.apps/myproject-django created
+    service/myproject-django created
+    ingress.networking.k8s.io/myproject created
+    deployment.apps/myproject-php created
+    service/myproject-php created
+    deployment.apps/myproject-python created
+    service/myproject-python created
+    deployment.apps/nodejs created
+    service/nodejs created
+    deployment.apps/ruby created
+    service/ruby created
+    deployment.apps/rust created
+    service/rust created
+    ...
    ```
 
-Now all our applications are accessible on the paths given below.
+Now all our applications are accessible on the cluster. We can get the ingress to see the URLs where
+the apps have been deployed to `kubectl get ingress myproject -o yaml`.
+If you deployed to Minikube the apps should be available on the URLs given below:
 
-* golang app- `http://myproject.my.k8s.cluster.domain.com/golang`
+* golang - [http://localhost/golang](http://localhost/golang)
 
    ![golang](../../assets/images/samples/ui/go.png)
 
-* java-gradle app- `http://myproject.my.k8s.cluster.domain.com/java-gradle`
-
-  ![java-gradle](../../assets/images/samples/ui/java-gradle.png)
-
-* java-maven app- `http://myproject.my.k8s.cluster.domain.com/java-maven`
-
-   ![java-maven](../../assets/images/samples/ui/java-maven.png)
-
-* nodejs app- `http://myproject.my.k8s.cluster.domain.com/nodejs`
+* nodejs - [http://localhost/nodejs](http://localhost/nodejs)
 
    ![nodejs](../../assets/images/samples/ui/nodejs.png)
 
-* php app- `http://myproject.my.k8s.cluster.domain.com/php`
-
-   ![php](../../assets/images/samples/ui/php.png)
-
-* python app- `http://myproject.my.k8s.cluster.domain.com/python`
+* python - [http://localhost/myproject-python](http://localhost/myproject-python)
 
    ![python](../../assets/images/samples/ui/python.png)
 
-* ruby app- `http://myproject.my.k8s.cluster.domain.com/ruby`
+* ruby - [http://localhost/ruby](http://localhost/ruby)
 
    ![ruby](../../assets/images/samples/ui/ruby.png)
 
-So, you can have a very diverse source environment, like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) having multiple applications in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. If you don't like working with the terminal we also have a [Move2Kube UI tool](https://move2kube.konveyor.io/tutorials/move2kube-ui/) which has all the same features as the CLI.
+* java-gradle - [http://localhost/java-gradle](http://localhost/java-gradle)
+
+  ![java-gradle](../../assets/images/samples/ui/java-gradle.png)
+
+* java-maven - [http://localhost/java-maven](http://localhost/java-maven)
+
+   ![java-maven](../../assets/images/samples/ui/java-maven.png)
+
+and so on ...
+
+## Conclusion
+
+So you can have a very diverse source environment, like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample which has multiple apps in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. If you don't like working with the terminal we also have a [Move2Kube UI tool](https://move2kube.konveyor.io/tutorials/move2kube-ui/) which has all the same features as the CLI.
