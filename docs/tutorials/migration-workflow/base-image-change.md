@@ -84,4 +84,4 @@ spec:
   config:
     defaultNodejsVersion: "12"
 ```
-Next step [Custom transformer 2](/tutorials/migration-workflow/custom-transformer-2)
+Next step [Simple Parameterizer](/tutorials/migration-workflow/simpleparameterizer)
