@@ -9,6 +9,8 @@ nav_order: 1
 
 # Collect
 
+> Note: This is an optional step. If you are not familiar with Cloud Foundry or you don't want to collect information from your running app, then feel free to skip to the next step [Plan](/tutorials/migration-workflow/plan).
+
 The first step is to analyze our running application in Cloud Foundry. Move2Kube CLI tools provides a command to do this called `collect`. As the name suggests the `collect` command collects information about the running applications.
 
 - It looks for CLI tools such as `cf`, `oc`, and `kubectl` that you have installed.
@@ -32,7 +34,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     space:          dev
     ```
 
-1. Make sure you have already deployed the `e2e-demo` app in the Cloud Foundry cluster.
+1. Make sure you have already deployed the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app) app in the Cloud Foundry cluster.
 
     ```console
     $ cf apps
