@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Custom transformer for a simple parameterizer"
-permalink: /tutorials/migration-workflow/simpleparameterizer
+permalink: /tutorials/migration-workflow/parameterizer
 parent: "Migration workflow"
 grand_parent: Tutorials
 nav_order: 5
