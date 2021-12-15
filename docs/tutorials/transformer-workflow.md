@@ -14,8 +14,8 @@ In this tutorial we will see how we can customize the transformations done by Mo
 The transformations that Move2Kube does are done using modules called **Transformers**. Move2Kube has a set of built-in
 transformers that it runs in a pipeline to generate all the outputs it produces, but we can make and add our own transformers to this pipeline.
 
-Transformers are capable of generating files and folders, modifying the output of other transformers, asking the user questions
-to guide the transformation, rearrange the output folder structure, etc.
+Transformers are capable of generating files and directories, modifying the output of other transformers, asking the user questions
+to guide the transformation, rearrange the output directory structure, etc.
 Transformers can be written as:
     - a Starlark script
     - a container image
@@ -582,13 +582,13 @@ We can take a look at the Ingress that was generated.
     ```console
     $ ls
     add-annotation-simple	language-platforms	language-platforms.zip	m2k.plan		m2kconfig.yaml		m2kqacache.yaml		myproject
-    ibm-macbook-pro:temp user$ ls
+    $ ls
     add-annotation-simple	language-platforms	language-platforms.zip	m2k.plan		m2kconfig.yaml		m2kqacache.yaml		myproject
-    ibm-macbook-pro:temp user$ ls myproject/
+    $ ls myproject/
     Readme.md	deploy		scripts		source
-    ibm-macbook-pro:temp user$ ls myproject/deploy/
+    $ ls myproject/deploy/
     cicd			compose			knative			knative-parameterized	yamls			yamls-parameterized
-    ibm-macbook-pro:temp user$ ls myproject/deploy/yamls
+    $ ls myproject/deploy/yamls
     app-deployment.yaml				myproject-ingress.yaml				myproject-java-gradle-war-service.yaml		myproject-php-service.yaml			simplewebapp-service.yaml
     app-service.yaml				myproject-java-gradle-deployment.yaml		myproject-java-maven-war-deployment.yaml	myproject-python-deployment.yaml
     main-deployment.yaml				myproject-java-gradle-service.yaml		myproject-java-maven-war-service.yaml		myproject-python-service.yaml

@@ -10,7 +10,7 @@ has_children: true
 # Migration workflow
 
 In this tutorial we will go through the entire workflow for migrating an application to run on Kubernetes.
-We will be using the [Konveyor End-to-End demo app](https://github.com/konveyor/mig-demo-apps/tree/master/apps/e2e-demo).
+We will be using the [Konveyor End-to-End demo app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app).
 It is a retail website for shopping online. The website shows some products for sale and you can create orders by adding things to cart and checking out.
 
 This application consists of 5 different services:
