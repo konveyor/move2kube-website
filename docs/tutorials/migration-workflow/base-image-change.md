@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Custom transformer for base-image-change"
+title: "Custom transformer for changing base image"
 permalink: /tutorials/migration-workflow/base-image-change
 parent: "Migration workflow"
 grand_parent: Tutorials
