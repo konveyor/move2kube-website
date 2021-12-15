@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Custom transformer for base-image-change"
-permalink: /tutorials/migration-workflow/custom-transformer-1
+permalink: /tutorials/migration-workflow/base-image-change
 parent: "Migration workflow"
 grand_parent: Tutorials
 nav_order: 4
