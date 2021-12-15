@@ -154,6 +154,7 @@ spec:
 ```
 Also, note that `Dockerfile` template in the `templates` folder is modified to include the shell script as start-up script:
 ```
+{% raw %}
 FROM registry.access.redhat.com/ubi8/nodejs-{{ .NodeVersion }}
 COPY . .
 RUN npm install
@@ -162,6 +163,7 @@ RUN npm run build
 {{- end}}
 EXPOSE {{ .Port }}
 CMD sh hello-nodejs.sh
+{% endraw %}
 ```
 
 Next step [Custom Helm-chart Generator](/tutorials/migration-workflow/custom-helmchart-gen)

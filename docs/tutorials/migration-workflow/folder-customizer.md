@@ -96,6 +96,7 @@ As can be seen from the contents below, the name of our custom transformer is `K
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Kubernetes` and use our custom transformer in its place.
 - Lastly, the key field which makes the folder structure change is the `outputPath` (this is in the `config` section and has a value `"yamls-elsewhere"`) field which provides the folder path prefix for the desired target folder structure for kubernetes yamls.
 ```
+{% raw %}
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Transformer
 metadata:
@@ -121,7 +122,7 @@ spec:
   config:
     outputPath: "yamls-elsewhere"
     ingressName: "{{ .ProjectName }}"
-
+{% endraw %}
 ```
 
 Next step [Script Injector](/tutorials/migration-workflow/script-inject)
