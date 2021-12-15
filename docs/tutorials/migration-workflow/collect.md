@@ -9,460 +9,363 @@ nav_order: 1
 
 # Collect
 
-The first step is to analyze our running application in Cloud Foundry. Move2Kube CLI tools provides a command to do this called `collect`. As the name suggests the `collect` command collects as much information about the running applications.
+The first step is to analyze our running application in Cloud Foundry. Move2Kube CLI tools provides a command to do this called `collect`. As the name suggests the `collect` command collects information about the running applications.
 
-- It looks for CLI tools such as `cf`, `oc`, `kubectl` and `ibmcloud` that you have installed.
+- It looks for CLI tools such as `cf`, `oc`, and `kubectl` that you have installed.
 
-- If you are logged into any clusters, it will use the tools it found to extract as much information as possible about the apps that are running. Information about Kubernetes Pods, Deployments, Services, Cloud Foundry apps, environment variables, etc. are all collected. In the case of Kubernetes clusters it even collects information about the types of resources that are installed on the cluster to detect if it is an Openshift Cluster, whether it has Tekton, etc.
+- If you are logged into any clusters, it will use the tools it found to extract as much information as possible about the apps that are running. Information about Kubernetes CRDs, Cloud Foundry apps, environment variables, etc. are all collected. In the case of Kubernetes clusters it collects information about the types of resources that are installed on the cluster, whether it has Tekton, BuildConfigs, etc.
 
-- All the information that was collected gets written into some YAML files. One YAML per cluster. These cluster metadata YAMLs can then be used during the plan phase to smoothen the migration.
+- All the information that was collected gets written into a directory called `m2k_collect` as YAML files. In this case, the info about Cloud Foundry apps is written to a sub-directory called `cf`. These cluster metadata YAMLs can then be used during the plan phase to smoothen the migration.
 For example: Some of the information that is collected is port information. This allows Move2Kube to select the right ports for each service when generating Dockerfiles for containerizing these services.
 
 ## Collecting information from e2e-demo app
 
-1. Make sure you have the `cf` tool installed and you have already deployed the `e2e-demo` app in a Cloud Foundry cluster.
+1. Make sure you have the `cf` tool installed and you have logged into your Cloud Foundry instance.
+You can run `cf target` to check if you are logged in. The output should be similar to this:
+
+    ```console
+    $ cf target
+    API endpoint:   https://api.cf.my.cloud.provider.com
+    API version:    3.107.0
+    user:           user@gmail.com
+    org:            my-org
+    space:          dev
+    ```
+
+1. Make sure you have already deployed the `e2e-demo` app in the Cloud Foundry cluster.
+
+    ```console
+    $ cf apps
+    Getting apps in org my-org / space dev as user@gmail.com...
+
+    name          requested state   processes           routes
+    frontend      started           web:1/1             frontend-1234.my.cloud.provider.com
+    gateway       started           web:1/1, task:0/0   gateway-5678.my.cloud.provider.com
+    orders        started           web:1/1, task:0/0   orders-1234.my.cloud.provider.com
+    ...
+    ```
 
 1. Run `move2kube collect` to collect information about the app from Cloud Foundry.
+    ```console
+    $ move2kube collect
+    INFO[0000] Begin collection                             
+    INFO[0000] [*collector.ClusterCollector] Begin collection 
+    INFO[0000] [*collector.ClusterCollector] Done           
+    INFO[0000] [*collector.ImagesCollector] Begin collection 
+    INFO[0000] [*collector.ImagesCollector] Done            
+    INFO[0000] [*collector.CfAppsCollector] Begin collection 
+    INFO[0011] [*collector.CfAppsCollector] Done            
+    INFO[0011] [*collector.CfServicesCollector] Begin collection 
+    INFO[0026] [*collector.CfServicesCollector] Done        
+    INFO[0026] Collection done                              
+    INFO[0026] Collect Output in [/Users/user/Desktop/demo2/m2k_collect]. Copy this directory into the source directory to be used for planning. 
+    ```
 
-Below we can see an example cluster metadata YAML:
+    The output will be in a directory called `m2k_collect`. Inside it we can see a directory called `cf`.
+    There are 2 YAML files inside it. One is `CfApps` and the other is `CfServices`:
 
-```yaml
-apiVersion: move2kube.konveyor.io/v1alpha1
-kind: ClusterMetadata
-metadata:
-  name: |
-    default/c114-e-us-south-containers-cloud-ibm-com:32230/IAM#ashokponkumar@in.ibm.com
-spec:
-  storageClasses:
-    - default
-    - ibmc-block-bronze
-    - ibmc-block-custom
-    - ibmc-block-gold
-    - ibmc-block-retain-bronze
-    - ibmc-block-retain-custom
-    - ibmc-block-retain-gold
-    - ibmc-block-retain-silver
-    - ibmc-block-silver
-    - ibmc-file-bronze
-    - ibmc-file-bronze-gid
-    - ibmc-file-custom
-    - ibmc-file-gold
-    - ibmc-file-gold-gid
-    - ibmc-file-retain-bronze
-    - ibmc-file-retain-custom
-    - ibmc-file-retain-gold
-    - ibmc-file-retain-silver
-    - ibmc-file-silver
-    - ibmc-file-silver-gid
-  apiKindVersionMap:
-    APIServer:
-      - config.openshift.io/v1
-    APIService:
-      - apiregistration.k8s.io/v1
-      - apiregistration.k8s.io/v1beta1
-    Alertmanager:
-      - monitoring.coreos.com/v1
-    AppliedClusterResourceQuota:
-      - quota.openshift.io/v1
-    Authentication:
-      - config.openshift.io/v1
-      - operator.openshift.io/v1
-    BGPConfiguration:
-      - crd.projectcalico.org/v1
-    BGPPeer:
-      - crd.projectcalico.org/v1
-    BareMetalHost:
-      - metal3.io/v1alpha1
-    BinaryBuildRequestOptions:
-      - build.openshift.io/v1
-    Binding:
-      - v1
-    BlockAffinity:
-      - crd.projectcalico.org/v1
-    BrokerTemplateInstance:
-      - template.openshift.io/v1
-    Build:
-      - build.openshift.io/v1
-      - config.openshift.io/v1
-    BuildConfig:
-      - build.openshift.io/v1
-    BuildLog:
-      - build.openshift.io/v1
-    BuildRequest:
-      - build.openshift.io/v1
-    CSIDriver:
-      - storage.k8s.io/v1
-      - storage.k8s.io/v1beta1
-    CSINode:
-      - storage.k8s.io/v1
-      - storage.k8s.io/v1beta1
-    CSISnapshotController:
-      - operator.openshift.io/v1
-    CatalogSource:
-      - operators.coreos.com/v1alpha1
-    CertificateSigningRequest:
-      - certificates.k8s.io/v1beta1
-    ClusterInformation:
-      - crd.projectcalico.org/v1
-    ClusterOperator:
-      - config.openshift.io/v1
-    ClusterResourceQuota:
-      - quota.openshift.io/v1
-    ClusterRole:
-      - authorization.openshift.io/v1
-      - rbac.authorization.k8s.io/v1
-      - rbac.authorization.k8s.io/v1beta1
-    ClusterRoleBinding:
-      - authorization.openshift.io/v1
-      - rbac.authorization.k8s.io/v1
-      - rbac.authorization.k8s.io/v1beta1
-    ClusterServiceVersion:
-      - operators.coreos.com/v1alpha1
-    ClusterVersion:
-      - config.openshift.io/v1
-    ComponentStatus:
-      - v1
-    Config:
-      - operator.openshift.io/v1
-      - imageregistry.operator.openshift.io/v1
-      - samples.operator.openshift.io/v1
-    ConfigMap:
-      - v1
-    Console:
-      - config.openshift.io/v1
-      - operator.openshift.io/v1
-    ConsoleCLIDownload:
-      - console.openshift.io/v1
-    ConsoleExternalLogLink:
-      - console.openshift.io/v1
-    ConsoleLink:
-      - console.openshift.io/v1
-    ConsoleNotification:
-      - console.openshift.io/v1
-    ConsoleYAMLSample:
-      - console.openshift.io/v1
-    ContainerRuntimeConfig:
-      - machineconfiguration.openshift.io/v1
-    ControllerRevision:
-      - apps/v1
-    CredentialsRequest:
-      - cloudcredential.openshift.io/v1
-    CronJob:
-      - batch/v1beta1
-    CustomResourceDefinition:
-      - apiextensions.k8s.io/v1
-      - apiextensions.k8s.io/v1beta1
-    DNS:
-      - config.openshift.io/v1
-      - operator.openshift.io/v1
-    DNSRecord:
-      - ingress.operator.openshift.io/v1
-    DaemonSet:
-      - apps/v1
-    Deployment:
-      - apps/v1
-    DeploymentConfig:
-      - apps.openshift.io/v1
-    DeploymentConfigRollback:
-      - apps.openshift.io/v1
-    DeploymentLog:
-      - apps.openshift.io/v1
-    DeploymentRequest:
-      - apps.openshift.io/v1
-    EndpointSlice:
-      - discovery.k8s.io/v1beta1
-    Endpoints:
-      - v1
-    Etcd:
-      - operator.openshift.io/v1
-    Event:
-      - events.k8s.io/v1beta1
-      - v1
-    Eviction:
-      - v1
-    FeatureGate:
-      - config.openshift.io/v1
-    FelixConfiguration:
-      - crd.projectcalico.org/v1
-    GlobalNetworkPolicy:
-      - crd.projectcalico.org/v1
-    GlobalNetworkSet:
-      - crd.projectcalico.org/v1
-    Group:
-      - user.openshift.io/v1
-    HorizontalPodAutoscaler:
-      - autoscaling/v1
-      - autoscaling/v2beta1
-      - autoscaling/v2beta2
-    HostEndpoint:
-      - crd.projectcalico.org/v1
-    IPAMBlock:
-      - crd.projectcalico.org/v1
-    IPAMConfig:
-      - crd.projectcalico.org/v1
-    IPAMHandle:
-      - crd.projectcalico.org/v1
-    IPPool:
-      - crd.projectcalico.org/v1
-      - whereabouts.cni.cncf.io/v1alpha1
-    Identity:
-      - user.openshift.io/v1
-    Image:
-      - image.openshift.io/v1
-      - config.openshift.io/v1
-    ImageContentSourcePolicy:
-      - operator.openshift.io/v1alpha1
-    ImagePruner:
-      - imageregistry.operator.openshift.io/v1
-    ImageSignature:
-      - image.openshift.io/v1
-    ImageStream:
-      - image.openshift.io/v1
-    ImageStreamImage:
-      - image.openshift.io/v1
-    ImageStreamImport:
-      - image.openshift.io/v1
-    ImageStreamLayers:
-      - image.openshift.io/v1
-    ImageStreamMapping:
-      - image.openshift.io/v1
-    ImageStreamTag:
-      - image.openshift.io/v1
-    ImageTag:
-      - image.openshift.io/v1
-    Infrastructure:
-      - config.openshift.io/v1
-    Ingress:
-      - config.openshift.io/v1
-      - networking.k8s.io/v1beta1
-      - extensions/v1beta1
-    IngressClass:
-      - networking.k8s.io/v1beta1
-    IngressController:
-      - operator.openshift.io/v1
-    InstallPlan:
-      - operators.coreos.com/v1alpha1
-    Installation:
-      - operator.tigera.io/v1
-    Job:
-      - batch/v1
-    KubeAPIServer:
-      - operator.openshift.io/v1
-    KubeControllerManager:
-      - operator.openshift.io/v1
-    KubeScheduler:
-      - operator.openshift.io/v1
-    KubeStorageVersionMigrator:
-      - operator.openshift.io/v1
-    KubeletConfig:
-      - machineconfiguration.openshift.io/v1
-    Lease:
-      - coordination.k8s.io/v1
-      - coordination.k8s.io/v1beta1
-    LimitRange:
-      - v1
-    LocalResourceAccessReview:
-      - authorization.openshift.io/v1
-    LocalSubjectAccessReview:
-      - authorization.openshift.io/v1
-      - authorization.k8s.io/v1
-      - authorization.k8s.io/v1beta1
-    MachineConfig:
-      - machineconfiguration.openshift.io/v1
-    MachineConfigPool:
-      - machineconfiguration.openshift.io/v1
-    MutatingWebhookConfiguration:
-      - admissionregistration.k8s.io/v1
-      - admissionregistration.k8s.io/v1beta1
-    Namespace:
-      - v1
-    Network:
-      - config.openshift.io/v1
-      - operator.openshift.io/v1
-    NetworkAttachmentDefinition:
-      - k8s.cni.cncf.io/v1
-    NetworkPolicy:
-      - networking.k8s.io/v1
-      - crd.projectcalico.org/v1
-    NetworkSet:
-      - crd.projectcalico.org/v1
-    Node:
-      - v1
-    NodeMetrics:
-      - metrics.k8s.io/v1beta1
-    NodeProxyOptions:
-      - v1
-    OAuth:
-      - config.openshift.io/v1
-    OAuthAccessToken:
-      - oauth.openshift.io/v1
-    OAuthAuthorizeToken:
-      - oauth.openshift.io/v1
-    OAuthClient:
-      - oauth.openshift.io/v1
-    OAuthClientAuthorization:
-      - oauth.openshift.io/v1
-    OpenShiftAPIServer:
-      - operator.openshift.io/v1
-    OpenShiftControllerManager:
-      - operator.openshift.io/v1
-    OperatorGroup:
-      - operators.coreos.com/v1
-      - operators.coreos.com/v1alpha2
-    OperatorHub:
-      - config.openshift.io/v1
-    OperatorPKI:
-      - network.operator.openshift.io/v1
-    OperatorSource:
-      - operators.coreos.com/v1
-    PackageManifest:
-      - packages.operators.coreos.com/v1
-    PersistentVolume:
-      - v1
-    PersistentVolumeClaim:
-      - v1
-    Pod:
-      - v1
-    PodAttachOptions:
-      - v1
-    PodDisruptionBudget:
-      - policy/v1beta1
-    PodExecOptions:
-      - v1
-    PodMetrics:
-      - metrics.k8s.io/v1beta1
-    PodMonitor:
-      - monitoring.coreos.com/v1
-    PodPortForwardOptions:
-      - v1
-    PodProxyOptions:
-      - v1
-    PodSecurityPolicy:
-      - policy/v1beta1
-    PodSecurityPolicyReview:
-      - security.openshift.io/v1
-    PodSecurityPolicySelfSubjectReview:
-      - security.openshift.io/v1
-    PodSecurityPolicySubjectReview:
-      - security.openshift.io/v1
-    PodTemplate:
-      - v1
-    PriorityClass:
-      - scheduling.k8s.io/v1
-      - scheduling.k8s.io/v1beta1
-    Profile:
-      - tuned.openshift.io/v1
-    Project:
-      - project.openshift.io/v1
-      - config.openshift.io/v1
-    ProjectRequest:
-      - project.openshift.io/v1
-    Prometheus:
-      - monitoring.coreos.com/v1
-    PrometheusRule:
-      - monitoring.coreos.com/v1
-    Provisioning:
-      - metal3.io/v1alpha1
-    Proxy:
-      - config.openshift.io/v1
-    RBACSync:
-      - ibm.com/v1alpha1
-    RangeAllocation:
-      - security.openshift.io/v1
-    ReplicaSet:
-      - apps/v1
-    ReplicationController:
-      - v1
-    ResourceAccessReview:
-      - authorization.openshift.io/v1
-    ResourceQuota:
-      - v1
-    Role:
-      - authorization.openshift.io/v1
-      - rbac.authorization.k8s.io/v1
-      - rbac.authorization.k8s.io/v1beta1
-    RoleBinding:
-      - authorization.openshift.io/v1
-      - rbac.authorization.k8s.io/v1
-      - rbac.authorization.k8s.io/v1beta1
-    RoleBindingRestriction:
-      - authorization.openshift.io/v1
-    Route:
-      - route.openshift.io/v1
-    RuntimeClass:
-      - node.k8s.io/v1beta1
-    Scale:
-      - apps.openshift.io/v1
-      - operator.openshift.io/v1
-      - apps/v1
-      - v1
-    Scheduler:
-      - config.openshift.io/v1
-    Secret:
-      - v1
-    SecretList:
-      - image.openshift.io/v1
-    SecurityContextConstraints:
-      - security.openshift.io/v1
-    SelfSubjectAccessReview:
-      - authorization.k8s.io/v1
-      - authorization.k8s.io/v1beta1
-    SelfSubjectRulesReview:
-      - authorization.openshift.io/v1
-      - authorization.k8s.io/v1
-      - authorization.k8s.io/v1beta1
-    Service:
-      - v1
-    ServiceAccount:
-      - v1
-    ServiceCA:
-      - operator.openshift.io/v1
-    ServiceMonitor:
-      - monitoring.coreos.com/v1
-    ServiceProxyOptions:
-      - v1
-    StatefulSet:
-      - apps/v1
-    StorageClass:
-      - storage.k8s.io/v1
-      - storage.k8s.io/v1beta1
-    StorageState:
-      - migration.k8s.io/v1alpha1
-    StorageVersionMigration:
-      - migration.k8s.io/v1alpha1
-    SubjectAccessReview:
-      - authorization.openshift.io/v1
-      - authorization.k8s.io/v1
-      - authorization.k8s.io/v1beta1
-    SubjectRulesReview:
-      - authorization.openshift.io/v1
-    Subscription:
-      - operators.coreos.com/v1alpha1
-    Template:
-      - template.openshift.io/v1
-    TemplateInstance:
-      - template.openshift.io/v1
-    ThanosRuler:
-      - monitoring.coreos.com/v1
-    TigeraStatus:
-      - operator.tigera.io/v1
-    TokenReview:
-      - authentication.k8s.io/v1
-      - authentication.k8s.io/v1beta1
-    Tuned:
-      - tuned.openshift.io/v1
-    User:
-      - user.openshift.io/v1
-    UserIdentityMapping:
-      - user.openshift.io/v1
-    ValidatingWebhookConfiguration:
-      - admissionregistration.k8s.io/v1
-      - admissionregistration.k8s.io/v1beta1
-    VolumeAttachment:
-      - storage.k8s.io/v1
-      - storage.k8s.io/v1beta1
-```
+    ```console
+    $ ls m2k_collect/
+    cf		clusters	images
+    $ ls m2k_collect/cf/
+    cfapps-e3a2f9d68a7a5ecc.yaml		cfservices-32194c9906854947.yaml
+    ```
+    The `CfApps` file contains all the information that was collected about our app such as service names, environment variables, ports, etc.
 
-Now that we have collected the runtime information from the app running in the Cloud Foundry cluster, we can move on to the planning phase.
+    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/09d8b76369a3447f142a20888ce9747fca9f4fd6/samples/enterprise-app/cfapps.yaml)
+
+    ```yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: CfApps
+    spec:
+      applications:
+        - application:
+            guid: id1
+            createdat: "2021-12-14T10:01:40Z"
+            updatedat: "2021-12-14T10:03:08Z"
+            name: orders
+            memory: 1024
+            instances: 1
+            diskquota: 1024
+            spaceguid: space-id1
+            stackguid: stack-id1
+            state: STARTED
+            packagestate: STAGED
+            command: ""
+            buildpack: https://github.com/cloudfoundry/java-buildpack
+            detectedbuildpack: java
+            detectedbuildpackguid: ""
+            healthcheckhttpendpoint: ""
+            healthchecktype: port
+            healthchecktimeout: 0
+            diego: true
+            enablessh: true
+            detectedstartcommand: 'JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.16.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR     -XX:ActiveProcessorCount=$(nproc) -Djava.ext.dirs=$PWD/.java-buildpack/container_security_provider:$PWD/.java-buildpack/open_jdk_jre/lib/ext -Djava.security.   properties=$PWD/.java-buildpack/java_security/java.security $JAVA_OPTS" && CALCULATED_MEMORY=$($PWD/.java-buildpack/open_jdk_jre/bin/  java-buildpack-memory-calculator-3.13.0_RELEASE -totMemory=$MEMORY_LIMIT -loadedClasses=23193 -poolType=metaspace -stackThreads=250 -vmOptions="$JAVA_OPTS") &    & echo JVM Memory Configuration: $CALCULATED_MEMORY && JAVA_OPTS="$JAVA_OPTS $CALCULATED_MEMORY" && MALLOC_ARENA_MAX=2 SERVER_PORT=$PORT eval exec $PWD/.   java-buildpack/open_jdk_jre/bin/java $JAVA_OPTS -cp $PWD/. org.springframework.boot.loader.JarLauncher'
+            dockerimage: ""
+            dockercredentialsjson: {}
+            dockercredentials:
+              username: ""
+              password: ""
+            environment: {}
+            stagingfailedreason: ""
+            stagingfaileddescription: ""
+            ports:
+              - 8080
+            spaceurl: /v2/spaces/space-id1
+            spacedata:
+              meta:
+                guid: space-id1
+                url: /v2/spaces/space-id1
+                createdat: "2020-10-05T05:29:46Z"
+                updatedat: "2020-10-05T05:29:46Z"
+              entity:
+                guid: space-id1
+                createdat: ""
+                updatedat: ""
+                name: dev
+                organizationguid: org-id1
+                orgurl: /v2/organizations/org-id1
+                orgdata:
+                  meta:
+                    guid: org-id1
+                    url: /v2/organizations/org-id1
+                    createdat: "2020-10-05T05:29:31Z"
+                    updatedat: "2020-10-05T05:29:31Z"
+                  entity:
+                    guid: org-id1
+                    createdat: ""
+                    updatedat: ""
+                    name: org
+                    status: active
+                    quotadefinitionguid: quota-id
+                    defaultisolationsegmentguid: ""
+                quotadefinitionguid: ""
+                isolationsegmentguid: ""
+                allowssh: true
+            packageupdatedat: "2021-12-14T10:01:49Z"
+          environment:
+            environment: {}
+            stagingenv:
+              BLUEMIX_REGION: region
+            runningenv:
+              BLUEMIX_REGION: region
+            systemenv:
+              VCAP_SERVICES: {}
+            applicationenv:
+              VCAP_APPLICATION:
+                application_id: id1
+                application_name: orders
+                application_uris:
+                  - orders-proud-bilby-rf.net
+                application_version: app-ver1
+                cf_api: api-url
+                limits:
+                  disk: 1024
+                  fds: 16384
+                  mem: 1024
+                name: orders
+                organization_id: org-id1
+                organization_name: org
+                process_id: id1
+                process_type: web
+                space_id: space-id1
+                space_name: dev
+                uris:
+                  - orders-proud-bilby-rf.net
+                users: null
+                version: app-ver1
+        - application:
+            guid: id2
+            createdat: "2021-12-14T10:04:00Z"
+            updatedat: "2021-12-14T10:05:43Z"
+            name: gateway
+            memory: 1024
+            instances: 1
+            diskquota: 1024
+            spaceguid: space-id1
+            stackguid: stack-id1
+            state: STARTED
+            packagestate: STAGED
+            command: ""
+            buildpack: https://github.com/cloudfoundry/java-buildpack
+            detectedbuildpack: java
+            detectedbuildpackguid: ""
+            healthcheckhttpendpoint: ""
+            healthchecktype: port
+            healthchecktimeout: 0
+            diego: true
+            enablessh: true
+            detectedstartcommand: 'JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.16.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR     -XX:ActiveProcessorCount=$(nproc) -Djava.ext.dirs=$PWD/.java-buildpack/container_security_provider:$PWD/.java-buildpack/open_jdk_jre/lib/ext -Djava.security.   properties=$PWD/.java-buildpack/java_security/java.security $JAVA_OPTS" && CALCULATED_MEMORY=$($PWD/.java-buildpack/open_jdk_jre/bin/  java-buildpack-memory-calculator-3.13.0_RELEASE -totMemory=$MEMORY_LIMIT -loadedClasses=24458 -poolType=metaspace -stackThreads=250 -vmOptions="$JAVA_OPTS") &    & echo JVM Memory Configuration: $CALCULATED_MEMORY && JAVA_OPTS="$JAVA_OPTS $CALCULATED_MEMORY" && MALLOC_ARENA_MAX=2 SERVER_PORT=$PORT eval exec $PWD/.   java-buildpack/open_jdk_jre/bin/java $JAVA_OPTS -cp $PWD/. org.springframework.boot.loader.JarLauncher'
+            dockerimage: ""
+            dockercredentialsjson: {}
+            dockercredentials:
+              username: ""
+              password: ""
+            environment: {}
+            stagingfailedreason: ""
+            stagingfaileddescription: ""
+            ports:
+              - 8080
+            spaceurl: /v2/spaces/space-id1
+            spacedata:
+              meta:
+                guid: space-id1
+                url: /v2/spaces/space-id1
+                createdat: "2020-10-05T05:29:46Z"
+                updatedat: "2020-10-05T05:29:46Z"
+              entity:
+                guid: space-id1
+                createdat: ""
+                updatedat: ""
+                name: dev
+                organizationguid: org-id1
+                orgurl: /v2/organizations/org-id1
+                orgdata:
+                  meta:
+                    guid: org-id1
+                    url: /v2/organizations/org-id1
+                    createdat: "2020-10-05T05:29:31Z"
+                    updatedat: "2020-10-05T05:29:31Z"
+                  entity:
+                    guid: org-id1
+                    createdat: ""
+                    updatedat: ""
+                    name: org
+                    status: active
+                    quotadefinitionguid: quota-id
+                    defaultisolationsegmentguid: ""
+                quotadefinitionguid: ""
+                isolationsegmentguid: ""
+                allowssh: true
+            packageupdatedat: "2021-12-14T10:04:09Z"
+          environment:
+            environment: {}
+            stagingenv:
+              BLUEMIX_REGION: region
+            runningenv:
+              BLUEMIX_REGION: region
+            systemenv:
+              VCAP_SERVICES: {}
+            applicationenv:
+              VCAP_APPLICATION:
+                application_id: id2
+                application_name: gateway
+                application_uris:
+                  - gateway-restless-fossa-ws.net
+                application_version: app-ver2
+                cf_api: api-url
+                limits:
+                  disk: 1024
+                  fds: 16384
+                  mem: 1024
+                name: gateway
+                organization_id: org-id1
+                organization_name: org
+                process_id: id2
+                process_type: web
+                space_id: space-id1
+                space_name: dev
+                uris:
+                  - gateway-restless-fossa-ws.net
+                users: null
+                version: app-ver2
+        - application:
+            guid: id3
+            createdat: "2021-12-14T14:54:25Z"
+            updatedat: "2021-12-14T15:15:38Z"
+            name: frontend
+            memory: 1024
+            instances: 1
+            diskquota: 1024
+            spaceguid: space-id1
+            stackguid: stack-id1
+            state: STARTED
+            packagestate: STAGED
+            command: npm run start
+            buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+            detectedbuildpack: nodejs
+            detectedbuildpackguid: ""
+            healthcheckhttpendpoint: ""
+            healthchecktype: port
+            healthchecktimeout: 0
+            diego: true
+            enablessh: true
+            detectedstartcommand: npm start
+            dockerimage: ""
+            dockercredentialsjson: {}
+            dockercredentials:
+              username: ""
+              password: ""
+            environment: {}
+            stagingfailedreason: ""
+            stagingfaileddescription: ""
+            ports:
+              - 8080
+            spaceurl: /v2/spaces/space-id1
+            spacedata:
+              meta:
+                guid: space-id1
+                url: /v2/spaces/space-id1
+                createdat: "2020-10-05T05:29:46Z"
+                updatedat: "2020-10-05T05:29:46Z"
+              entity:
+                guid: space-id1
+                createdat: ""
+                updatedat: ""
+                name: dev
+                organizationguid: org-id1
+                orgurl: /v2/organizations/org-id1
+                orgdata:
+                  meta:
+                    guid: org-id1
+                    url: /v2/organizations/org-id1
+                    createdat: "2020-10-05T05:29:31Z"
+                    updatedat: "2020-10-05T05:29:31Z"
+                  entity:
+                    guid: org-id1
+                    createdat: ""
+                    updatedat: ""
+                    name: org
+                    status: active
+                    quotadefinitionguid: quota-id
+                    defaultisolationsegmentguid: ""
+                quotadefinitionguid: ""
+                isolationsegmentguid: ""
+                allowssh: true
+            packageupdatedat: "2021-12-14T14:59:40Z"
+          environment:
+            environment: {}
+            stagingenv:
+              BLUEMIX_REGION: region
+            runningenv:
+              BLUEMIX_REGION: region
+            systemenv:
+              VCAP_SERVICES: {}
+            applicationenv:
+              VCAP_APPLICATION:
+                application_id: id3
+                application_name: frontend
+                application_uris:
+                  - frontend-patient-oryx-mc.net
+                application_version: app-ver3
+                cf_api: api-url
+                limits:
+                  disk: 1024
+                  fds: 16384
+                  mem: 1024
+                name: frontend
+                organization_id: org-id1
+                organization_name: org
+                process_id: id3
+                process_type: web
+                space_id: space-id1
+                space_name: dev
+                uris:
+                  - frontend-patient-oryx-mc.net
+                users: null
+                version: app-ver3
+    ```
+
+Now that we have collected the runtime information from the app running in our Cloud Foundry cluster, we can move on to the planning phase.
 
 Next step [Plan](/tutorials/migration-workflow/plan)

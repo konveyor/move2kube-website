@@ -22,10 +22,10 @@ This information is stored in YAML format in a plan file called `m2k.plan`. This
 
 1. First copy all the cluster metdata we collected into a directory.
 
-```console
-$ mkdir customizations
-$ cp -r *.yaml customizations/
-```
+    ```console
+    $ mkdir customizations
+    $ cp -r *.yaml customizations/
+    ```
 
 1. Run `move2kube plan -s path/to/e2e-demo -c customizations` to generate a plan on how to migrate our app to Kubernetes.
 

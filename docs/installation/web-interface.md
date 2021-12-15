@@ -68,7 +68,7 @@ Access the UI in `http://localhost:8080/`.
 
    >
       Note: There is a known issue when mounting directories in WSL.  
-      Some empty folders may be created in the root directory.  
+      Some empty directories may be created in the root directory.  
       If you are on Windows, use Powershell instead of WSL until this is fixed.
 
 ## Bringing up Move2Kube UI as Helm Chart  
