@@ -85,16 +85,19 @@ myproject/
 
 ## Anatomy of `folder-customizer` transformer
 Let us understand, how easy it is to change the folder structure as shown above. The `folder-customizer` transformer contains just a single yaml file (`kubernetes.yaml`) containing the configurations of that transformer.
+
 ```
 folder-customizer/
 └── kubernetes.yaml
 ```
+
 As can be seen from the contents below, the name of our custom transformer is `KubernetesForFolderChange` (see `name` field in the `metadata` section). In the specification section, let us look at the important fields of interest:
 - Specifying that we are going to use an in-built transformer class (see `class` field in `spec` section) `Kubernetes` as the basis of our transformer (Note here that there could different **transformers** implementing the same **transformer class**. The difference could be in the way they are configured.)
 - we are asking Move2Kube to pass artifacts of type `IR` (short for Intermediate Representation) to this transformer (see `consumes` field).
 - we are stating that the output produced by this transformer is `KubernetesYamls` (see `produce` field). 
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Kubernetes` and use our custom transformer in its place.
 - Lastly, the key field which makes the folder structure change is the `outputPath` (this is in the `config` section and has a value `"yamls-elsewhere"`) field which provides the folder path prefix for the desired target folder structure for kubernetes yamls.
+
 ```
 {% raw %}
 apiVersion: move2kube.konveyor.io/v1alpha1
