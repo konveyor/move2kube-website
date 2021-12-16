@@ -4,7 +4,7 @@ title: "Custom transformer for injecting a script into the container image"
 permalink: /tutorials/migration-workflow/script-inject
 parent: "Migration workflow"
 grand_parent: Tutorials
-nav_order: 4
+nav_order: 7
 ---
 
 # Custom transformer for injecting a script into the container image
@@ -18,8 +18,7 @@ In this example, we illustrate how we could include our own scripts into the con
 2. To dump the input at an accessible location, create an input sub-directory `input` and copy the `e2e-demo` into this folder.
 
 3. To see what we get **without** any customization, let us run `move2kube transform -s input/ --qa-skip`. The output dockerfile generated in the path  `myproject/source/e2e-demo/frontend/Dockerfile` looks like this:
-
-```
+```Dockerfile
 FROM registry.access.redhat.com/ubi8/nodejs-12
 COPY . .
 RUN npm install
@@ -62,8 +61,7 @@ myproject/source/e2e-demo/frontend/
 ```
 
 Let us say, we want to add a simple start-up script (shown below) into the container image, and make the container execute this script while it is brought up:
-
-```
+```console
 echo "[Injected script]: Starting the application"
 npm run start
 ```
@@ -75,8 +73,7 @@ This can be achieved by customizing Move2Kube using custom transformer that is a
 5. Run the following CLI command: `move2kube transform -s input/ -c customizations/ --qa-skip`. Note that this command has a `-c customizations/` option which is meant to tell Move2Kube to pick up the custom transformer `script-inject`. 
 
 Once the output is generated, we can observe the same dockerfile mentioned before i.e. `myproject/source/e2e-demo/frontend/Dockerfile` contains the custom image. The contents are shown below:
-
-```
+```Dockerfile
 FROM registry.access.redhat.com/ubi8/nodejs-12
 COPY . .
 RUN npm install
@@ -137,8 +134,7 @@ In the above transformer folder, the `nodejs.yaml` is the configuration for the 
 - we are asking Move2Kube to pass artifacts of type `Service` to this transformer (see `consumes` field).
 - we are stating that the output produced by this transformer is a `Dockerfile` (see `produce` field). 
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Nodejs-Dockerfile` and use our custom transformer in its place.
-
-```
+```yaml
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Transformer
 metadata:
@@ -167,9 +163,8 @@ spec:
 
 Also, note that `Dockerfile` template in the `templates` folder is modified to include the shell script as start-up script:
 
-```
-{% raw %}
-FROM registry.access.redhat.com/ubi8/nodejs-{{ .NodeVersion }}
+```Dockerfile
+{% raw %}FROM registry.access.redhat.com/ubi8/nodejs-{{ .NodeVersion }}
 COPY . .
 RUN npm install
 {{- if .Build }}

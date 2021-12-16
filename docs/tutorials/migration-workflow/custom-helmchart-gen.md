@@ -4,7 +4,7 @@ title: "Custom helm-chart generator"
 permalink: /tutorials/migration-workflow/custom-helmchart-gen
 parent: "Migration workflow"
 grand_parent: Tutorials
-nav_order: 7
+nav_order: 8
 ---
 
 # Custom helm-chart generator
@@ -159,7 +159,7 @@ myproject/e2e-demo/
 ```
 
 ## Anatomy of `custom-helmchart-gen` transformer
-This custom transformer is more advanced compared to the previous cases as it uses a starlark script (`customhelmchartgen.star`) and several templatization features (notice the `{{\ .ServiceName\ }}` template in the file names of custom helm-chart template in the `templates` sub-directory) to achieve the per-service helm-chart requirement. Also, this `custom-helmchart-gen` transformer is generating a custom dockerfile for any Java service detected within `e2e-demo` project. The contents of `custom-helmchart-gen` custom transformer are as shown below:
+This custom transformer is more advanced compared to the previous cases as it uses a starlark script (`customhelmchartgen.star`) and several templatization features (notice the `{% raw %}{{\ .ServiceName\ }}{% endraw %}` template in the file names of custom helm-chart template in the `templates` sub-directory) to achieve the per-service helm-chart requirement. Also, this `custom-helmchart-gen` transformer is generating a custom dockerfile for any Java service detected within `e2e-demo` project. The contents of `custom-helmchart-gen` custom transformer are as shown below:
 ```
 {% raw %} 
 customization/custom-helmchart-gen/
@@ -177,9 +177,9 @@ customization/custom-helmchart-gen/
 {% endraw %}
 ```
 The code of the starlark script is shown below. At a high level, the custom transformer detects (in the detect phase where `directory_detect()` function is invoked) a Java project if it finds `pom.xml` in the directory. Once the Java project is detected, the corresponding project path and service name are passed to the transform phase through Move2Kube. In the transform phase, the `transform()` function is invoked with the discovered service artifacts (from detect phase). These artifacts are used to fill the helm-chart templates shown above and produced as the output in a per-service folder structure.
-```
-{% raw %} 
-PomFile = "pom.xml"
+
+```python
+{% raw %}PomFile = "pom.xml"
 
 # Performs the detection of pom file and extracts service name
 def directory_detect(dir):
@@ -229,5 +229,3 @@ def getServiceName(filePath):
             return t2[0]
 {% endraw %}
 ```
-
-Next step [Ingress Annotator](/tutorials/migration-workflow/ingress-annotator)
