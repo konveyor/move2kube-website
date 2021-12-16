@@ -18,7 +18,7 @@ In this example, we illustrate how we could include our own custom base image in
 2. To dump the input at an accessible location, create an input sub-directory `input` and copy the `e2e-demo` into this folder.
 
 3. To see what we get **without** any customization, let us run `move2kube transform -s input/ --qa-skip`. The output dockerfile generated in the path  `myproject/source/e2e-demo/frontend/Dockerfile` looks like this:
-```
+```Dockerfile
 FROM registry.access.redhat.com/ubi8/nodejs-12
 COPY . .
 RUN npm install
@@ -34,14 +34,13 @@ Let us say, we want to change the base image `registry.access.redhat.com/ubi8/no
 5. Run the following CLI command: `move2kube transform -s input/ -c customizations/ --qa-skip`. Note that this command has a `-c customizations/` option which is meant to tell Move2Kube to pick up the custom transformer `base-image-change`. 
 
 Once the output is generated, we can observe the same dockerfile mentioned before i.e. `myproject/source/e2e-demo/frontend/Dockerfile` contains the custom image. The contents are shown below:
-```
+```Dockerfile
 FROM quay.io/padmanabhavs/nodejs-12
 COPY . .
 RUN npm install
 RUN npm run build
 EXPOSE 8080
 CMD npm run start
-
 ```
 
 ## Anatomy of `base-image-change` transformer
@@ -58,7 +57,8 @@ The `nodejs.yaml` is the configuration for the transformer. As can be seen from 
 - we are asking Move2Kube to pass artifacts of type `Service` to this transformer (see `consumes` field).
 - we are stating that the output produced by this transformer is a `Dockerfile` (see `produce` field). 
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Nodejs-Dockerfile` and use our custom transformer in its place.
-```
+
+```yaml
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Transformer
 metadata:

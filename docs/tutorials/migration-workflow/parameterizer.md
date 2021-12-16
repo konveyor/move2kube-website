@@ -18,8 +18,7 @@ In this example, we illustrate how we could parameterize a value in the helm cha
 2. To dump the input at an accessible location, create an input sub-directory `input` and copy the `e2e-demo` into this folder.
 
 3. To see what we get **without** any customization, let us run `move2kube transform -s input/ --qa-skip`. The relevant snippet from the deployment yaml generated in the path  `myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/config-utils-deployment.yaml` looks like this:
-```
----
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,10 +40,8 @@ Let us say, we want to parameterize the `replicas` field (see `spec` section) in
 5. Run the following CLI command: `move2kube transform -s input/ -c customizations/ --qa-skip`. Note that this command has a `-c customizations/` option which is meant to tell Move2Kube to pick up the custom transformer. 
 
 Once the output is generated, we can observe the same deployment mentioned before i.e. `myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/config-utils-deployment.yaml` contains the parameterized `replicas` field (see `{% raw %} replicas: {{ index .Values "common" "replicas" }} {% endraw %}` in the `spec` section). A snippet of the contents is shown below:
-```
-{% raw %}
----
-apiVersion: apps/v1
+```yaml
+{% raw %}apiVersion: apps/v1
 kind: Deployment
 metadata:
     annotations:
@@ -59,7 +56,8 @@ spec:
 {% endraw %}
 ```
 The default value of the parameterized field can be see in the `deploy/yamls-parameterized/helm-chart/myproject/values-dev.yaml` file as shown below:
-```
+
+```yaml
 common:
   replicas: 10
 ```
@@ -75,9 +73,8 @@ The `parameterizers.yaml` is the configuration for the transformer. As can be se
 - we are asking Move2Kube to pass artifacts of type `KubernetesYamls` to this transformer (see `consumes` field).
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Parameterizer` and use our custom transformer in its place.
 
-```
-{% raw %}
-apiVersion: move2kube.konveyor.io/v1alpha1
+```yaml
+{% raw %}apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Transformer
 metadata:
   name: CustomParameterizers
@@ -103,8 +100,7 @@ spec:
 
 The contents of the `replicas-parameterizer.yaml` file is shown below.  This file describes the target fields to be parameterized (`target` in the `spec` section), template (`template`) to be used to replace the target field, default value (in this example, `default` is set to 10) to be used for the target field, and which type of files (`filters`) need to be modified.
 
-```
-{% raw %}
+```yaml
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Parameterizer
 metadata:
@@ -117,6 +113,6 @@ spec:
       filters:
         - kind: Deployment
           apiVersion: ".*/v1.*"
-{% endraw %}
 ```
-Next step [Folder customization](/tutorials/migration-workflow/folder-customizer)
+
+Next step [Customizate output directory structure](/tutorials/migration-workflow/output-directory-structure)
