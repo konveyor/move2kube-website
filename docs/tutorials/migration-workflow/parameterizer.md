@@ -74,7 +74,9 @@ The `parameterizers.yaml` is the configuration for the transformer. As can be se
 - Specifying that we are going to use an in-built transformer class (see `class` field in `spec` section) `Parameterizer` as the basis of our transformer (Note here that there could different **transformers** implementing the same **transformer class**. The difference could be in the way they are configured.)
 - we are asking Move2Kube to pass artifacts of type `KubernetesYamls` to this transformer (see `consumes` field).
 - We are also specifying an `override` section which is asking Move2Kube to override the in-built transformer named `Parameterizer` and use our custom transformer in its place.
+
 ```
+{% raw %}
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Transformer
 metadata:
@@ -96,9 +98,11 @@ spec:
     ocTemplatePath: "{{ OutputRel .YamlsPath }}/../{{ FilePathBase .YamlsPath }}-parameterized/openshift-template"
     kustomizePath: "{{ OutputRel .YamlsPath }}/../{{ FilePathBase .YamlsPath }}-parameterized/kustomize"
     helmChartName: "{{ .ProjectName }}"
+{% endraw %}
 ```
 
 The contents of the `replicas-parameterizer.yaml` file is shown below.  This file describes the target fields to be parameterized (`target` in the `spec` section), template (`template`) to be used to replace the target field, default value (in this example, `default` is set to 10) to be used for the target field, and which type of files (`filters`) need to be modified.
+
 ```
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Parameterizer
