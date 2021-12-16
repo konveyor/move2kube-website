@@ -280,4 +280,4 @@ Now that we have generated the output we can run `buildimages.sh` to build all t
 
 However after inspecting the output we might see some things we want to change. For example, we might want to add some annotations to the Ingress, maybe change the output directory structure, change which values are parameterized in the Helm chart, generate some new files, etc. For all these user specific requirements and more we can write our own custom transformers.
 
-Next step [Custom transformer 1](/tutorials/migration-workflow/custom-transformer-1)
+Next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change)

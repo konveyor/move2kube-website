@@ -119,4 +119,4 @@ spec:
           apiVersion: ".*/v1.*"
 {% endraw %}
 ```
-Next step [folder-customizer](/tutorials/migration-workflow/folder-customizer)
+Next step [Folder customization](/tutorials/migration-workflow/folder-customizer)
