@@ -3,7 +3,7 @@ layout: default
 title: "Path Mapping"
 permalink: /documentation/path-mapping
 parent: Documentation
-nav_order: 2
+nav_order: 3
 ---
 
 # Path Mapping
