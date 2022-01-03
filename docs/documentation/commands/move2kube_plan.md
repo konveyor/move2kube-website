@@ -2,7 +2,7 @@
 layout: default
 title: plan
 permalink: /documentation/commands/plan
-parent: Move2kube commands
+parent: Move2Kube commands
 grand_parent: Documentation
 ---
 ## move2kube plan

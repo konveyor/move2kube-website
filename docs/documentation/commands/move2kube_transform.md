@@ -2,7 +2,7 @@
 layout: default
 title: transform
 permalink: /documentation/commands/transform
-parent: Move2kube commands
+parent: Move2Kube commands
 grand_parent: Documentation
 ---
 ## move2kube transform

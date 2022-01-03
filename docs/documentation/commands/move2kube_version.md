@@ -2,7 +2,7 @@
 layout: default
 title: version
 permalink: /documentation/commands/version
-parent: Move2kube commands
+parent: Move2Kube commands
 grand_parent: Documentation
 ---
 ## move2kube version

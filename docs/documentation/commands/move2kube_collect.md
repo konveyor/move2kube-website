@@ -2,7 +2,7 @@
 layout: default
 title: collect
 permalink: /documentation/commands/collect
-parent: Move2kube commands
+parent: Move2Kube commands
 grand_parent: Documentation
 ---
 ## move2kube collect

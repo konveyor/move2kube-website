@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Move2kube commands
+title: Move2Kube commands
 permalink: /documentation/commands
 parent: Documentation
 has_children: true
