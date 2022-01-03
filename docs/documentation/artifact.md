@@ -3,7 +3,7 @@ layout: default
 title: Artifact
 permalink: /documentation/artifact
 parent: Documentation
-nav_order: 1
+nav_order: 2
 ---
 
 # Artifact
