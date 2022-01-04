@@ -10,30 +10,31 @@ nav_order: 5
 
 [Example built-in transformer YAMLs](https://github.com/konveyor/move2kube/tree/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/assets/inbuilt/transformers)
 
-[Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/transformer.go#L27-L48)
+[Source code](https://github.com/konveyor/move2kube/blob/6448624d79c37809417c05e34fcb3b2456952bcb/types/transformer/transformer.go#L27-L49)
 
 ```golang
 // Transformer defines definition of cf runtime instance apps file
 type Transformer struct {
-	types.TypeMeta   `yaml:",inline"`
-	types.ObjectMeta `yaml:"metadata,omitempty"`
-	Spec             TransformerSpec `yaml:"spec,omitempty"`
+	types.TypeMeta   `yaml:",inline" json:",inline"`
+	types.ObjectMeta `yaml:"metadata,omitempty" json:"metadata,omitempty"`
+	Spec             TransformerSpec `yaml:"spec,omitempty" json:"spec,omitempty"`
 }
 
 // TransformerSpec stores the data
 type TransformerSpec struct {
-	FilePath           string                              `yaml:"-"`
-	Class              string                              `yaml:"class"`
-	Isolated           bool                                `yaml:"isolated"`
-	DirectoryDetect    DirectoryDetect                     `yaml:"directoryDetect"`
-	ExternalFiles      map[string]string                   `yaml:"externalFiles"` // [source]destination
-	ArtifactsToProcess map[string]ArtifactPreprocessConfig `yaml:"consumes"`      // plantypes.ArtifactType
-	Produces           map[string]ProducedArtifact         `yaml:"produces"`      // plantypes.ArtifactType
-	Intercepts         []string                            `yaml:"intercepts"`
-	Override           labels.Selector                     `yaml:"-"`
-	OverrideAsObj      interface{}                         `yaml:"override"`  // Will be parsed and loaded into TransformersToOverride
-	TemplatesDir       string                              `yaml:"templates"` // Relative to yaml directory or working directory in image
-	Config             interface{}                         `yaml:"config"`
+	FilePath           string                                 `yaml:"-" json:"-"`
+	Class              string                                 `yaml:"class" json:"class"`
+	Isolated           bool                                   `yaml:"isolated" json:"isolated"`
+	DirectoryDetect    DirectoryDetect                        `yaml:"directoryDetect" json:"directoryDetect"`
+	ExternalFiles      map[string]string                      `yaml:"externalFiles" json:"externalFiles"` // [source]destination
+	ConsumedArtifacts  map[ArtifactType]ArtifactProcessConfig `yaml:"consumes" json:"consumes"`
+	ProducedArtifacts  map[ArtifactType]ProducedArtifact      `yaml:"produces" json:"produces"`
+	Dependency         interface{}                            `yaml:"dependency" json:"dependency"` // metav1.LabelSelector
+	Override           interface{}                            `yaml:"override" json:"override"`     // metav1.LabelSelector
+	DependencySelector labels.Selector                        `yaml:"-" json:"-"`
+	OverrideSelector   labels.Selector                        `yaml:"-" json:"-"`
+	TemplatesDir       string                                 `yaml:"templates" json:"templates"` // Relative to yaml directory or working directory in image
+	Config             interface{}                            `yaml:"config" json:"config"`
 }
 ```
 
@@ -61,7 +62,7 @@ Below we have the details of each field in the YAML. The `apiVersion` and `kind`
 	- `produces` : `object ([string]: object)` - This can be used to tell Move2Kube the type of output artifacts your transformer will return.
 		The key is a string containing the type of the artifact. The value is an object with the following fields:
 		- `changeTypeTo` : `string` - This can be used to change the artifact type to something else. Useful for overriding the behaviour of existing transformers.
-	- `intercepts` : `[]string` - A list of artifact types to intercept. Only one of this or `consumes` should be specified. `intercepts` has a higher priority than `consumes`.
+	- `dependency` : `any` - TODO
 	- `override` : `any` - TODO
 	- `templates` : `string` - TODO
 	- `config` : `any` - Each transformer has a type/class specified by the `class` field shown above. Each class exposes certain configuration options.
