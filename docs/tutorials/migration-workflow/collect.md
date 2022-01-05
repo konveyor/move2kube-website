@@ -4,14 +4,14 @@ title: "Collect"
 permalink: /tutorials/migration-workflow/collect
 parent: "Migration workflow"
 grand_parent: Tutorials
-nav_order: 1
+nav_order: 3
 ---
 
 # Collect
 
-> Note: This is an optional step. If you are not familiar with Cloud Foundry or you don't want to collect information from your running app, then feel free to skip to the next step [Plan](/tutorials/migration-workflow/plan).
+> Note: This is an optional step. If you are not familiar with Cloud Foundry or you don't want to collect information from your running app, then feel free to skip to the next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change).
 
-The first step is to analyze our running application in Cloud Foundry. Move2Kube CLI tools provides a command to do this called `collect`. As the name suggests the `collect` command collects information about the running applications.
+To analyze our running application in Cloud Foundry, the Move2Kube CLI tool provides a command called `collect`. As the name suggests the `collect` command collects information about applications running in the cloud.
 
 - It looks for CLI tools such as `cf`, `oc`, and `kubectl` that you have installed.
 
@@ -60,7 +60,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     INFO[0011] [*collector.CfServicesCollector] Begin collection 
     INFO[0026] [*collector.CfServicesCollector] Done        
     INFO[0026] Collection done                              
-    INFO[0026] Collect Output in [/Users/user/Desktop/demo2/m2k_collect]. Copy this directory into the source directory to be used for planning. 
+    INFO[0026] Collect Output in [/Users/user/Desktop/tutorial/m2k_collect]. Copy this directory into the source directory to be used for planning. 
     ```
 
     The output will be in a directory called `m2k_collect`. Inside it we can see a directory called `cf`.
@@ -368,6 +368,10 @@ You can run `cf target` to check if you are logged in. The output should be simi
                 version: app-ver3
     ```
 
-Now that we have collected the runtime information from the app running in our Cloud Foundry cluster, we can move on to the planning phase.
+Now that we have collected the runtime information from the app running in our Cloud Foundry cluster, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are same as in [Plan](/tutorials/migration-workflow/plan).
 
-Next step [Plan](/tutorials/migration-workflow/plan)
+## Next steps
+
+Next we will look at customizing the output that Move2Kube produces using custom transformers.
+
+Next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change)
