@@ -41,14 +41,14 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     $ move2kube plan -s src
     INFO[0000] Configuration loading done                   
     INFO[0000] Planning Transformation - Base Directory     
-    INFO[0000] [DockerfileDetector] Planning transformation 
-    INFO[0000] Identified 1 named services and 1 to-be-named services 
-    INFO[0000] [DockerfileDetector] Done                    
     INFO[0000] [ComposeAnalyser] Planning transformation    
     INFO[0000] [ComposeAnalyser] Done                       
     INFO[0000] [CloudFoundry] Planning transformation       
     INFO[0000] Identified 3 named services and 0 to-be-named services 
     INFO[0000] [CloudFoundry] Done                          
+    INFO[0000] [DockerfileDetector] Planning transformation 
+    INFO[0000] Identified 1 named services and 1 to-be-named services 
+    INFO[0000] [DockerfileDetector] Done                    
     INFO[0000] [Base Directory] Identified 4 named services and 1 to-be-named services 
     INFO[0000] Transformation planning - Base Directory done 
     INFO[0000] Planning Transformation - Directory Walk     
@@ -63,7 +63,7 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     INFO[0000] [Directory Walk] Identified 7 named services and 1 to-be-named services 
     INFO[0000] [Named Services] Identified 6 named services 
     INFO[0000] No of services identified : 6                
-    INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
+    INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]. 
     ```
 
 1. Let's look at the plan file that was generated.
@@ -78,25 +78,25 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     metadata:
       name: myproject
     spec:
-      rootDir: src
+      sourceDir: src
       services:
         config-utils:
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - config-utils/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - config-utils
             configs:
               Maven:
                 mavenAppName: config-utils
                 artifactType: jar
         customers-tomcat:
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - customers-tomcat-k8s/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - customers-tomcat-k8s
             configs:
               Maven:
@@ -104,11 +104,11 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
                 artifactType: war
               SpringBoot:
                 springBootVersion: 2.5.0
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - customers-tomcat-legacy/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - customers-tomcat-legacy
             configs:
               Maven:
@@ -117,40 +117,40 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
               SpringBoot:
                 springBootVersion: 2.5.0
         frontend:
-          - name: CloudFoundry
+          - transformerName: CloudFoundry
             paths:
               CfManifest:
                 - frontend/manifest.yml
-              ProjectPath:
+              ServiceDirPath:
                 - frontend
             configs:
               CloudFoundryService:
                 serviceName: frontend
               ContainerizationOptions:
                 - Nodejs-Dockerfile
-          - name: Nodejs-Dockerfile
+          - transformerName: Nodejs-Dockerfile
             paths:
-              ProjectPath:
+              ServiceDirPath:
                 - frontend
         gateway:
-          - name: CloudFoundry
+          - transformerName: CloudFoundry
             paths:
               BuildArtifact:
                 - gateway/target/gateway-2.0.0-SNAPSHOT-exec.jar
               CfManifest:
                 - gateway/manifest.yml
-              ProjectPath:
+              ServiceDirPath:
                 - gateway
             configs:
               CloudFoundryService:
                 serviceName: gateway
               ContainerizationOptions:
                 - Maven
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - gateway/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - gateway
             configs:
               Maven:
@@ -167,11 +167,11 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
                   - local
                   - openshift
         inventory:
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - inventory/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - inventory
             configs:
               Maven:
@@ -181,37 +181,37 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
                   - native
                   - local
                   - openshift
-          - name: DockerfileDetector
+          - transformerName: DockerfileDetector
             paths:
               Dockerfile:
                 - inventory/src/main/docker/Dockerfile.jvm
-              ProjectPath:
+              ServiceDirPath:
                 - inventory/src/main/docker
-          - name: DockerfileDetector
+          - transformerName: DockerfileDetector
             paths:
               Dockerfile:
                 - inventory/src/main/docker/Dockerfile.native
-              ProjectPath:
+              ServiceDirPath:
                 - inventory/src/main/docker
         orders:
-          - name: CloudFoundry
+          - transformerName: CloudFoundry
             paths:
               BuildArtifact:
                 - orders/target/orders-2.0.0-SNAPSHOT-exec.jar
               CfManifest:
                 - orders/manifest.yml
-              ProjectPath:
+              ServiceDirPath:
                 - orders
             configs:
               CloudFoundryService:
                 serviceName: orders
               ContainerizationOptions:
                 - Maven
-          - name: Maven
+          - transformerName: Maven
             paths:
               MavenPom:
                 - orders/pom.xml
-              ProjectPath:
+              ServiceDirPath:
                 - orders
             configs:
               Maven:
@@ -278,27 +278,28 @@ Next step [Transform](/tutorials/migration-workflow/transform)
 
 1. Bring up the UI:
     ```console
-    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0-beta.3
+    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0-rc.1
     INFO[0000] Starting Move2Kube API server at port: 8080
     ```
 
 1. Create a new workspace
     ![No workspaces]({{ site.baseurl }}/assets/images/migration-workflow/01-no-workspaces.png)
     ![Create a workspace]({{ site.baseurl }}/assets/images/migration-workflow/02-create-workspace.png)
-    ![New workspace]({{ site.baseurl }}/assets/images/migration-workflow/03-new-workspace.png)
+    ![New workspace]({{ site.baseurl }}/assets/images/migration-workflow/03-new-workspace.jpeg)
 
 1. Create a new project
     ![No projects]({{ site.baseurl }}/assets/images/migration-workflow/04-no-projects.png)
     ![Create a project]({{ site.baseurl }}/assets/images/migration-workflow/05-create-project.png)
-    ![New project]({{ site.baseurl }}/assets/images/migration-workflow/06-new-project.png)
+    ![New project]({{ site.baseurl }}/assets/images/migration-workflow/06-new-project.jpeg)
 
 1. Scroll down to the `project inputs` section and then upload the source directory and the collected information zip files.
 
-    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/07-no-project-inputs.png)
+    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/07-no-project-inputs.jpeg)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/08-upload-project-input-1.png)
-    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/09-upload-project-input-2.png)
+    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/09-upload-project-input-2.jpeg)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/10-src-uploaded.png)
-    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/11-upload-project-input-3.png)
+    Optional: If you have collected some data using the `move2kube collect` command you can create a zip file and upload that as well. Make sure to upload it as `sources`.
+    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/11-upload-project-input-3.jpeg)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/12-cf-uploaded.png)
 
 1. Scroll down to the planning section and click `Start Planning`.
@@ -307,7 +308,7 @@ Next step [Transform](/tutorials/migration-workflow/transform)
 
     Planning can take a few minutes.
 
-    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/14-new-plan.png)
+    ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/14-new-plan.jpeg)
 
 1.  Once the plan has been generated we can move on to the next step.
 
