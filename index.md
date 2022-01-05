@@ -42,7 +42,7 @@ With Move2Kube, generating the Kubernetes/OpenShift deployment files for your so
 
 Move2Kube takes as input the source files and outputs the target deployment files.
 
-![Move2Kube-Usage](assets/images/usage.png)
+![Move2Kube-Usage](assets/images/move2kube-3-step-workflow.jpeg)
 
 For more detailed information :
 * [Installation](/installation)
