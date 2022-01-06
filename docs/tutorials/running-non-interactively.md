@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Running the same workflow twice"
-permalink: /tutorials/running-the-same-workflow-twice
+title: "Running non-interactively"
+permalink: /tutorials/running-non-interactively
 parent: Tutorials
 nav_order: 2
 ---
 
-# Running the same workflow twice
+# Running non-interactively
 
 ## Prerequisites
 
