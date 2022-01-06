@@ -3,7 +3,7 @@ layout: default
 title: "Using a custom transformer"
 permalink: /tutorials/custom-transformer
 parent: Tutorials
-nav_order: 3
+nav_order: 5
 ---
 
 # Using a custom transformer
