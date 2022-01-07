@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Migrating Cloud Foundry apps to Kubernetes"
+title: "Migrating and deploying Cloud Foundry apps to Kubernetes"
 permalink: /tutorials/cloud-foundry/
 parent: Tutorials
 nav_order: 4
@@ -15,15 +15,11 @@ This document takes us through the steps that will install Move2Kube and use Mov
 
 ## Prerequisites
 
-1. Install Move2Kube.
+1. Install [Move2Kube](/installation)
 
-   ```console
-   $ MOVE2KUBE_TAG='v0.3.0-rc.0' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
-   ```
+1. Install a container runtime: [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation)
 
-2. Install dependencies.
-  * [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation)
-  * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+1. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
 
    To verify that dependencies were correctly installed you can run the below commands.
    ```console
@@ -37,9 +33,9 @@ This document takes us through the steps that will install Move2Kube and use Mov
    $ kubectl version
    ```
 
-3. Install [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
+1. Install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 
-4. Clone the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository
+1. Clone the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository
 
    ```console
    $ git clone https://github.com/konveyor/move2kube-demos.git
@@ -60,17 +56,18 @@ This document takes us through the steps that will install Move2Kube and use Mov
    ├── package-lock.json
    └── package.json
    ```
-5. We will deploy a simple nodejs application into Cloud Foundry (CF). If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
+
+1. We will deploy a simple nodejs application into Cloud Foundry (CF). If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
    1. Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints)).
-   2. Login to CF using
+   1. Login to CF using
        ```console
        move2kube-demos git:(main) $ cf login -a <YOUR CF API endpoint>
        ```
-   3. From the root folder of this repo run this to deploy the sample application
+   1. From the root folder of this repo run this to deploy the sample application
        ```console
        move2kube-demos git:(main) $ cf push -f ./samples/cloud-foundry/
        ```
-   4. You can visit the URL of the application (you can get this by running `cf apps`) to see it running.
+   1. You can visit the URL of the application (you can get this by running `cf apps`) to see it running.
 
 
 ## Steps to generate target artifacts

@@ -56,7 +56,7 @@ We can use this file when we run the transform using the `--config` flag
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	src		src.zip
     $ cat m2kconfig.yaml 
     ```
-    Your `m2kconfig.yaml` might look different depending on what questions where asked and what answers you gave.
+    Your `m2kconfig.yaml` might look different depending on what questions were asked and what answers you gave.
     ```yaml
     move2kube:
       containerruntime: docker
@@ -541,9 +541,8 @@ We can use this file when we run the transform using the `--config` flag
           default: /inventory
           answer: /inventory
     ```
-
-1. The cache file contains both the questions and the answers. It also contains additional information about each question, such as the default answer,
-the type of the question, the id of the questions, any hints that were provided, etc.
+    The cache file contains both the questions and the answers. It also contains additional information about each question, such as the default answer,
+    the type of the question, the id of the questions, any hints that were provided, etc.
 
 1. The config file stores the answer to a question under the key specified by the question's id.  
 For example, the question `What URL/path should we expose the service inventory's 8080 port on?` has the id `move2kube.services."inventory"."8080".urlpath`.
