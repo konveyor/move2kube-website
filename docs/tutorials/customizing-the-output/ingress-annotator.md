@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Adding annotations to Ingress"
+title: "Adding custom annotations to Kubernetes YAMLs"
 permalink: /tutorials/customizing-the-output/ingress-annotator
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 1
 ---
 
-# Adding annotations to Ingress
+# Adding custom annotations to Kubernetes YAMLs
 
 ## Big picture
 
