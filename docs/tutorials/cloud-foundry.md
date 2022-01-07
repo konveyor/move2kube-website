@@ -22,16 +22,16 @@ This document takes us through the steps that will install Move2Kube and use Mov
    ```
 
 2. Install dependencies.
-  * [Docker](https://www.docker.com/get-started)
-  * [operator-sdk](https://docs.openshift.com/container-platform/4.1/applications/operator_sdk/osdk-getting-started.html#osdk-installing-cli_osdk-getting-started)
+  * [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation)
   * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
    To verify that dependencies were correctly installed you can run the below commands.
    ```console
-   $ operator-sdk version
-   ```
-   ```console
    $ docker version
+   ```
+   or
+   ```console
+   $ podman info
    ```
    ```console
    $ kubectl version
