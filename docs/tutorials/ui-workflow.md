@@ -3,7 +3,7 @@ layout: default
 title: "Using Move2Kube UI"
 permalink: /tutorials/ui
 parent: Tutorials
-nav_order: 4
+nav_order: 2
 ---
 
 # Using Move2Kube UI

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Custom transformer for changing base image"
-permalink: /tutorials/migration-workflow/base-image-change
-parent: "Migration workflow"
+title: "Changing the base image in Dockerfile"
+permalink: /tutorials/customizing-the-output/base-image-change
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 4
+nav_order: 2
 ---
 
-# Changing the base image of the dockerfile
+# Changing the base image in Dockerfile
 
 ## Big picture
 
@@ -85,4 +85,4 @@ spec:
     defaultNodejsVersion: "12"
 ```
 
-Next step [Simple Parameterizer](/tutorials/migration-workflow/parameterizer)
+Next step [Parameterizering specific fields in the Helm Chart](/tutorials/customizing-the-output/parameterizer)

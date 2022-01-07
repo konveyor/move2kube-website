@@ -1,9 +1,10 @@
 ---
 layout: default
 title: "Path Mapping"
-permalink: /documentation/path-mapping
-parent: Documentation
-nav_order: 3
+permalink: /documentation/concepts/path-mapping
+parent: Concepts
+grand_parent: Documentation
+nav_order: 2
 ---
 
 # Path Mapping

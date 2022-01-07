@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Ingress annotator"
-permalink: /tutorials/migration-workflow/ingress-annotator
-parent: "Migration workflow"
+title: "Adding custom annotations to Kubernetes YAMLs"
+permalink: /tutorials/customizing-the-output/ingress-annotator
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 7
+nav_order: 1
 ---
 
-# Ingress Annotator
+# Adding custom annotations to Kubernetes YAMLs
 
 ## Big picture
 
@@ -114,3 +114,5 @@ def transform(new_artifacts, old_artifacts):
     return {'pathMappings': pathMappings, 'artifacts': artifacts}
 {% endraw %}
 ```
+
+Next step [Changing the base image in Dockerfile](/tutorials/customizing-the-output/base-image-change)

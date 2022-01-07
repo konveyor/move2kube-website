@@ -2,7 +2,7 @@
 layout: default
 title: "Plan"
 permalink: /tutorials/migration-workflow/plan
-parent: "Migration workflow"
+parent: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 grand_parent: Tutorials
 nav_order: 1
 ---

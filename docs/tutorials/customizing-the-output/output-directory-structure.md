@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Customizate output directory structure"
-permalink: /tutorials/migration-workflow/output-directory-structure
-parent: "Migration workflow"
+title: "Customizing the output directory structure"
+permalink: /tutorials/customizing-the-output/output-directory-structure
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 6
+nav_order: 4
 ---
 
-# Customizate output directory structure
+# Customizing the output directory structure
 
 ## Big picture
 
@@ -127,4 +127,4 @@ spec:
 {% endraw %}
 ```
 
-Next step [Script Injector](/tutorials/migration-workflow/script-inject)
+Next step [Injecting custom files into the container image](/tutorials/customizing-the-output/script-inject)

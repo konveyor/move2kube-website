@@ -2,14 +2,14 @@
 layout: default
 title: "Collect"
 permalink: /tutorials/migration-workflow/collect
-parent: "Migration workflow"
+parent: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 grand_parent: Tutorials
 nav_order: 3
 ---
 
 # Collect
 
-> Note: This is an optional step. If you are not familiar with Cloud Foundry or you don't want to collect information from your running app, then feel free to skip to the next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change).
+> Note: This is an optional step. If you are not familiar with Cloud Foundry or you don't want to collect information from your running app, then feel free to skip to the next step [Customizing the output](/tutorials/customizing-the-output).
 
 To analyze our running application in Cloud Foundry, the Move2Kube CLI tool provides a command called `collect`. As the name suggests the `collect` command collects information about applications running in the cloud.
 
@@ -374,4 +374,4 @@ Now that we have collected the runtime information from the app running in our C
 
 Next we will look at customizing the output that Move2Kube produces using custom transformers.
 
-Next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change)
+Next step [Customizing the output](/tutorials/customizing-the-output)
