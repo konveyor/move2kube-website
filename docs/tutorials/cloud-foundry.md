@@ -10,7 +10,7 @@ nav_order: 4
 
 ## Description
 
-This document explains steps that will install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. It also takes through the process to customize for a specific cluster. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
+This document takes us through the steps that will install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. It also takes through the process to customize for a specific cluster. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
 
 
 ## Prerequisites
@@ -48,7 +48,7 @@ This document explains steps that will install Move2Kube and use Move2Kube's 3 s
    ```console
    $ cd move2kube-demos
    ```
-   Let's see the structure inside the `samples/cloud-foundry` directory.
+   Let's see the structure inside the `./samples/cloud-foundry` directory.
 
    ```console
    move2kube-demos git:(main) $ tree samples/cloud-foundry
@@ -75,12 +75,13 @@ This document explains steps that will install Move2Kube and use Move2Kube's 3 s
 
 ## Steps to generate target artifacts
 
-Now that we have a running CF app we can transform it using Move2Kube. We will be using the the three stage process for the transformation. Run these steps from the `samples/` folder:
+Now that we have a running CF app we can transform it using Move2Kube. We will be using the the three stage process for the transformation. Run these steps from the `./samples/` folder:
 
 1. We will first collect some data about your running CF application. We can also capture the data about the target Kubernetes cluster using `move2kube collect` command. But, here we will be using the `-a cf` annotation flag with the command to only select the collector subset for cloud foundry.  
 
     ```console
-    move2kube-demos git:(main) $ cd samples
+    move2kube-demos git:(main) $ cd samples/
+
     samples git:(main) $ move2kube collect -a cf
     INFO[0000] Begin collection                             
     INFO[0000] [*collector.CfAppsCollector] Begin collection 
@@ -91,26 +92,26 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     INFO[0027] Collect Output in [/Users/username/github/move2kube-demos/samples/m2k_collect]. Copy this directory into the source directory to be used for planning.
     ```
 
-    * The data we collected will be stored in a new folder called `m2k_collect`.
+    * The data we collected will be stored in a new folder called `./m2k_collect`.
 
     ```console
     samples git:(main) $ ls m2k_collect
     cf
     ```
 
-    * The `m2k_collect/cf` folder contains the yaml file which has the runtime information of the particular application that you are trying to transform. There is information about the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it would have collected that information too.
+    * The `./m2k_collect/cf` folder contains the yaml file which has the runtime information of the particular application that you are trying to transform. There is information about the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it collects that information too.
 
-    Move the cf folder into the source directory.
+    * Move the `./m2k_collect/cf` folder into the source directory `./cloud-foundry`.
 
     ```console
     samples git:(main) $ mv m2k_collect/cf cloud-foundry/cf
     ```
 
-    * (Additional Info) If you had run `move2kube collect` command without specifying the annotation flag `-a cf`, then Move2Kube will also collect the information about the target Kubernetes cluster, but you are required to be logged-in to your Kubernetes cluster before running the collect command. In this case, `m2k_collect/clusters` will have the cluster metadata yaml file which has the target cluster information.
+    * (Additional Info) If you had run `move2kube collect` command without specifying the annotation flag `-a cf`, then Move2Kube will also collect the information about the target Kubernetes cluster, but you are required to be logged-in to your Kubernetes cluster before running the collect command. In this case, `./m2k_collect/clusters` folder will have the cluster metadata yaml file which has the target cluster information.
 
     * For this tutorial, we have copied these files into the source directory already and renamed them as [*cfapps.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cfapps.yaml) and [*cluster.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cluster.yaml).
 
-2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the plan phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us.
+2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us.
     ```console
     samples git:(main) $ move2kube plan -s cloud-foundry
     INFO[0000] Loading Configuration                        
@@ -138,7 +139,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     INFO[0000] Plan can be found at [/Users/username/github/move2kube-demos/samples/m2k.plan].
     ```
 
-    * It has created a *m2k.plan* which is essentially a yaml file. Let's see what is inside the plan file.
+    * It has created a *m2k.plan* which is essentially a yaml file. Let's see what is inside the *plan* file.
 
     ```console
     samples git:(main) $ cat m2k.plan
@@ -214,10 +215,10 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     * And the plan file is saying that the application can be transformed using two transformers `CloudFoundry` or `Nodejs-Dockerfile`.
     * It can use the source artifacts `manifest.yaml` and also the runtime information from `cfapps.yaml` and combine all of them and do the transformation.
 
-3. Let's invoke `move2kube transform` on this plan.
+3. Let's invoke `move2kube transform` on this *plan*.
 
     ```console
-    samples git:(main) ✗ move2kube transform
+    samples git:(main) $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/username/github/move2kube-demos/samples/m2k.plan. Will transform using this plan. 
     ? Select all transformer types that you are interested in:
     Hints:
@@ -518,7 +519,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     INFO[1185] Transformed target artifacts can be found at [/Users/username/github/move2kube-demos/samples/myproject].
     ```
 
-Finally, the transformation is successful and the target artifacts can be found inside the *myproject* folder. The structure of the *myproject* folder can be seen by executing the below command.
+Finally, the transformation is successful and the target artifacts can be found inside the `./myproject` folder. The structure of the *./myproject* folder can be seen by executing the below command.
 
 ```console
 samples git:(main) $  tree myproject
@@ -636,11 +637,11 @@ myproject
 33 directories, 76 files
 ```
 
-So, Move2Kube has created all the deployment artifacts which are present inside the *myproject* folder.
+So, Move2Kube has created all the deployment artifacts which are present inside the *./myproject* folder.
 
 ## Deploying the application to Kubernetes with the generated target artifacts
 
-1. Let's get inside the *myproject* directory.
+1. Let's get inside the *./myproject* directory.
 
      ```console
      samples git:(main) $ cd myproject/
@@ -650,7 +651,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
      ```
 
 
-2. Next we run the *builddockerimages.sh* script inside the `myproject/scripts` folder. This step may take some time to complete.
+2. Next we run the *builddockerimages.sh* script inside the `./myproject/scripts` folder. This step may take some time to complete.
 
     ```console
     myproject git:(main) $ cd scripts
@@ -692,10 +693,10 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     latest: digest: sha256:75283b09042b1454567b5e99d6d99374daad07fe46ee6843ace7dca29f085fd7 size: 1789
     ```
 
-    NOTE: If you have pushed the image repository to `quay.io`, in the Repository's Visibility in [quay.io](https://quay.io) `cfnodejsapp` repository's Settings, select whether you want the repository `cfnodejsapp` to be public or private so that it can be properly accessed by the Kubernetes cluster.
+    NOTE: If you have pushed the image repository to `quay.io`, then in the Repository's Visibility in [quay.io](https://quay.io) `cfnodejsapp` repository's Settings, select whether you want the repository `cfnodejsapp` to be public or private so that it can be properly accessed by the Kubernetes cluster.
 
 
-4. Finally we are going to deploy the application with *kubectl apply* command using the yaml files which Move2Kube has created for us inside the `myproject/deploy/yamls` folder.
+4. Finally we are going to deploy the application with *kubectl apply* command using the yaml files which Move2Kube has created for us inside the `./myproject/deploy/yamls` folder.
 
     ```console
     scripts git:(main) $ cd ..
@@ -709,7 +710,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     Now our application is accessible on the cluster. You can check the status of pods by running the command mentioned below.
 
     ```console
-    myproject git:(main) $kubectl get pods             
+    myproject git:(main) $ kubectl get pods
 
     NAME                           READY   STATUS    RESTARTS   AGE
     cfnodejsapp-58d777bd44-8ct2m   1/1     Running   0          7s
@@ -719,7 +720,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     We can get the ingress to see the URL where the app has been deployed to.
 
     ```console
-    kubectl get ingress myproject
+    myproject git:(main) $ kubectl get ingress myproject
     ```
 
     ![cfnodejsapp](../../assets/images/samples/cloud-foundry/cloud-foundry-app.png)
