@@ -1,9 +1,10 @@
 ---
 layout: default
 title: Transformer
-permalink: /documentation/transformer
-parent: Documentation
-nav_order: 4
+permalink: /documentation/concepts/transformer
+parent: Concepts
+grand_parent: Documentation
+nav_order: 3
 ---
 
 # Transformer
@@ -47,7 +48,7 @@ This is the interface all transformers are expected to implement.
 
 - The major function that needs to be implemented is `Transform`.
 - If you want your transformer to do something during the planning phase then you can implement `DirectoryDetect` as well. If implement this function, be sure to set
-	`directoryDetect` to a value other than `0` in the transformer YAML as well. See [transformer-yaml](/documentation/transformer-yaml) for more details.
+	`directoryDetect` to a value other than `0` in the transformer YAML as well. See [transformer-yaml](/documentation/concepts/transformer-yaml) for more details.
 - The `Init` and `GetConfig` functions are fixed and cannot be implemented by custom transformers. They are implemented by transformers built into Move2Kube.
 
 ### Methods
@@ -69,4 +70,4 @@ This is the interface all transformers are expected to implement.
 	- The second input is a list of artifacts that the transformer has already seen.
 	- The first output is a list of path mappings. A path mapping is a way for transformers to add files to the output directory of Move2Kube.
 		Path mappings can be used to generate new files, delete exiting files, modify the output directory structure, etc.
-		See [Path Mapping](/documentation/path-mapping) for details.
+		See [Path Mapping](/documentation/concepts/path-mapping) for details.

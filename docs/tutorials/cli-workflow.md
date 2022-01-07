@@ -3,7 +3,7 @@ layout: default
 title: "Using Move2Kube CLI"
 permalink: /tutorials/cli
 parent: Tutorials
-nav_order: 3
+nav_order: 1
 ---
 
 # Using Move2Kube CLI

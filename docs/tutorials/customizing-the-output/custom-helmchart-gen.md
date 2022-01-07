@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Custom helm-chart generator"
-permalink: /tutorials/migration-workflow/custom-helmchart-gen
-parent: "Migration workflow"
+title: "Generating a custom Helm chart"
+permalink: /tutorials/customizing-the-output/custom-helmchart-gen
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 8
+nav_order: 6
 ---
 
-# Custom helm-chart generator
+# Generating a custom Helm chart
 
 ## Big picture
 

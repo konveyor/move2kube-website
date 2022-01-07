@@ -2,7 +2,7 @@
 layout: default
 title: "Transform"
 permalink: /tutorials/migration-workflow/transform
-parent: "Migration workflow"
+parent: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 grand_parent: Tutorials
 nav_order: 2
 ---
@@ -305,4 +305,4 @@ Now that we have generated the output we can run the scripts inside the `scripts
 
 After inspecting the output that Move2Kube produced we might see some things we want to change. For example, we might want to change the base image used in the Dockerfiles, add some annotations to the Ingress YAML, maybe change the output directory structure, change which values are parameterized in the Helm chart, generate some new files, etc. For all these user specific requirements and more, we can write our own custom transformers.
 
-Next step [Custom transformer for changing base image](/tutorials/migration-workflow/base-image-change)
+Next step [Customizing the output](/tutorials/customizing-the-output)

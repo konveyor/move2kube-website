@@ -3,7 +3,7 @@ layout: default
 title: "Running non-interactively"
 permalink: /tutorials/running-non-interactively
 parent: Tutorials
-nav_order: 2
+nav_order: 3
 ---
 
 # Running non-interactively

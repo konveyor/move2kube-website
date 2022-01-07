@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Custom transformer for a simple parameterizer"
-permalink: /tutorials/migration-workflow/parameterizer
-parent: "Migration workflow"
+title: "Parameterizering specific fields in the Helm Chart"
+permalink: /tutorials/customizing-the-output/parameterizer
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 5
+nav_order: 3
 ---
 
-# Simple Parameterizer
+# Parameterizering specific fields in the Helm Chart
 
 ## Big picture
 
@@ -115,4 +115,4 @@ spec:
           apiVersion: ".*/v1.*"
 ```
 
-Next step [Customizate output directory structure](/tutorials/migration-workflow/output-directory-structure)
+Next step [Customizing the output directory structure](/tutorials/customizing-the-output/output-directory-structure)

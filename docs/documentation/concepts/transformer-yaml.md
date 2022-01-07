@@ -1,9 +1,10 @@
 ---
 layout: default
 title: "Transformer YAML"
-permalink: /documentation/transformer-yaml
-parent: Documentation
-nav_order: 5
+permalink: /documentation/concepts/transformer-yaml
+parent: Concepts
+grand_parent: Documentation
+nav_order: 4
 ---
 
 # Transformer YAML

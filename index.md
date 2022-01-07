@@ -40,9 +40,12 @@ With Move2Kube, generating the Kubernetes/OpenShift deployment files for your so
 
 ## Usage
 
-Move2Kube takes as input the source files and outputs the target deployment files.
+> A major use case is [Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes](/tutorials/migration-workflow)
+
+Move2Kube takes as input the source files and outputs the target deployment files.  
 
 ![Move2Kube-Usage](assets/images/move2kube-3-step-workflow.jpeg)
+
 
 For more detailed information :
 * [Installation](/installation)

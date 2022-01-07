@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Custom transformer for injecting a script into the container image"
-permalink: /tutorials/migration-workflow/script-inject
-parent: "Migration workflow"
+title: "Injecting a script into the container image"
+permalink: /tutorials/customizing-the-output/script-inject
+parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 7
+nav_order: 5
 ---
 
-# Custom transformer for injecting a script into the container image
+# Injecting a script into the container image
 
 ## Big picture
 
@@ -175,4 +175,4 @@ CMD sh hello-nodejs.sh
 {% endraw %}
 ```
 
-Next step [Custom Helm-chart Generator](/tutorials/migration-workflow/custom-helmchart-gen)
+Next step [Generating a custom Helm chart](/tutorials/customizing-the-output/custom-helmchart-gen)
