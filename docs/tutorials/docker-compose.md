@@ -617,4 +617,4 @@ Below we show the steps for migrating the second sample. The steps for the first
 
 ## Conclusion
 
-    In this tutorial we transformed a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube. The steps for migrating from other platforms like Docker Swarm are similar.
+  In this tutorial we transformed a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube. The steps for migrating from other platforms like Docker Swarm are similar.
