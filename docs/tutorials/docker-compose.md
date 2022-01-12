@@ -28,6 +28,14 @@ Below we show the steps for migrating the second sample. The steps for the first
 
 1. Download the [zip file](https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip) containing the Docker Compose samples and extract the second sample from it.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ curl -Lo docker-compose.zip https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip
+    $ mv docker-compose/multiple-services .
+    ```
+    </summary>
     ```console
     $ curl -Lo docker-compose.zip https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -60,8 +68,16 @@ Below we show the steps for migrating the second sample. The steps for the first
     $ ls
     docker-compose		docker-compose.zip	multiple-services
     ```
+    </details>
 
 1. Now we can run the planning phase.
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ move2kube plan -s multiple-services/
+    ```
+    </summary>
     ```console
     $ move2kube plan -s multiple-services/
     INFO[0000] Configuration loading done                   
@@ -85,12 +101,22 @@ Below we show the steps for migrating the second sample. The steps for the first
     INFO[0000] No of services identified : 3                
     INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]
     ```
+    </details>
 
 1. We can inspect the plan to see that all 3 services were detected.
 
     ```console
     $ cat m2k.plan 
     ```
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the full plan yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: Plan
+    ......
+    ```
+    </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: Plan
@@ -189,6 +215,7 @@ Below we show the steps for migrating the second sample. The steps for the first
         WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
         ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
+    </details>
 
 1. Now we can run the transformation phase. For most questions we go with the default answer. However, some questions to watch out for are:
     - The question about the URL path on which the `redis` service should be exposed. Since this service is not meant to be exposed we will give `:-` as suggested in the question hints. This makes sure the service port will not be exposed via the Ingress.
@@ -196,6 +223,13 @@ Below we show the steps for migrating the second sample. The steps for the first
     - The question about registry URL and namespace. This is where the container images will be pushed after building.
     - The ingress host and TLS secret. If you are deploying to MiniKube give `localhost` as the host and leave the TLS secret blank.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ move2kube transform
+    ```
+    </summary>
     ```console
     $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
@@ -295,9 +329,18 @@ Below we show the steps for migrating the second sample. The steps for the first
     INFO[0021] Plan Transformation done                     
     INFO[0021] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
     ```
+    </details>
 
 1. Now that the transformation has finished we can look at the output.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ ls
+    $ tree myproject/
+    ```
+    </summary>
     ```console
     $ ls
     docker-compose		m2k.plan		m2kqacache.yaml		myproject docker-compose.zip	m2kconfig.yaml		multiple-services
@@ -442,10 +485,19 @@ Below we show the steps for migrating the second sample. The steps for the first
 
     35 directories, 101 files
     ```
+    </details>
     Inside the `scripts` directory we see some helpful scripts that Move2Kube has generated to help us build and push the container images we need.
-    ```
-1. Now we can build all the images using the `buildimages.sh` script.
 
+1. Now we can build all the images using the `builddockerimages.sh` script.
+
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ cd myproject/
+    $ ./builddockerimages.sh 
+    ```
+    </summary>
     ```console
     $ ./builddockerimages.sh 
     [+] Building 4.3s (10/10) FINISHED                                                                                                                                
@@ -488,9 +540,17 @@ Below we show the steps for migrating the second sample. The steps for the first
     /Users/user/Desktop/tutorial/myproject
     done
     ```
+    </details>
 
 1. Then we can push those images to the registry and namespace we selected using the `pushimages.sh` script.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ ./pushimages.sh 
+    ```
+    </summary>
     ```console
     $ ./pushimages.sh 
     The push refers to repository [quay.io/move2kube/fibonacci-web]
@@ -524,6 +584,7 @@ Below we show the steps for migrating the second sample. The steps for the first
     9d1a9278f26b: Layer already exists 
     latest: digest: sha256:521be8d409c29414274c912600dc7606b7db591f69abb2fbfb5e402ccb547878 size: 2840
     ```
+    </details>
 
 1. Skip this step if you have already have a Kubernetes cluster with Ingress enabled. Let's start MiniKube to start a local Kubernetes cluster on our machine.
 

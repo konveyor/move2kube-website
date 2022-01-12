@@ -33,11 +33,18 @@ In addition Move2Kube also generate the CI/CD pipeline and parameterized version
 1. Run `move2kube transform` in the same directory as the plan file. This will detect the plan file and use it to find the source directory.
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
-    - An extra spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. Again, we could have done this by editing the plan file.
+    - An extra spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. We could also do this by editing the plan file.
     - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `local` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ move2kube transform
+    ```
+    </summary>
     ```console
     $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
@@ -255,6 +262,7 @@ In addition Move2Kube also generate the CI/CD pipeline and parameterized version
     INFO[0040] Plan Transformation done                     
     INFO[0040] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject]. 
     ```
+    </details>
 
 ## Transforming using the UI
 

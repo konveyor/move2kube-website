@@ -76,6 +76,15 @@ You can run `cf target` to check if you are logged in. The output should be simi
 
     An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/09d8b76369a3447f142a20888ce9747fca9f4fd6/samples/enterprise-app/cfapps.yaml)
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the full yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: CfApps
+    ......
+    ```
+    </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: CfApps
@@ -367,6 +376,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
                 users: null
                 version: app-ver3
     ```
+    </details>
 
 Now that we have collected the runtime information from the app running in our Cloud Foundry cluster, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are same as in [Plan](/tutorials/migration-workflow/plan).
 
