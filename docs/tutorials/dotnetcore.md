@@ -106,11 +106,16 @@ In this tutorial, we will learn how to migrate and deploy .NET Core applications
 
 ## Steps to generate target artifacts
 
-Now that we have a running CF app we can transform it using Move2Kube. We will be using the the three stage process for the transformation. Run these steps from the `./samples/` folder:
+We will be using the two stage process (*plan* and *transform*) for the transformation. Run these steps from the `./samples/` folder:
 
 1. First we create a *plan* on how to transform the applications to run on Kubernetes. In the *plan* phase, Move2Kube is going to go through the source artifacts and going to come up with a *plan* for us.
+
     ```console
-    samples git:(main) ✗ move2kube plan -s dotnet5 
+    move2kube-demos git:(main) $ cd samples
+    ```
+
+    ```console
+    samples git:(main) $ move2kube plan -s dotnet5
     INFO[0000] Configuration loading done                   
     INFO[0000] Planning Transformation - Base Directory     
     INFO[0000] [DockerfileDetector] Planning transformation 
@@ -218,8 +223,8 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
         ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
 
-    * In the plan, you can see that Move2Kube has detected all the four services (`dotnet5webapp`, `dotnet5angular`, `dotnet5react-redux`, `dotnet5react`) and relative paths of the detected `.csproj` and/or `.sln` files for each of the services.
-    * Also, the plan file is saying that the applications can be transformed using Move2Kube's inbuilt `DotNetCore-Dockerfile` transformer.
+    * In the *plan*, you can see that Move2Kube has detected all the four services (`dotnet5webapp`, `dotnet5angular`, `dotnet5react-redux`, `dotnet5react`) and relative paths of the detected `.csproj` and/or `.sln` files for each of the services.
+    * Also, the *plan* file is saying that the applications can be transformed using Move2Kube's inbuilt `DotNetCore-Dockerfile` transformer.
 
 2. Let's invoke `move2kube transform` on this *plan*.
 
@@ -322,7 +327,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
       [ ]  Other (specify custom option)
     ```
 
-    * For the `dotnet5react-redux` service also we go ahead with the default selected port.
+    * For the `dotnet5react-redux` service also, we go ahead with the default selected port.
 
     ```console
      5000
@@ -334,7 +339,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
       [ ]  Other (specify custom option)
     ```
 
-    * For the `dotnetwebapp` service also we go ahead with the default selected port.
+    * For the `dotnetwebapp` service, let's go ahead with the default selected port.
   
     ```console
      5000
@@ -387,7 +392,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     (/dotnet5webapp) dotnetwebapp
     ```
 
-    * We leave out the leading `/` to use the first part `dotnetwebapp` as subdomain.
+    * We leave out the leading `/` to use the first part `dotnetwebapp` as subdomain (as specified in the *Hints*).
 
     ```console
     dotnetwebapp
@@ -630,7 +635,9 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
 
     ```console
     myproject git:(main) $ cd scripts
-    
+    ```
+
+    ```console
     scripts git:(main) $ ./builddockerimages.sh
     [1/2] STEP 1/7: FROM mcr.microsoft.com/dotnet/sdk:5.0 AS builder
     [1/2] STEP 2/7: WORKDIR /src
@@ -789,7 +796,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     ```
 
 
-3. Now using the *pushimages.sh* script we can push our applications images to the registry that we specified during the *transform* phase. For this step, you are required to log in to your Docker registry. To log in to `quay.io` run `docker login quay.io` (or `podman login quay.io`). To log in to IBM Cloud `us.icr.io` registry refer [here](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_access#registry_access_apikey_auth_docker).
+3. Now using the *pushimages.sh* script we can push our applications images to the registry that we specified during the *transform* phase. For this step, you are required to log in to your Docker registry. To log in to `quay.io`, run `podman login quay.io` (or `docker login quay.io`, depending upon the container runtime selected during *transform* phase). To log in to IBM Cloud `us.icr.io` registry refer [here](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_access#registry_access_apikey_auth_docker).
 
     ```console
     scripts git:(main) $ ./pushimages.sh
