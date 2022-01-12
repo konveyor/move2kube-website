@@ -72,13 +72,15 @@ This document takes us through the steps that will install Move2Kube and use Mov
 
 ## Steps to generate target artifacts
 
-Now that we have a running CF app we can transform it using Move2Kube. We will be using the the three stage process for the transformation. Run these steps from the `./samples/` folder:
+Now that we have a running CF app we can transform it using Move2Kube. We will be using the three stage process (*collect*, *plan* and *transform*) for the transformation. Run these steps from the `./samples/` folder:
 
 1. We will first collect some data about your running CF application. We can also capture the data about the target Kubernetes cluster using `move2kube collect` command. But, here we will be using the `-a cf` annotation flag with the command to only select the collector subset for cloud foundry.  
 
     ```console
     move2kube-demos git:(main) $ cd samples/
+    ```
 
+    ```console
     samples git:(main) $ move2kube collect -a cf
     INFO[0000] Begin collection                             
     INFO[0000] [*collector.CfAppsCollector] Begin collection 
@@ -109,6 +111,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     * For this tutorial, we have copied these files into the source directory already and renamed them as [*cfapps.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cfapps.yaml) and [*cluster.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cluster.yaml).
 
 2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us.
+
     ```console
     samples git:(main) $ move2kube plan -s cloud-foundry
     INFO[0000] Loading Configuration                        
@@ -648,7 +651,9 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
 
     ```console
     myproject git:(main) $ cd scripts
-    
+    ```
+
+    ```console
     scripts git:(main) $ ./builddockerimages.sh
     [+] Building 7.1s (8/8) FINISHED                             
     => [internal] load build definition from Dockerfile    0.1s
@@ -716,6 +721,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     myproject git:(main) $ kubectl get ingress myproject
     ```
 
+    cfnodejsapp
     ![cfnodejsapp](../../assets/images/samples/cloud-foundry/cloud-foundry-app.png)
 
 ## Conclusion
