@@ -57,6 +57,15 @@ We can use this file when we run the transform using the `--config` flag
     $ cat m2kconfig.yaml 
     ```
     Your `m2kconfig.yaml` might look different depending on what questions were asked and what answers you gave.
+    <details markdown="block">
+    <summary markdown="block">
+    ```yaml
+    # click to see the full yaml
+    move2kube:
+      containerruntime: docker
+    .......
+    ```
+    </summary>
     ```yaml
     move2kube:
       containerruntime: docker
@@ -147,12 +156,22 @@ We can use this file when we run the transform using the `--config` flag
           - PHP-Dockerfile
           - WinConsoleApp-Dockerfile
     ```
+    </details>
 
 1. The config file only contains the answers we provided to the questions. We can better understand the config file by looking at its companion file `m2kqacache.yaml`
 
     ```console
     $ cat m2kqacache.yaml 
     ```
+    <details markdown="block">
+    <summary markdown="block">
+    ```yaml
+    # click to see the full yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: QACache
+    .......
+    ```
+    </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: QACache
@@ -541,6 +560,7 @@ We can use this file when we run the transform using the `--config` flag
           default: /inventory
           answer: /inventory
     ```
+    </details>
     The cache file contains both the questions and the answers. It also contains additional information about each question, such as the default answer,
     the type of the question, the id of the questions, any hints that were provided, etc.
 

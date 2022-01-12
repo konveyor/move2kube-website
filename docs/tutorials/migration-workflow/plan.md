@@ -37,6 +37,13 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
 
 1. Run `move2kube plan -s src` to generate a plan on how to migrate our app to Kubernetes.
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    # click to see the output
+    $ move2kube plan -s src
+    ```
+    </summary>
     ```console
     $ move2kube plan -s src
     INFO[0000] Configuration loading done                   
@@ -65,6 +72,7 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     INFO[0000] No of services identified : 6                
     INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]. 
     ```
+    </details>
 
 1. Let's look at the plan file that was generated.
 
@@ -72,6 +80,15 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     $ cat m2k.plan 
     ```
 
+    <details markdown="block">
+    <summary markdown="block">
+    ```yaml
+    # click to see the full plan yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: Plan
+    ......
+    ```
+    </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: Plan
@@ -265,6 +282,7 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
         WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
         ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
+    </details>
 
     The plan file contains all the transformers that Move2Kube detected and ran.
     These transformers will be run again during the transformation phase.  

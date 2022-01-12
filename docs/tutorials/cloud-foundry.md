@@ -139,7 +139,18 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     * It has created a *m2k.plan* which is essentially a yaml file. Let's see what is inside the *plan* file.
 
     ```console
-    samples git:(main) $ cat m2k.plan
+    $ cat m2k.plan
+    ```
+    <details markdown="block">
+    <summary markdown="block">
+    ```yaml
+    # click to see the full plan yaml
+    apiVersion: move2kube.konveyor.io/v1alpha1
+    kind: Plan
+    .......
+    ```
+    </summary>
+    ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: Plan
     metadata:
@@ -203,6 +214,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
         WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
         ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
+    </details>
 
     * In the plan, you can see that Move2Kube has detected the `cfnodejsapp` service, which is the name of our sample CF application from it's manifest.yml.
     * And the plan file is saying that the application can be transformed using two transformers `CloudFoundry` or `Nodejs-Dockerfile`.
@@ -514,8 +526,17 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
 
 Finally, the transformation is successful and the target artifacts can be found inside the `./myproject` folder. The structure of the *./myproject* folder can be seen by executing the below command.
 
+<details markdown="block">
+<summary markdown="block">
 ```console
-samples git:(main) $  tree myproject
+# click to see the output
+$  tree myproject
+```
+
+</summary>
+
+```console
+$  tree myproject
 myproject
 ├── Readme.md
 ├── deploy
@@ -629,6 +650,7 @@ myproject
 
 33 directories, 76 files
 ```
+</details>
 
 So, Move2Kube has created all the deployment artifacts which are present inside the *./myproject* folder.
 
