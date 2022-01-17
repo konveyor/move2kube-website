@@ -44,7 +44,7 @@ This document takes us through the steps that will install Move2Kube and use Mov
    ```console
    $ cd move2kube-demos
    ```
-   Let's see the structure inside the `./samples/cloud-foundry` directory.
+   Let's see the structure inside the `./samples/cloud-foundry` directory. The folder contains the source code files and the manifest.yml file.
 
    ```console
    move2kube-demos git:(main) $ tree samples/cloud-foundry
@@ -57,7 +57,9 @@ This document takes us through the steps that will install Move2Kube and use Mov
    └── package.json
    ```
 
-1. We will deploy a simple nodejs application into Cloud Foundry (CF). If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
+1. To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the `move2kube-demos/samples/cloud-foundry` directory. If you want to try out Move2Kube on your CF application, then in place of our sample `cloud-foundry` directory, you should provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the *plan* phase.
+
+1. We will deploy a simple nodejs application into CF. If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
    1. Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints)).
    1. Login to CF using
        ```console
@@ -110,7 +112,9 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
 
     * For this tutorial, we have copied these files into the source directory already and renamed them as [*cfapps.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cfapps.yaml) and [*cluster.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cluster.yaml).
 
-2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us.
+    * It is recommended to run the *collect* phase described in this step before running the *plan* phase. But, it is necessary to have the source artifacts of the CF application to run the *plan* phase.
+
+2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us. Here, we provide to Move2Kube the path to the source directory (containing the source code and/or manifest files of CF application) using the `-s` flag.
 
     ```console
     samples git:(main) $ move2kube plan -s cloud-foundry
