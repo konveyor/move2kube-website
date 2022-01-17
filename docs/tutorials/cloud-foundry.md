@@ -15,6 +15,33 @@ This document takes us through the steps that will install Move2Kube and use Mov
 
 ## Prerequisites
 
+1. A source folder which contains the source code files and/or the manifest.yml file of the Cloud Foundry application.
+
+   A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. In this tutorial, we will be using the `cloud-foundry` sample from this repository.
+
+   To clone the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository run the below command.
+
+   ```console
+   $ git clone https://github.com/konveyor/move2kube-demos.git
+   ```
+
+   ```console
+   $ cd move2kube-demos
+   ```
+
+   Let's see the structure inside the `./samples/cloud-foundry` directory. The `cloud-foundry` folder contains the source code files and the manifest.yml file.
+
+   ```console
+   move2kube-demos git:(main) $ tree samples/cloud-foundry
+   samples/cloud-foundry
+   ├── cfapps.yaml
+   ├── cluster.yaml
+   ├── main.js
+   ├── manifest.yml
+   ├── package-lock.json
+   └── package.json
+   ```
+
 1. Install [Move2Kube](/installation)
 
 1. Install a container runtime: [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation)
@@ -22,6 +49,9 @@ This document takes us through the steps that will install Move2Kube and use Mov
 1. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
 
    To verify that dependencies were correctly installed you can run the below commands.
+   ```console
+   $ move2kube version
+   ```
    ```console
    $ docker version
    ```
@@ -34,28 +64,6 @@ This document takes us through the steps that will install Move2Kube and use Mov
    ```
 
 1. Install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
-
-1. Clone the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository
-
-   ```console
-   $ git clone https://github.com/konveyor/move2kube-demos.git
-   ```
-
-   ```console
-   $ cd move2kube-demos
-   ```
-   Let's see the structure inside the `./samples/cloud-foundry` directory. The folder contains the source code files and the manifest.yml file.
-
-   ```console
-   move2kube-demos git:(main) $ tree samples/cloud-foundry
-   samples/cloud-foundry
-   ├── cfapps.yaml
-   ├── cluster.yaml
-   ├── main.js
-   ├── manifest.yml
-   ├── package-lock.json
-   └── package.json
-   ```
 
 1. To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the `move2kube-demos/samples/cloud-foundry` directory. If you want to try out Move2Kube on your CF application, then in place of our sample `cloud-foundry` directory, you should provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the *plan* phase.
 
