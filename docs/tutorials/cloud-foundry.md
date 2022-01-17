@@ -120,7 +120,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
 
     * For this tutorial, we have copied these files into the source directory already and renamed them as [*cfapps.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cfapps.yaml) and [*cluster.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cluster.yaml).
 
-    * It is recommended to run the *collect* phase described in this step before running the *plan* phase. But, it is necessary to have the source artifacts of the CF application to run the *plan* phase.
+    * If runtime metadata such as env variables which are not in the manifest, but in the deployed app needs to be used in Kubernetes, then you should run the *collect* phase described in this step before running the *plan* phase. But, it is necessary to have the source artifacts of the CF application to run the *plan* phase.
 
 2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us. Here, we provide to Move2Kube the path to the source directory (containing the source code and/or manifest files of CF application) using the `-s` flag.
 
