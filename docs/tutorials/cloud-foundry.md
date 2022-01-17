@@ -15,7 +15,7 @@ This document takes us through the steps that will install Move2Kube and use Mov
 
 ## Prerequisites
 
-1. A source folder which contains the source code files and/or the manifest.yml file of the Cloud Foundry application.
+1. A source folder which contains the source code files and/or the manifest.yml file of a Cloud Foundry application.
 
    A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. In this tutorial, we will be using the `cloud-foundry` sample from this repository.
 
