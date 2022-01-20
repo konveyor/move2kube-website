@@ -17,7 +17,7 @@ This information is stored in YAML format in a plan file called `m2k.plan`. This
 
 ## Prerequisites
 
-We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app) app. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app/src.zip)
+We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip)
 
   ```console
   $ curl -Lo src.zip 'https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip?raw=true'
@@ -30,12 +30,12 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
   $ ls
   src		src.zip
   $ ls src
-  README.md		config-utils		customers-tomcat-k8s	customers-tomcat-legacy	docs			frontend		gateway			inventory		orders
+  README.md		customers-tomcat	docs			frontend		gateway			orders
   ```
 
 ## Planning using the CLI
 
-1. Run `move2kube plan -s src` to generate a plan on how to migrate our app to Kubernetes.
+1. Run `move2kube plan -s src` to generate a plan for migrating the multiple components of the app to Kubernetes.
 
     <details markdown="block">
     <summary markdown="block">
@@ -54,22 +54,19 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     INFO[0000] Identified 3 named services and 0 to-be-named services 
     INFO[0000] [CloudFoundry] Done                          
     INFO[0000] [DockerfileDetector] Planning transformation 
-    INFO[0000] Identified 1 named services and 1 to-be-named services 
     INFO[0000] [DockerfileDetector] Done                    
-    INFO[0000] [Base Directory] Identified 4 named services and 1 to-be-named services 
+    INFO[0000] [Base Directory] Identified 3 named services and 0 to-be-named services 
     INFO[0000] Transformation planning - Base Directory done 
     INFO[0000] Planning Transformation - Directory Walk     
-    INFO[0000] Identified 1 named services and 0 to-be-named services in config-utils 
-    INFO[0000] Identified 1 named services and 0 to-be-named services in customers-tomcat-k8s 
-    INFO[0000] Identified 1 named services and 0 to-be-named services in customers-tomcat-legacy 
+    INFO[0000] Identified 1 named services and 0 to-be-named services in config-utils
+    INFO[0000] Identified 1 named services and 0 to-be-named services in customers-tomcat
     INFO[0000] Identified 1 named services and 0 to-be-named services in frontend 
     INFO[0000] Identified 1 named services and 0 to-be-named services in gateway 
-    INFO[0000] Identified 1 named services and 0 to-be-named services in inventory 
     INFO[0000] Identified 1 named services and 0 to-be-named services in orders 
     INFO[0000] Transformation planning - Directory Walk done 
-    INFO[0000] [Directory Walk] Identified 7 named services and 1 to-be-named services 
-    INFO[0000] [Named Services] Identified 6 named services 
-    INFO[0000] No of services identified : 6                
+    INFO[0000] [Directory Walk] Identified 5 named services and 0 to-be-named services 
+    INFO[0000] [Named Services] Identified 5 named services 
+    INFO[0000] No of services identified : 5                
     INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]. 
     ```
     </details>
@@ -91,196 +88,157 @@ We will be using the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree
     </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
-    kind: Plan
-    metadata:
-      name: myproject
-    spec:
-      sourceDir: src
-      services:
-        config-utils:
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - config-utils/pom.xml
-              ServiceDirPath:
-                - config-utils
-            configs:
-              Maven:
-                mavenAppName: config-utils
-                artifactType: jar
-        customers-tomcat:
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - customers-tomcat-k8s/pom.xml
-              ServiceDirPath:
-                - customers-tomcat-k8s
-            configs:
-              Maven:
-                mavenAppName: customers-tomcat
-                artifactType: war
-              SpringBoot:
-                springBootVersion: 2.5.0
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - customers-tomcat-legacy/pom.xml
-              ServiceDirPath:
-                - customers-tomcat-legacy
-            configs:
-              Maven:
-                mavenAppName: customers-tomcat
-                artifactType: war
-              SpringBoot:
-                springBootVersion: 2.5.0
-        frontend:
-          - transformerName: CloudFoundry
-            paths:
-              CfManifest:
-                - frontend/manifest.yml
-              ServiceDirPath:
-                - frontend
-            configs:
-              CloudFoundryService:
-                serviceName: frontend
-              ContainerizationOptions:
-                - Nodejs-Dockerfile
-          - transformerName: Nodejs-Dockerfile
-            paths:
-              ServiceDirPath:
-                - frontend
-        gateway:
-          - transformerName: CloudFoundry
-            paths:
-              BuildArtifact:
-                - gateway/target/gateway-2.0.0-SNAPSHOT-exec.jar
-              CfManifest:
-                - gateway/manifest.yml
-              ServiceDirPath:
-                - gateway
-            configs:
-              CloudFoundryService:
-                serviceName: gateway
-              ContainerizationOptions:
-                - Maven
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - gateway/pom.xml
-              ServiceDirPath:
-                - gateway
-            configs:
-              Maven:
-                mavenAppName: gateway
-                artifactType: jar
-                mavenProfiles:
-                  - local
-                  - openshift
-                  - openshift-manual
-                  - openshift-it
-              SpringBoot:
-                springBootAppName: gateway
-                springBootProfiles:
-                  - local
-                  - openshift
-        inventory:
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - inventory/pom.xml
-              ServiceDirPath:
-                - inventory
-            configs:
-              Maven:
-                mavenAppName: inventory
-                artifactType: jar
-                mavenProfiles:
-                  - native
-                  - local
-                  - openshift
-          - transformerName: DockerfileDetector
-            paths:
-              Dockerfile:
-                - inventory/src/main/docker/Dockerfile.jvm
-              ServiceDirPath:
-                - inventory/src/main/docker
-          - transformerName: DockerfileDetector
-            paths:
-              Dockerfile:
-                - inventory/src/main/docker/Dockerfile.native
-              ServiceDirPath:
-                - inventory/src/main/docker
-        orders:
-          - transformerName: CloudFoundry
-            paths:
-              BuildArtifact:
-                - orders/target/orders-2.0.0-SNAPSHOT-exec.jar
-              CfManifest:
-                - orders/manifest.yml
-              ServiceDirPath:
-                - orders
-            configs:
-              CloudFoundryService:
-                serviceName: orders
-              ContainerizationOptions:
-                - Maven
-          - transformerName: Maven
-            paths:
-              MavenPom:
-                - orders/pom.xml
-              ServiceDirPath:
-                - orders
-            configs:
-              Maven:
-                mavenAppName: orders
-                artifactType: jar
-                mavenProfiles:
-                  - local
-                  - openshift
-                  - openshift-manual
-                  - openshift-it
-              SpringBoot:
-                springBootAppName: orders
-                springBootProfiles:
-                  - local
-                  - openshift
-      transformers:
-        Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
-        CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
-        ClusterSelector: m2kassets/inbuilt/transformers/kubernetes/clusterselector/clusterselector.yaml
-        ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
-        ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
-        ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
-        DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
-        DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
-        DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
-        DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
-        EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
-        EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
-        Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
-        Gradle: m2kassets/inbuilt/transformers/dockerfilegenerator/java/gradle/gradle.yaml
-        Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
-        Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
-        Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
-        Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
-        KubernetesVersionChanger: m2kassets/inbuilt/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
-        Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
-        Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
-        Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
-        PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
-        Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizer/parameterizer.yaml
-        Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
-        ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
-        Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
-        Rust-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
-        Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
-        Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
-        WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
-        WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
-        WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
-        WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
-        WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
-        ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
+kind: Plan
+metadata:
+  name: myproject
+spec:
+  sourceDir: src
+  services:
+    config-utils:
+      - transformerName: Maven
+        paths:
+          MavenPom:
+            - config-utils/pom.xml
+          ServiceDirPath:
+            - config-utils
+        configs:
+          Maven:
+            mavenAppName: config-utils
+            artifactType: jar
+    customers-tomcat:
+      - transformerName: Maven
+        paths:
+          MavenPom:
+            - customers-tomcat/pom.xml
+          ServiceDirPath:
+            - customers-tomcat
+        configs:
+          Maven:
+            mavenAppName: customers-tomcat
+            artifactType: war
+          SpringBoot:
+            springBootVersion: 2.5.0
+    frontend:
+      - transformerName: CloudFoundry
+        paths:
+          CfManifest:
+            - frontend/manifest.yml
+          ServiceDirPath:
+            - frontend
+        configs:
+          CloudFoundryService:
+            serviceName: frontend
+          ContainerizationOptions:
+            - Nodejs-Dockerfile
+      - transformerName: Nodejs-Dockerfile
+        paths:
+          ServiceDirPath:
+            - frontend
+    gateway:
+      - transformerName: CloudFoundry
+        paths:
+          BuildArtifact:
+            - gateway/target/gateway-2.0.0-SNAPSHOT-exec.jar
+          CfManifest:
+            - gateway/manifest.yml
+          ServiceDirPath:
+            - gateway
+        configs:
+          CloudFoundryService:
+            serviceName: gateway
+          ContainerizationOptions:
+            - Maven
+      - transformerName: Maven
+        paths:
+          MavenPom:
+            - gateway/pom.xml
+          ServiceDirPath:
+            - gateway
+        configs:
+          Maven:
+            mavenAppName: gateway
+            artifactType: jar
+            mavenProfiles:
+              - local
+              - openshift
+              - openshift-manual
+              - openshift-it
+          SpringBoot:
+            springBootAppName: gateway
+            springBootProfiles:
+              - local
+              - openshift
+    orders:
+      - transformerName: CloudFoundry
+        paths:
+          BuildArtifact:
+            - orders/target/orders-2.0.0-SNAPSHOT-exec.jar
+          CfManifest:
+            - orders/manifest.yml
+          ServiceDirPath:
+            - orders
+        configs:
+          CloudFoundryService:
+            serviceName: orders
+          ContainerizationOptions:
+            - Maven
+      - transformerName: Maven
+        paths:
+          MavenPom:
+            - orders/pom.xml
+          ServiceDirPath:
+            - orders
+        configs:
+          Maven:
+            mavenAppName: orders
+            artifactType: jar
+            mavenProfiles:
+              - local
+              - openshift
+              - openshift-manual
+              - openshift-it
+          SpringBoot:
+            springBootAppName: orders
+            springBootProfiles:
+              - local
+              - openshift
+  transformers:
+    Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
+    CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
+    ClusterSelector: m2kassets/inbuilt/transformers/kubernetes/clusterselector/clusterselector.yaml
+    ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
+    ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
+    ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
+    DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
+    DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
+    DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
+    DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
+    EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
+    EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
+    Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
+    Gradle: m2kassets/inbuilt/transformers/dockerfilegenerator/java/gradle/gradle.yaml
+    Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
+    Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
+    Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
+    Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
+    KubernetesVersionChanger: m2kassets/inbuilt/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
+    Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
+    Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
+    Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
+    PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
+    Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizer/parameterizer.yaml
+    Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
+    ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
+    Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
+    Rust-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
+    Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
+    Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
+    WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
+    WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
+    WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
+    WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
+    WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
+    ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
     </details>
 
@@ -296,7 +254,7 @@ Next step [Transform](/tutorials/migration-workflow/transform)
 
 1. Bring up the UI:
     ```console
-    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0-rc.1
+    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0
     INFO[0000] Starting Move2Kube API server at port: 8080
     ```
 
@@ -316,7 +274,7 @@ Next step [Transform](/tutorials/migration-workflow/transform)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/08-upload-project-input-1.png)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/09-upload-project-input-2.jpeg)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/10-src-uploaded.png)
-    Optional: If you have collected some data using the `move2kube collect` command you can create a zip file and upload that as well. Make sure to upload it as `sources`.
+    Optional: If you have [collected](/tutorials/migration-workflow/collect) cloud foundry runtime metadata using the `move2kube collect` command you can create a zip file and upload that as well. Make sure to upload it as `sources`.
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/11-upload-project-input-3.jpeg)
     ![No project inputs]({{ site.baseurl }}/assets/images/migration-workflow/12-cf-uploaded.png)
 

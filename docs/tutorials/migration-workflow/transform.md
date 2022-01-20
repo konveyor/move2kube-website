@@ -16,13 +16,13 @@ During the transformation the transformers might run into situations where it re
 Example: Some of the questions Move2Kube will ask is about the type of container registry where you want to push the images to.
 It also needs to know the registry namespace, and any authentication necessary for pulling images from that registry.
 
-If you want to skip the QA, you can use the `--qa-skip` flag. However rather than skipping the questions, you can give a config file that contains all of the answers using the `--config` flag.
+If you want to skip the QA, you can use the `--qa-skip` flag to accept default answers. However rather than skipping the questions, you can give a config file that contains all of the answers using the `--config` flag.
 
-After the transformation is finished, all the answers are written to a config file called `m2kconfig,yaml`. This can be used for later transformations.
+After the transformation is finished, all the answers are written to a config file called `m2kconfig.yaml`. This can be used for later transformations.
 
 The transformation phase produces all the output files we need including, the Dockerfiles, build scripts for containerizing  various services and Kubernetes Deployment, Service and Ingress YAMLs necessary for deploying our application to a Kubernetes cluster.
 
-In addition Move2Kube also generate the CI/CD pipeline and parameterized versions of all those Kubernetes YAMLs (Helm chart, Kustomize YAMLs, Openshift templates, etc.) for various environments (dev, staging, prod, etc.).
+In addition Move2Kube also generates the CI/CD pipeline and parameterized versions of all those Kubernetes YAMLs (Helm chart, Kustomize YAMLs, Openshift templates, etc.) for various environments (dev, staging, prod, etc.).
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ In addition Move2Kube also generate the CI/CD pipeline and parameterized version
 1. Run `move2kube transform` in the same directory as the plan file. This will detect the plan file and use it to find the source directory.
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
-    - An extra spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. We could also do this by editing the plan file.
+    - A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. We could also do this by editing the plan file.
     - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `local` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
@@ -275,7 +275,7 @@ In addition Move2Kube also generate the CI/CD pipeline and parameterized version
     ![QA 1]({{ site.baseurl }}/assets/images/migration-workflow/16-qa-1.jpeg)
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
-    - An extra spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. Again, we could have done this by editing the plan file.
+    - A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. Again, we could have done this by editing the plan file.
     - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `local` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
@@ -307,10 +307,10 @@ Now that we have generated the output we can run the scripts inside the `scripts
 
 ## Next steps
 
-> Optional: [Collect information from running apps](/tutorials/migration-workflow/collect)
+> Optionally, As part of the above transformation if runtime information of the cloud foundry app is required, you can use the collect output in planning and transformation : [Collect information from running apps](/tutorials/migration-workflow/collect)
 
 ### Customizing the output
 
-After inspecting the output that Move2Kube produced we might see some things we want to change. For example, we might want to change the base image used in the Dockerfiles, add some annotations to the Ingress YAML, maybe change the output directory structure, change which values are parameterized in the Helm chart, generate some new files, etc. For all these user specific requirements and more, we can write our own custom transformers.
+After inspecting the output that Move2Kube produced we might see some things we want to change. For example, we might want to change the base image used in the Dockerfiles, add some annotations to the Ingress YAML, maybe change the output directory structure, change which values are parameterized in the Helm chart, generate some new files, etc. For all these user specific requirements and more, we can use customizations.
 
 Next step [Customizing the output](/tutorials/customizing-the-output)
