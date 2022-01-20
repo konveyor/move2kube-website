@@ -17,7 +17,7 @@ This information is stored in YAML format in a plan file called `m2k.plan`. This
 
 ## Prerequisites
 
-We will be using the [cf-multicomp-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/cf-multicomp-app) app. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/cf-multicomp-app/src.zip)
+We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip)
 
   ```console
   $ curl -Lo src.zip 'https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip?raw=true'

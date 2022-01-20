@@ -34,7 +34,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     space:          dev
     ```
 
-1. Make sure you have already deployed the [cf-multicomp-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/cf-multicomp-app) app in the Cloud Foundry instance.
+1. Make sure you have already deployed the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app in the Cloud Foundry instance.
 
     ```console
     $ cf apps
@@ -74,7 +74,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     ```
     The `CfApps` file contains all the information that was collected about our app such as service names, environment variables, ports, etc.
 
-    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/cf-multicomp-app/cfapps.yaml)
+    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/cfapps.yaml)
 
     <details markdown="block">
     <summary markdown="block">
