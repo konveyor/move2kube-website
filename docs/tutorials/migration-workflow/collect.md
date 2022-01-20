@@ -13,12 +13,12 @@ nav_order: 3
 
 To analyze our running application in Cloud Foundry, the Move2Kube CLI tool provides a command called `collect`. As the name suggests the `collect` command collects information about applications running in the cloud.
 
-- It looks for CLI tools such as `cf`, `oc`, and `kubectl` that you have installed.
+- For collecting information from cf running instance, you might require `cf` cli for logging into cloud foundry. If you want to target a specific Kubernetes cluster for your yamls, you will require either `oc`, and `kubectl` to collect information about the target cluster.
 
-- If you are logged into any clusters, it will use the tools it found to extract as much information as possible about the apps that are running. Information about Kubernetes CRDs, Cloud Foundry apps, environment variables, etc. are all collected. In the case of Kubernetes clusters it collects information about the types of resources that are installed on the cluster, whether it has Tekton, BuildConfigs, etc.
+- If you are logged into the cloud foundry instance, information about the apps such as environment variables, services and more are collected. If you are logged into Kubernetes clusters, it collects information about the types of resources that are installed on the cluster, whether it has Tekton, BuildConfigs, etc.
 
-- All the information that was collected gets written into a directory called `m2k_collect` as YAML files. In this case, the info about Cloud Foundry apps is written to a sub-directory called `cf`. These cluster metadata YAMLs can then be used during the plan phase to smoothen the migration.
-For example: Some of the information that is collected is port information. This allows Move2Kube to select the right ports for each service when generating Dockerfiles for containerizing these services.
+- All the information that was collected gets written into a directory called `m2k_collect` as YAML files. In this case, the info about Cloud Foundry apps is written to a sub-directory called `cf`. These YAMLs can then be used during the plan phase to get a wholistic plan combining the source and metadata.
+For example: Some of the information that is collected is port and environment variable information. This allows Move2Kube to select the right ports and set right environment variables for each service when generating Dockerfiles for containerizing these services.
 
 ## Collecting information from e2e-demo app
 
@@ -34,7 +34,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     space:          dev
     ```
 
-1. Make sure you have already deployed the [e2e-demo](https://github.com/konveyor/move2kube-demos/tree/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app) app in the Cloud Foundry cluster.
+1. Make sure you have already deployed the [cf-multicomp-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/cf-multicomp-app) app in the Cloud Foundry instance.
 
     ```console
     $ cf apps
@@ -74,7 +74,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     ```
     The `CfApps` file contains all the information that was collected about our app such as service names, environment variables, ports, etc.
 
-    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/09d8b76369a3447f142a20888ce9747fca9f4fd6/samples/enterprise-app/cfapps.yaml)
+    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/cf-multicomp-app/cfapps.yaml)
 
     <details markdown="block">
     <summary markdown="block">
@@ -378,10 +378,10 @@ You can run `cf target` to check if you are logged in. The output should be simi
     ```
     </details>
 
-Now that we have collected the runtime information from the app running in our Cloud Foundry cluster, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are same as in [Plan](/tutorials/migration-workflow/plan).
+Now that we have collected the runtime information from the app running in our Cloud Foundry instance, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are same as in [Plan](/tutorials/migration-workflow/plan).
 
 ## Next steps
 
-Next we will look at customizing the output that Move2Kube produces using custom transformers.
+Next we will look at customizing the output that Move2Kube produces using customizations.
 
 Next step [Customizing the output](/tutorials/customizing-the-output)
