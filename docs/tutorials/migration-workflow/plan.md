@@ -17,20 +17,12 @@ This information is stored in YAML format in a plan file called `m2k.plan`. This
 
 ## Prerequisites
 
-We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip)
+We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app. Download it using the below command.
 
   ```console
-  $ curl -Lo src.zip 'https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/src.zip?raw=true'
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                  Dload  Upload   Total   Spent    Left  Speed
-  100   149  100   149    0     0    295      0 --:--:-- --:--:-- --:--:--   300
-  100   160  100   160    0     0    175      0 --:--:-- --:--:-- --:--:--  156k
-  100  603k  100  603k    0     0   261k      0  0:00:02  0:00:02 --:--:-- 4825k
-  $ unzip src.zip 
-  $ ls
-  src		src.zip
-  $ ls src
-  README.md		customers-tomcat	docs			frontend		gateway			orders
+      $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
+      $ ls src
+      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
   ```
 
 ## Planning using the CLI
