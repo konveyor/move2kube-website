@@ -37,9 +37,10 @@ done
 if [ -z "$dir" ] 
 then
     curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
-    unzip ${repo}.zip "${repo}-main/*"
-    mv "${repo}-main/" "${repo}"
     rm -rf ${repo}.zip
+    unzip ${repo}.zip "${repo}-main/*"
+    rm -rf "${repo}"
+    mv "${repo}-main/" "${repo}"
     rm -rf "${repo}-main"
     if [ $zip_flag == "true" ] 
     then 
@@ -49,9 +50,10 @@ then
 else
     base_dir=${dir##*/}
     curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
-    unzip ${repo}.zip "${repo}-main/$dir/*"
-    mv "${repo}-main/$dir" "${base_dir}"
     rm -rf ${repo}.zip
+    unzip ${repo}.zip "${repo}-main/$dir/*"
+    rm -rf "${base_dir}"
+    mv "${repo}-main/$dir" "${base_dir}"
     rm -rf "${repo}-main"
     if [ $zip_flag == "true" ] 
     then 
