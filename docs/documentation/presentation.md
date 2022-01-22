@@ -3,7 +3,7 @@ layout: default
 title: Presentation
 permalink: /documentation/presentation
 parent: Documentation
-nav_order: 1
+nav_order: 3
 ---
 
 # Konveyor Move2Kube Presentation
