@@ -23,6 +23,7 @@ Move2Kube generates Kubernetes yamls based on the needs of the application. But 
 
   ```console
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
+      
       $ ls src
       README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
   ```
@@ -135,4 +136,4 @@ The code of the starlark script is shown below. At a high-level, the code requir
 
 The above steps can be replicated in the UI, by uploading the zip of the custom transformer as a `customization`. You can get the zip of the source and customization by adding a `-z` to the end of the commands used in step 2 and step 4.
 
-Next step [Creating custom Dockerfile](/tutorials/customizing-the-output/custom-dockerfile)
+Next step [Adding custom Dockerfile or any custom file](/tutorials/customizing-the-output/custom-dockerfile-custom-files)
