@@ -7,20 +7,18 @@ grand_parent: Tutorials
 nav_order: 2
 ---
 
-# Creating custom Dockerfile
+# Adding custom Dockerfile or any custom file 
 
 ## Big picture
 
 In this example, we look at how to make Move2Kube add custom Dockerfile and a custom file. 
 
 1. Let us start by creating an empty workspace directory say `workspace` and make it the current working directory. We will assume all commands are executed within this directory.
-
   ```console
       $ mkdir workspace && cd workspace
   ```
 
 2. Lets use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
-
   ```console
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
 
@@ -28,7 +26,7 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
       README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
   ```
 
-3. Let's first run Move2Kube without any **without** any customization. If we notice the `Dockerfile` generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as base image, and there are no scripts named `start-nodejs.sh`. Once done, lets delete the `myproject` directory.
+3. Let's first run Move2Kube **without** any customization. If we notice the `Dockerfile` generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as base image, and there are no scripts named `start-nodejs.sh`. Once done, lets delete the `myproject` directory.
   ```console
       $ move2kube transform -s src/ --qa-skip && ls myproject/source/frontend && cat myproject/source/frontend/Dockerfile && rm -rf myproject
 
@@ -41,7 +39,6 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
       EXPOSE 8080
       CMD npm run start
   ```
-
 Let us say, we want to change the base image `registry.access.redhat.com/ubi8/nodejs-12` provided by Move2Kube, to some custom image, say `quay.io/konveyor/nodejs-12`. This can be achieved by modifying the template used by the Nodejs transformer.
 
 4. We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile) of the [nodejs in-built transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers/dockerfilegenerator/nodejs) to achieve this. We copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-custom-files) into the `customizations` sub-directory.
@@ -96,11 +93,13 @@ In this case, we change the Dockerfile template, add a script and change the tra
     EXPOSE {{ .Port }}
     CMD sh start-nodejs.sh
   ```
+
 2. Add `customizations/custom-dockerfile-custom-files/templates/start-nodejs.sh`.
   ```console
     $ ls customizations/custom-dockerfile-custom-files/templates/
     Dockerfile	start-nodejs.sh
   ```
+
 3. The `nodejs.yaml` is the transformer configuration. We have [two changes](https://github.com/konveyor/move2kube/blob/main/assets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml) here compared to the in-built transformer: 
 - The name of our custom transformer is `Nodejs-CustomFiles` (see `name` field in the `metadata` section). 
 - We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if this transformer is present.
@@ -133,4 +132,4 @@ In this case, we change the Dockerfile template, add a script and change the tra
         defaultNodejsVersion: "12"
   ```
 
-Next step [Parameterizering specific fields in the Helm Chart](/tutorials/customizing-the-output/parameterizer)
+Next step [Parameterizing custom fields in Helm Chart, Kustomize, OC Templates](/tutorials/customizing-the-output/custom-parameterization-of-helm-charts-kustomize-octemplates)
