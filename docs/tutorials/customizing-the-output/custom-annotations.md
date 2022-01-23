@@ -4,7 +4,7 @@ title: "Adding custom annotations to Kubernetes YAMLs"
 permalink: /tutorials/customizing-the-output/custom-annotations
 parent: "Customizing the output"
 grand_parent: Tutorials
-nav_order: 1
+nav_order: 2
 ---
 
 # Adding custom annotations to Kubernetes YAMLs
@@ -134,4 +134,4 @@ The code of the starlark script is shown below. At a high-level, the code requir
 
 The above steps can be replicated in the UI, by uploading the zip of the custom transformer as a `customization`. You can get the zip of the source and customization by adding a `-z` to the end of the commands used in step 2 and step 4.
 
-Next step [Adding custom Dockerfile or any custom file](/tutorials/customizing-the-output/custom-dockerfile-custom-files)
+Next step [Parameterizing custom fields in Helm Chart, Kustomize, OC Templates](/tutorials/customizing-the-output/custom-parameterization-of-helm-charts-kustomize-octemplates)
