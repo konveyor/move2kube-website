@@ -127,4 +127,4 @@ spec:
 {% endraw %}
 ```
 
-Next step [Injecting custom files into the container image](/tutorials/customizing-the-output/script-inject)
+Next step [Injecting custom files into the container image](/tutorials/customizing-the-output/custom-helmchart-gen)
