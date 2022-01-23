@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Adding custom annotations to Kubernetes YAMLs"
-permalink: /tutorials/customizing-the-output/ingress-annotator
+permalink: /tutorials/customizing-the-output/custom-annotations
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 1
@@ -27,10 +27,9 @@ Move2Kube generates Kubernetes yamls based on the needs of the application. But 
       README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
   ```
 
-3. To see what we get **without** any customization. The output ingress does not have any annotation. Then lets delete the myproject directory.
+3. Let's first run Move2Kube without any **without** any customization. The output ingress does not have any annotation. Once done, lets delete the `myproject` directory.
   ```console
-      $ move2kube transform -s src/ --qa-skip
-      $ cat myproject/deploy/yamls/myproject-ingress.yaml
+      $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls/myproject-ingress.yaml && rm -rf myproject
       apiVersion: networking.k8s.io/v1
       kind: Ingress
       metadata:
@@ -38,14 +37,11 @@ Move2Kube generates Kubernetes yamls based on the needs of the application. But 
         labels:
           move2kube.konveyor.io/service: myproject
         name: myproject
-      $ rm -rf myproject
   ```
 
 4. We will use the starlark based custom transformer [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation). We copy it into the `customizations` sub-directory.
   ```console
-      $ mkdir customizations && cd customizations
-      $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-kubernetes-annotation -r move2kube-transformers
-      $ cd ..
+      $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-kubernetes-annotation -r move2kube-transformers -o customizations
   ```
 
 5. Now lets transform with this customization. Specify the customization using the `-c` flag. 
@@ -139,4 +135,4 @@ The code of the starlark script is shown below. At a high-level, the code requir
 
 The above steps can be replicated in the UI, by uploading the zip of the custom transformer as a `customization`. You can get the zip of the source and customization by adding a `-z` to the end of the commands used in step 2 and step 4.
 
-Next step [Changing the base image in Dockerfile](/tutorials/customizing-the-output/base-image-change)
+Next step [Creating custom Dockerfile](/tutorials/customizing-the-output/custom-dockerfile)
