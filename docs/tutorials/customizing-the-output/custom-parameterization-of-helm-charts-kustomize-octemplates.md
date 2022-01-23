@@ -257,4 +257,4 @@ The transformer configuration is in `parameterizers.yaml` and the parameterizati
     {% endraw %}
   ```
 
-Next step [Customizing the output directory structure](/tutorials/customizing-the-output/output-directory-structure)
+Next step [Adding custom files and directories in custom locations](/tutorials/customizing-the-output/add-custom-files-directories-in-custom-locations)

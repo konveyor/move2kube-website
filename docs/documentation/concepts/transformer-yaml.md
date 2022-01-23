@@ -62,7 +62,7 @@ Below we have the details of each field in the YAML. The `apiVersion` and `kind`
 		- `merge` : `boolean` - If true all artifacts of this type will be merged into a single one before being passed to your transformer.
 	- `produces` : `object ([string]: object)` - This can be used to tell Move2Kube the type of output artifacts your transformer will return.
 		The key is a string containing the type of the artifact. The value is an object with the following fields:
-		- `changeTypeTo` : `string` - This can be used to change the artifact type to something else. Useful for overriding the behaviour of existing transformers.
+		- `changeTypeTo` : `string` - This can be used to change the artifact type to something else. Useful for overriding the behavior of existing transformers.
 	- `dependency` : `any` - TODO
 	- `override` : `any` - TODO
 	- `templates` : `string` - TODO
