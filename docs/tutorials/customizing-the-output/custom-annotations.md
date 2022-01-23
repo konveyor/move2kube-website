@@ -14,13 +14,11 @@ nav_order: 1
 Move2Kube generates Kubernetes yamls based on the needs of the application. But there might be situations where you might require specific fields to look different in the output. In this example, we illustrate how we could add an annotation to the Ingress YAML specifying an ingress class. 
 
 1. Let us start by creating an empty workspace directory say `workspace` and make it the current working directory. We will assume all commands are executed within this directory.
-
   ```console
       $ mkdir workspace && cd workspace
   ```
 
 2. Lets use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
-
   ```console
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
       
@@ -28,7 +26,7 @@ Move2Kube generates Kubernetes yamls based on the needs of the application. But 
       README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
   ```
 
-3. Let's first run Move2Kube without any **without** any customization. The output ingress does not have any annotation. Once done, lets delete the `myproject` directory.
+3. Let's first run Move2Kube **without** any customization. The output ingress does not have any annotation. Once done, lets delete the `myproject` directory.
   ```console
       $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls/myproject-ingress.yaml && rm -rf myproject
       apiVersion: networking.k8s.io/v1
