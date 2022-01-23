@@ -8,65 +8,36 @@ nav_order: 5
 
 # Migrating from Docker Compose to Kubernetes
 
-## Prerequisites
+### TLDR
 
-1. Complete the [Migration Workflow](/tutorials/migration-workflow) tutorial first and familiarize yourself with the [transformation](/tutorials/migration-workflow/transform) process.
+```console
+$ move2kube transform -s docker-compose
+```
+
+Move2Kube will automatically analyse all the yaml files in docker-compose directory and transform and create all artifacts required for deploying the application in Kubernetes.
+
+## Prerequisites
 
 1. A Kubernetes cluster. If you don't have one you can install [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
 
 ## Overview
 
-In this tutorial we will look at migrating an application written for Docker Compose to run on Kubernetes. We will be using the 2 [Docker Compose](https://github.com/konveyor/move2kube-demos/tree/076850e75846a11b58fcfa12aeb49468ca045423/samples/docker-compose) samples from the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repo.
+In this tutorial we will look at migrating an application written for Docker Compose to run on Kubernetes. We will be using the 2 [Docker Compose](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose) samples from the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repo.
 
-The [first sample](https://github.com/konveyor/move2kube-demos/tree/076850e75846a11b58fcfa12aeb49468ca045423/samples/docker-compose/single-service) is a web app with a single service using Nginx. It uses a prebuilt image.
+The [first sample](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/single-service) is a web app with a single service using Nginx. It uses a prebuilt image.
 
-The [second sample](https://github.com/konveyor/move2kube-demos/tree/076850e75846a11b58fcfa12aeb49468ca045423/samples/docker-compose/multiple-services) is more complicated. It's also a web app but it has 3 services. A frontend written in PHP for Apache, an API backend written for NodeJS and a service for caching the calculations performed by the backend. For the cache service we use a prebuilt Redis image.
+The [second sample](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services) is more complicated. It's also a web app but it has 3 services. A frontend written in PHP for Apache, an API backend written for NodeJS and a service for caching the calculations performed by the backend. For the cache service we use a prebuilt Redis image.
 
-Below we show the steps for migrating the second sample. The steps for the first sample are similar.
+Below we show the steps for migrating the second sample. The steps for the first sample are similar, except that since it uses prebuilt images, you can skip the build and push images portion.
 
 ## Steps
 
-1. Download the [zip file](https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip) containing the Docker Compose samples and extract the second sample from it.
+1. Download the `samples/docker-compose/multiple-services` sample.
 
-    <details markdown="block">
-    <summary markdown="block">
-    ```console
-    # click to see the output
-    $ curl -Lo docker-compose.zip https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip
-    $ mv docker-compose/multiple-services .
-    ```
-    </summary>
-    ```console
-    $ curl -Lo docker-compose.zip https://github.com/konveyor/move2kube-demos/raw/16ef50910b590f4a3cba88555538f79a783656e2/samples/docker-compose.zip
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100   187  100   187    0     0    421      0 --:--:-- --:--:-- --:--:--   429
-    100  6438  100  6438    0     0   6797      0 --:--:-- --:--:-- --:--:--     0
-    $ unzip docker-compose.zip 
-    Archive:  docker-compose.zip
-       creating: docker-compose/
-       creating: docker-compose/single-service/
-      inflating: docker-compose/single-service/docker-compose.yaml  
-      inflating: docker-compose/m2kqacache.yaml  
-       creating: docker-compose/multiple-services/
-     extracting: docker-compose/multiple-services/.m2kignore  
-      inflating: docker-compose/multiple-services/docker-compose.yaml  
-       creating: docker-compose/multiple-services/web/
-      inflating: docker-compose/multiple-services/web/index.php  
-     extracting: docker-compose/multiple-services/web/Dockerfile  
-      inflating: docker-compose/multiple-services/web/fib.php  
-       creating: docker-compose/multiple-services/api/
-      inflating: docker-compose/multiple-services/api/Dockerfile  
-      inflating: docker-compose/multiple-services/api/index.js  
-      inflating: docker-compose/multiple-services/api/package-lock.json  
-      inflating: docker-compose/multiple-services/api/package.json  
+  ```console
+    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/docker-compose/multiple-services -r move2kube-demos
     $ ls
-    docker-compose		docker-compose.zip
-    $ ls docker-compose
-    m2kqacache.yaml		multiple-services	single-service
-    $ mv docker-compose/multiple-services .
-    $ ls
-    docker-compose		docker-compose.zip	multiple-services
+    multiple-services
     ```
     </details>
 

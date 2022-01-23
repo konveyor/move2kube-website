@@ -16,103 +16,20 @@ In this tutorial we will see how we can transform a set of sample applications t
 
 1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli/)
 
-1. Download [language-platforms.zip](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms.zip) which we will be using for this tutorial. The language-platforms.zip file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
+1. We will use [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
 
 ## Steps to use the CLI to do a transformation
 
-1. Unzip the `language-platforms.zip` file that we downloaded. We can see there are several directories. Each directory contains a simple web application written in different languages.
-    <details markdown="block">
-    <summary markdown="block">
+1. Download the language platforms sample. Each directory contains a simple web application written in different languages.
     ```console
-    # click to see the output
-    $ curl -Lo language-platforms.zip https://github.com/konveyor/move2kube-demos/raw/b2653958ec51b1fd2f20e0ee6588da7c69a1d867/samples/language-platforms.zip
-    $ unzip language-platforms.zip
-    ```
-    </summary>
-    ```console
-    $ curl -Lo language-platforms.zip https://github.com/konveyor/move2kube-demos/raw/b2653958ec51b1fd2f20e0ee6588da7c69a1d867/samples/language-platforms.zip
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100   196  100   196    0     0    440      0 --:--:-- --:--:-- --:--:--   446
-    100 53388  100 53388    0     0  48312      0  0:00:01  0:00:01 --:--:-- 1263k
-    $ unzip language-platforms.zip 
-    Archive:  language-platforms.zip
-       creating: language-platforms/
-     extracting: language-platforms/.m2kignore  
-       creating: language-platforms/nodejs/
-      inflating: language-platforms/nodejs/main.js  
-      inflating: language-platforms/nodejs/package.json  
-       creating: language-platforms/java-gradle-war/
-      inflating: language-platforms/java-gradle-war/java-gradle-war.war  
-       creating: language-platforms/python/
-      inflating: language-platforms/python/requirements.txt  
-      inflating: language-platforms/python/main.py  
-       creating: language-platforms/golang/
-      inflating: language-platforms/golang/go.mod  
-      inflating: language-platforms/golang/main.go  
-       creating: language-platforms/rust/
-      inflating: language-platforms/rust/Cargo.toml  
-      inflating: language-platforms/rust/Rocket.toml  
-       creating: language-platforms/rust/src/
-      inflating: language-platforms/rust/src/main.rs  
-       creating: language-platforms/php/
-      inflating: language-platforms/php/index.php  
-      inflating: language-platforms/php/site.conf  
-       creating: language-platforms/java-maven-war/
-      inflating: language-platforms/java-maven-war/java-maven-war.war  
-       creating: language-platforms/java-maven/
-      inflating: language-platforms/java-maven/pom.xml  
-       creating: language-platforms/java-maven/src/
-       creating: language-platforms/java-maven/src/main/
-       creating: language-platforms/java-maven/src/main/webapp/
-      inflating: language-platforms/java-maven/src/main/webapp/index.jsp  
-       creating: language-platforms/java-maven/src/main/webapp/WEB-INF/
-      inflating: language-platforms/java-maven/src/main/webapp/WEB-INF/web.xml  
-       creating: language-platforms/django/
-      inflating: language-platforms/django/requirements.txt  
-       creating: language-platforms/django/webroot/
-       creating: language-platforms/django/webroot/migrations/
-      inflating: language-platforms/django/webroot/migrations/__init__.py  
-      inflating: language-platforms/django/webroot/models.py  
-      inflating: language-platforms/django/webroot/__init__.py  
-      inflating: language-platforms/django/webroot/apps.py  
-      inflating: language-platforms/django/webroot/admin.py  
-      inflating: language-platforms/django/webroot/tests.py  
-      inflating: language-platforms/django/webroot/urls.py  
-      inflating: language-platforms/django/webroot/views.py  
-     extracting: language-platforms/django/db.sqlite3  
-      inflating: language-platforms/django/Pipfile  
-       creating: language-platforms/django/simplewebapp/
-      inflating: language-platforms/django/simplewebapp/asgi.py  
-      inflating: language-platforms/django/simplewebapp/__init__.py  
-      inflating: language-platforms/django/simplewebapp/settings.py  
-      inflating: language-platforms/django/simplewebapp/urls.py  
-      inflating: language-platforms/django/simplewebapp/wsgi.py  
-      inflating: language-platforms/django/manage.py  
-      inflating: language-platforms/django/Pipfile.lock  
-       creating: language-platforms/ruby/
-      inflating: language-platforms/ruby/config.ru  
-      inflating: language-platforms/ruby/ruby.rb  
-      inflating: language-platforms/ruby/Gemfile  
-       creating: language-platforms/ruby/views/
-      inflating: language-platforms/ruby/views/main.erb  
-       creating: language-platforms/java-gradle/
-      inflating: language-platforms/java-gradle/build.gradle  
-       creating: language-platforms/java-gradle/src/
-       creating: language-platforms/java-gradle/src/main/
-       creating: language-platforms/java-gradle/src/main/webapp/
-       creating: language-platforms/java-gradle/src/main/webapp/WEB-INF/
-      inflating: language-platforms/java-gradle/src/main/webapp/WEB-INF/web.xml  
-       creating: language-platforms/java-gradle/src/main/java/
-       creating: language-platforms/java-gradle/src/main/java/simplewebapp/
-      inflating: language-platforms/java-gradle/src/main/java/simplewebapp/MainServlet.java   
+    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos
+
     $ ls language-platforms
     django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
     ```
-    </details>
 
 1. Run `move2kube plan -s language-platforms` to generate a plan file. The `-s` flag is used to specify a source directory. Here we give `language-platforms` because we want
-Move2Kube to analyze the sourcd code inside the `language-platforms` directory and come up with a plan for transforming them to Kubernetes YAMLs.
+Move2Kube to analyze the source code inside the `language-platforms` directory and come up with a plan for transforming them to Kubernetes YAMLs.
     <details markdown="block">
     <summary markdown="block">
     ```console
@@ -889,7 +806,7 @@ The name of the output directory is the same as the project name (by default `my
 
     The CLI has created Kubernetes YAMLs for us which are stored inside the `deploy/yamls` directory. For each of the directories and the services identified, it has created the deployment artifacts, service artifacts and the ingress as required.  The `scripts` directory contains the scripts for building the images for the applications using Dockerfiles.
 
-    Many scripts like `buildimages.sh` and `pushimages.sh` are also present inside the directory. It has also created a simple `deploy/compose/docker-compose.yaml` for you, so that you can test the images locally if you want. It has also created Tekton artifacts inside the `deploy/cicd/tekton` directory that are required if you want to use Tekton as your CI/CD pipeline.
+    Many scripts like `builddockerimages.sh` and `pushimages.sh` are also present inside the directory. It has also created a simple `deploy/compose/docker-compose.yaml` for you, so that you can test the images locally if you want. It has also created Tekton artifacts inside the `deploy/cicd/tekton` directory that are required if you want to use Tekton as your CI/CD pipeline.
 
     The `Readme.md` file guides on the next steps to be followed.
 
@@ -906,19 +823,19 @@ The name of the output directory is the same as the project name (by default `my
     For production usage use the CI/CD pipelines for deployment.
     ```
 
-1. Next we run the `buildimages.sh` script. This step may take some time to complete.
+1. Next we run the `builddockerimages.sh` script. This step may take some time to complete.
 
     <details markdown="block">
     <summary markdown="block">
     ```console
     # click to see the output
     $ cd scripts/
-    $ ./buildimages.sh
+    $ ./builddockerimages.sh
     ```
     </summary>
     ```console
     $ cd scripts/
-    $ ./buildimages.sh
+    $ ./builddockerimages.sh
     [+] Building 2.2s (11/11) FINISHED
     => [internal] load build definition from Dockerfile 0.0s
     => => transferring dockerfile: 1.36kB 0.0s

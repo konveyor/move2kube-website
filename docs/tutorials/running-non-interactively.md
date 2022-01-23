@@ -8,12 +8,6 @@ nav_order: 3
 
 # Running non-interactively
 
-## Prerequisites
-
-Complete the [Migration Workflow](/tutorials/migration-workflow) tutorial first and familiarize yourself with the [transformation](/tutorials/migration-workflow/transform) process.
-
-We will be using the same [e2e-demo](https://github.com/konveyor/move2kube-demos/tree/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app) app from that tutorial. You can download the zip file containing the source code from [here](https://github.com/konveyor/move2kube-demos/blob/dda15a4c8bd7a750d0e57bd31dd926fd135c4a3c/samples/enterprise-app/src.zip)
-
 ## Overview
 
 ### TLDR
@@ -22,8 +16,7 @@ We will be using the same [e2e-demo](https://github.com/konveyor/move2kube-demos
 $ move2kube transform --config path/to/m2kconfig.yaml
 ```
 
-Move2Kube asks a lot of questions during the transformation phase. After looking at the output of the transformation we may want to rerun the transformation,
-giving different answers to some of the questions that were asked. In order to avoid answering all of the same questions over and over, Move2Kube provides us with a simple configuration file.
+Move2Kube interacts with the user through questions during the transformation phase. After looking at the output of the transformation we may want to rerun the transformation, giving different answers to some of the questions that were asked. In order to avoid answering all of the same questions over and over, Move2Kube provides us with a simple configuration file.
 
 If we look at the directory where we ran the `move2kube transform` command, we see a file called `m2kconfig.yaml`. This file contains the answers we provided to all of the questions that were asked. There is also a `m2kqacache.yaml` file which contains both the questions and the answers in more detail.
 
@@ -31,16 +24,23 @@ We can use this file when we run the transform using the `--config` flag
 
 ## Steps
 
+1. Download the language platforms sample. Each directory contains a simple web application written in different languages.
+    ```console
+    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos
+
+    $ ls language-platforms
+    django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
+    ```
+
 1. If you already have a `m2kconfig.yaml` from a previous run then skip this step.  
-    Run the plan and transform on the `e2e-demo` source, answer all the questions as appropriate.
+    Run the plan and transform on the `language-platforms` source, answer all the questions as appropriate.
     ```console
     $ ls
-    src	src.zip
-    $ move2kube plan -s src
+    language-platforms
+    $ move2kube plan -s language-platforms
     INFO[0000] Configuration loading done                   
     INFO[0000] Planning Transformation - Base Directory     
-    ...
-    INFO[0000] No of services identified : 6                
+    ...                
     INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
     $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
@@ -53,7 +53,7 @@ We can use this file when we run the transform using the `--config` flag
 
     ```console
     $ ls
-    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	src		src.zip
+    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	language-platforms
     $ cat m2kconfig.yaml 
     ```
     Your `m2kconfig.yaml` might look different depending on what questions were asked and what answers you gave.
@@ -71,90 +71,104 @@ We can use this file when we run the transform using the `--config` flag
       containerruntime: docker
       minreplicas: "2"
       services:
-        config-utils:
-          enable: false
-        customers-tomcat:
+        golang:
           "8080":
-            urlpath: /customers-tomcat
+            urlpath: /golang
           enable: true
-          wartransformer: Tomcat
-        frontend:
-          "8080":
-            urlpath: /frontend
+          ports:
+            - "8080"
+        java-gradle:
+          "9080":
+            urlpath: /java-gradle
           enable: true
-          port: "8080"
-        gateway:
-          "8080":
-            urlpath: /gateway
-          activemavenprofiles:
-            - local
-          activespringbootprofiles:
-            - local
+          wartransformer: Liberty
+        java-maven:
+          "9080":
+            urlpath: /java-maven
           enable: true
-          port: "8080"
-        inventory:
+          wartransformer: Liberty
+        myproject-django:
           "8080":
-            urlpath: /inventory
-          activemavenprofiles:
-            - local
+            urlpath: /myproject-django
           enable: true
           port: "8080"
-        orders:
+        myproject-java-war:
+          "9080":
+            urlpath: /myproject-java-war
+          enable: true
+          wartransformer: Liberty
+        myproject-php:
+          "8082":
+            urlpath: /myproject-php
+          enable: true
+        myproject-python:
           "8080":
-            urlpath: /orders
-          activemavenprofiles:
-            - local
-          activespringbootprofiles:
-            - local
+            urlpath: /myproject-python
           enable: true
           port: "8080"
+        nodejs:
+          "8080":
+            urlpath: /nodejs
+          enable: true
+          port: "8080"
+        ruby:
+          "8080":
+            urlpath: /ruby
+          enable: true
+          port: "8080"
+        rust:
+          "8085":
+            urlpath: /rust
+          enable: true
+          port: "8085"
       target:
         clustertype: Kubernetes
         imageregistry:
           logintype: No authentication
-          namespace: move2kube
+          namespace: myproject
           url: quay.io
         ingress:
-          host: localhost
+          host: myproject.com
           tls: ""
       transformers:
         types:
-          - Buildconfig
-          - ClusterSelector
-          - ComposeGenerator
-          - Liberty
-          - Parameterizer
-          - Rust-Dockerfile
-          - Tekton
-          - Tomcat
-          - WinSLWebApp-Dockerfile
-          - Python-Dockerfile
-          - ReadMeGenerator
-          - WarRouter
-          - CloudFoundry
-          - Knative
-          - WinWebApp-Dockerfile
-          - DockerfileParser
-          - Maven
-          - ContainerImagesPushScriptGenerator
-          - Golang-Dockerfile
           - EarRouter
-          - Gradle
-          - KubernetesVersionChanger
-          - Nodejs-Dockerfile
-          - WarAnalyser
-          - ZuulAnalyser
-          - DockerfileDetector
-          - DockerfileImageBuildScript
-          - EarAnalyser
-          - Jar
-          - Kubernetes
-          - Ruby-Dockerfile
-          - ComposeAnalyser
-          - DotNetCore-Dockerfile
-          - Jboss
-          - PHP-Dockerfile
           - WinConsoleApp-Dockerfile
+          - Gradle
+          - Jar
+          - WinSLWebApp-Dockerfile
+          - DockerfileImageBuildScript
+          - DotNetCore-Dockerfile
+          - EarAnalyser
+          - Golang-Dockerfile
+          - Ruby-Dockerfile
+          - Tomcat
+          - Buildconfig
+          - ComposeGenerator
+          - ContainerImagesPushScriptGenerator
+          - DockerfileParser
+          - WarAnalyser
+          - WinWebApp-Dockerfile
+          - WarRouter
+          - ZuulAnalyser
+          - KubernetesVersionChanger
+          - Tekton
+          - Maven
+          - PHP-Dockerfile
+          - Parameterizer
+          - Python-Dockerfile
+          - ClusterSelector
+          - DockerfileDetector
+          - Kubernetes
+          - Liberty
+          - Rust-Dockerfile
+          - Nodejs-Dockerfile
+          - ReadMeGenerator
+          - CloudFoundry
+          - ComposeAnalyser
+          - Jboss
+          - Knative
+      transformerselector: ""
     ```
     </details>
 
@@ -183,203 +197,326 @@ We can use this file when we run the transform using the `--config` flag
           hints:
             - Services that don't support any of the transformer types you are interested in will be ignored.
           options:
-            - Jar
-            - Gradle
-            - ReadMeGenerator
-            - DockerfileParser
-            - DockerfileImageBuildScript
-            - EarAnalyser
-            - WinWebApp-Dockerfile
-            - Maven
+            - Golang-Dockerfile
             - Nodejs-Dockerfile
-            - ZuulAnalyser
-            - Buildconfig
-            - Liberty
-            - Parameterizer
-            - Kubernetes
-            - WarAnalyser
-            - ComposeGenerator
-            - Ruby-Dockerfile
-            - WarRouter
             - ContainerImagesPushScriptGenerator
+            - ReadMeGenerator
+            - ComposeAnalyser
+            - EarAnalyser
+            - Ruby-Dockerfile
+            - WarAnalyser
+            - DotNetCore-Dockerfile
+            - Python-Dockerfile
+            - Liberty
+            - Knative
+            - CloudFoundry
+            - Tomcat
+            - ZuulAnalyser
+            - Tekton
             - Rust-Dockerfile
             - KubernetesVersionChanger
-            - Tomcat
-            - Knative
+            - DockerfileParser
+            - Parameterizer
+            - PHP-Dockerfile
+            - Kubernetes
+            - WinWebApp-Dockerfile
+            - Maven
             - Jboss
+            - ComposeGenerator
+            - Gradle
             - WinConsoleApp-Dockerfile
+            - Buildconfig
+            - DockerfileDetector
+            - WarRouter
             - EarRouter
             - ClusterSelector
-            - CloudFoundry
-            - PHP-Dockerfile
-            - Tekton
-            - DotNetCore-Dockerfile
-            - DockerfileDetector
-            - Python-Dockerfile
-            - Golang-Dockerfile
-            - ComposeAnalyser
+            - Jar
+            - DockerfileImageBuildScript
             - WinSLWebApp-Dockerfile
           default:
-            - Jar
-            - Gradle
-            - ReadMeGenerator
-            - DockerfileParser
-            - DockerfileImageBuildScript
-            - EarAnalyser
-            - WinWebApp-Dockerfile
-            - Maven
+            - Golang-Dockerfile
             - Nodejs-Dockerfile
-            - ZuulAnalyser
-            - Buildconfig
-            - Liberty
-            - Parameterizer
-            - Kubernetes
-            - WarAnalyser
-            - ComposeGenerator
-            - Ruby-Dockerfile
-            - WarRouter
             - ContainerImagesPushScriptGenerator
+            - ReadMeGenerator
+            - ComposeAnalyser
+            - EarAnalyser
+            - Ruby-Dockerfile
+            - WarAnalyser
+            - DotNetCore-Dockerfile
+            - Python-Dockerfile
+            - Liberty
+            - Knative
+            - CloudFoundry
+            - Tomcat
+            - ZuulAnalyser
+            - Tekton
             - Rust-Dockerfile
             - KubernetesVersionChanger
-            - Tomcat
-            - Knative
+            - DockerfileParser
+            - Parameterizer
+            - PHP-Dockerfile
+            - Kubernetes
+            - WinWebApp-Dockerfile
+            - Maven
             - Jboss
+            - ComposeGenerator
+            - Gradle
             - WinConsoleApp-Dockerfile
+            - Buildconfig
+            - DockerfileDetector
+            - WarRouter
             - EarRouter
             - ClusterSelector
-            - CloudFoundry
-            - PHP-Dockerfile
-            - Tekton
-            - DotNetCore-Dockerfile
-            - DockerfileDetector
-            - Python-Dockerfile
-            - Golang-Dockerfile
-            - ComposeAnalyser
+            - Jar
+            - DockerfileImageBuildScript
             - WinSLWebApp-Dockerfile
           answer:
-            - Buildconfig
-            - ClusterSelector
-            - ComposeGenerator
-            - Liberty
-            - Parameterizer
-            - Rust-Dockerfile
-            - Tekton
-            - Tomcat
-            - WinSLWebApp-Dockerfile
-            - Python-Dockerfile
-            - ReadMeGenerator
-            - WarRouter
-            - CloudFoundry
-            - Knative
-            - WinWebApp-Dockerfile
-            - DockerfileParser
-            - Maven
-            - ContainerImagesPushScriptGenerator
-            - Golang-Dockerfile
             - EarRouter
-            - Gradle
-            - KubernetesVersionChanger
-            - Nodejs-Dockerfile
-            - WarAnalyser
-            - ZuulAnalyser
-            - DockerfileDetector
-            - DockerfileImageBuildScript
-            - EarAnalyser
-            - Jar
-            - Kubernetes
-            - Ruby-Dockerfile
-            - ComposeAnalyser
-            - DotNetCore-Dockerfile
-            - Jboss
-            - PHP-Dockerfile
             - WinConsoleApp-Dockerfile
+            - Gradle
+            - Jar
+            - WinSLWebApp-Dockerfile
+            - DockerfileImageBuildScript
+            - DotNetCore-Dockerfile
+            - EarAnalyser
+            - Golang-Dockerfile
+            - Ruby-Dockerfile
+            - Tomcat
+            - Buildconfig
+            - ComposeGenerator
+            - ContainerImagesPushScriptGenerator
+            - DockerfileParser
+            - WarAnalyser
+            - WinWebApp-Dockerfile
+            - WarRouter
+            - ZuulAnalyser
+            - KubernetesVersionChanger
+            - Tekton
+            - Maven
+            - PHP-Dockerfile
+            - Parameterizer
+            - Python-Dockerfile
+            - ClusterSelector
+            - DockerfileDetector
+            - Kubernetes
+            - Liberty
+            - Rust-Dockerfile
+            - Nodejs-Dockerfile
+            - ReadMeGenerator
+            - CloudFoundry
+            - ComposeAnalyser
+            - Jboss
+            - Knative
+        - id: move2kube.transformerselector
+          type: Input
+          hints:
+            - Set the transformer selector config.
+          default: ""
+          answer: ""
         - id: move2kube.services.[].enable
           type: MultiSelect
           description: 'Select all services that are needed:'
           hints:
             - The services unselected here will be ignored.
           options:
-            - frontend
-            - gateway
-            - inventory
-            - orders
-            - config-utils
-            - customers-tomcat
+            - java-maven
+            - myproject-django
+            - myproject-python
+            - rust
+            - golang
+            - java-gradle
+            - myproject-java-war
+            - myproject-php
+            - nodejs
+            - ruby
           default:
-            - frontend
-            - gateway
-            - inventory
-            - orders
-            - config-utils
-            - customers-tomcat
+            - java-maven
+            - myproject-django
+            - myproject-python
+            - rust
+            - golang
+            - java-gradle
+            - myproject-java-war
+            - myproject-php
+            - nodejs
+            - ruby
           answer:
-            - frontend
-            - gateway
-            - inventory
-            - orders
-            - customers-tomcat
-        - id: move2kube.services.inventory.activemavenprofiles
-          type: MultiSelect
-          description: Choose the Maven profile to be used for the service inventory
-          hints:
-            - Selected Maven profiles will be used for setting configuration for the service inventory
-          options:
-            - native
-            - local
-            - openshift
-          default:
-            - openshift
-          answer:
-            - local
-        - id: move2kube.services.inventory.port
+            - java-maven
+            - myproject-django
+            - myproject-python
+            - rust
+            - golang
+            - java-gradle
+            - myproject-java-war
+            - myproject-php
+            - nodejs
+            - ruby
+        - id: move2kube.services.java-gradle.wartransformer
           type: Select
-          description: 'Select port to be exposed for the service inventory :'
+          description: Select the transformer to use for service java-gradle
+          options:
+            - Liberty
+            - Tomcat
+            - Jboss
+          default: Liberty
+          answer: Liberty
+        - id: move2kube.services.ruby.port
+          type: Select
+          description: 'Select port to be exposed for the service ruby :'
           hints:
-            - Select Other if you want to expose the service inventory to some other port
+            - Select Other if you want to expose the service ruby to some other port
           options:
             - "8080"
             - Other (specify custom option)
           default: "8080"
           answer: "8080"
-        - id: move2kube.services.customers-tomcat.wartransformer
+        - id: move2kube.services.nodejs.port
+          type: Input
+          description: 'Enter the port to be exposed for the service nodejs: '
+          hints:
+            - The service nodejs will be exposed to the specified port
+          default: "8080"
+          answer: "8080"
+        - id: move2kube.services.myproject-python.port
           type: Select
-          description: Select the transformer to use for service customers-tomcat
+          description: 'Select port to be exposed for the service myproject-python :'
+          hints:
+            - Select Other if you want to expose the service myproject-python to some other port
           options:
-            - Tomcat
+            - "8080"
+            - Other (specify custom option)
+          default: "8080"
+          answer: "8080"
+        - id: move2kube.services.myproject-django.port
+          type: Select
+          description: 'Select port to be exposed for the service myproject-django :'
+          hints:
+            - Select Other if you want to expose the service myproject-django to some other port
+          options:
+            - "8080"
+            - Other (specify custom option)
+          default: "8080"
+          answer: "8080"
+        - id: move2kube.services.java-maven.wartransformer
+          type: Select
+          description: Select the transformer to use for service java-maven
+          options:
             - Liberty
+            - Tomcat
             - Jboss
-          default: Tomcat
-          answer: Tomcat
-        - id: move2kube.services."frontend"."8080".urlpath
+          default: Liberty
+          answer: Liberty
+        - id: move2kube.services.rust.port
+          type: Select
+          description: 'Select port to be exposed for the service rust :'
+          hints:
+            - Select Other if you want to expose the service rust to some other port
+          options:
+            - "8085"
+            - Other (specify custom option)
+          default: "8085"
+          answer: "8085"
+        - id: move2kube.services.myproject-java-war.wartransformer
+          type: Select
+          description: Select the transformer to use for service myproject-java-war
+          options:
+            - Liberty
+            - Tomcat
+            - Jboss
+          default: Liberty
+          answer: Liberty
+        - id: move2kube.services.golang.ports
+          type: MultiSelect
+          description: 'Select ports to be exposed for the service golang :'
+          hints:
+            - Select Other if you want to add more ports
+          options:
+            - "8080"
+            - Other (specify custom option)
+          default:
+            - "8080"
+          answer:
+            - "8080"
+        - id: move2kube.containerruntime
+          type: Select
+          description: 'Select the container runtime to use :'
+          hints:
+            - The container runtime selected will be used in the scripts
+          options:
+            - docker
+            - podman
+          default: docker
+          answer: docker
+        - id: move2kube.services."rust"."8085".urlpath
           type: Input
-          description: What URL/path should we expose the service frontend's 8080 port on?
+          description: What URL/path should we expose the service rust's 8085 port on?
           hints:
             - Enter :- not expose the service
             - Leave out leading / to use first part as subdomain
             - Add :N as suffix for NodePort service type
             - Add :L for Load Balancer service type
-          default: /frontend
-          answer: /frontend
-        - id: move2kube.services."orders"."8080".urlpath
+          default: /rust
+          answer: /rust
+        - id: move2kube.services."myproject-django"."8080".urlpath
           type: Input
-          description: What URL/path should we expose the service orders's 8080 port on?
+          description: What URL/path should we expose the service myproject-django's 8080 port on?
           hints:
             - Enter :- not expose the service
             - Leave out leading / to use first part as subdomain
             - Add :N as suffix for NodePort service type
             - Add :L for Load Balancer service type
-          default: /orders
-          answer: /orders
-        - id: move2kube.services."gateway"."8080".urlpath
+          default: /myproject-django
+          answer: /myproject-django
+        - id: move2kube.services."golang"."8080".urlpath
           type: Input
-          description: What URL/path should we expose the service gateway's 8080 port on?
+          description: What URL/path should we expose the service golang's 8080 port on?
           hints:
             - Enter :- not expose the service
             - Leave out leading / to use first part as subdomain
             - Add :N as suffix for NodePort service type
             - Add :L for Load Balancer service type
-          default: /gateway
-          answer: /gateway
+          default: /golang
+          answer: /golang
+        - id: move2kube.services."nodejs"."8080".urlpath
+          type: Input
+          description: What URL/path should we expose the service nodejs's 8080 port on?
+          hints:
+            - Enter :- not expose the service
+            - Leave out leading / to use first part as subdomain
+            - Add :N as suffix for NodePort service type
+            - Add :L for Load Balancer service type
+          default: /nodejs
+          answer: /nodejs
+        - id: move2kube.services."ruby"."8080".urlpath
+          type: Input
+          description: What URL/path should we expose the service ruby's 8080 port on?
+          hints:
+            - Enter :- not expose the service
+            - Leave out leading / to use first part as subdomain
+            - Add :N as suffix for NodePort service type
+            - Add :L for Load Balancer service type
+          default: /ruby
+          answer: /ruby
+        - id: move2kube.services."myproject-python"."8080".urlpath
+          type: Input
+          description: What URL/path should we expose the service myproject-python's 8080 port on?
+          hints:
+            - Enter :- not expose the service
+            - Leave out leading / to use first part as subdomain
+            - Add :N as suffix for NodePort service type
+            - Add :L for Load Balancer service type
+          default: /myproject-python
+          answer: /myproject-python
+        - id: move2kube.services."myproject-php"."8082".urlpath
+          type: Input
+          description: What URL/path should we expose the service myproject-php's 8082 port on?
+          hints:
+            - Enter :- not expose the service
+            - Leave out leading / to use first part as subdomain
+            - Add :N as suffix for NodePort service type
+            - Add :L for Load Balancer service type
+          default: /myproject-php
+          answer: /myproject-php
         - id: move2kube.minreplicas
           type: Input
           description: Provide the minimum number of replicas each service should have
@@ -394,8 +531,9 @@ We can use this file when we run the transform using the `--config` flag
             - You can always change it later by changing the yamls.
           options:
             - Other (specify custom option)
+            - us.icr.io
             - quay.io
-            - index.docker.io
+            - registry.ng.bluemix.net
           default: quay.io
           answer: quay.io
         - id: move2kube.target.imageregistry.namespace
@@ -404,7 +542,7 @@ We can use this file when we run the transform using the `--config` flag
           hints:
             - 'Ex : myproject'
           default: myproject
-          answer: move2kube
+          answer: myproject
         - id: move2kube.target.imageregistry.logintype
           type: Select
           description: '[quay.io] What type of container registry login do you want to use?'
@@ -422,13 +560,13 @@ We can use this file when we run the transform using the `--config` flag
           hints:
             - Choose the cluster type you would like to target
           options:
+            - AWS-EKS
+            - Azure-AKS
             - GCP-GKE
             - IBM-IKS
             - IBM-Openshift
             - Kubernetes
             - Openshift
-            - AWS-EKS
-            - Azure-AKS
           default: Kubernetes
           answer: Kubernetes
         - id: move2kube.target.ingress.host
@@ -437,7 +575,7 @@ We can use this file when we run the transform using the `--config` flag
           hints:
             - Ingress host domain is part of service URL
           default: myproject.com
-          answer: localhost
+          answer: myproject.com
         - id: move2kube.target.ingress.tls
           type: Input
           description: Provide the TLS secret for ingress
@@ -445,146 +583,60 @@ We can use this file when we run the transform using the `--config` flag
             - Leave empty to use http
           default: ""
           answer: ""
-        - id: move2kube.services.frontend.port
-          type: Select
-          description: 'Select port to be exposed for the service frontend :'
-          hints:
-            - Select Other if you want to expose the service frontend to some other port
-          options:
-            - "8080"
-            - Other (specify custom option)
-          default: "8080"
-          answer: "8080"
-        - id: move2kube.services.gateway.activemavenprofiles
-          type: MultiSelect
-          description: Choose the Maven profile to be used for the service gateway
-          hints:
-            - Selected Maven profiles will be used for setting configuration for the service gateway
-          options:
-            - local
-            - openshift
-            - openshift-manual
-            - openshift-it
-          default:
-            - openshift
-          answer:
-            - local
-        - id: move2kube.services.gateway.activespringbootprofiles
-          type: MultiSelect
-          description: Choose Springboot profiles to be used for the service gateway
-          hints:
-            - Selected Springboot profiles will be used for setting configuration for the service gateway
-          options:
-            - local
-            - openshift
-          default:
-            - local
-            - openshift
-          answer:
-            - local
-        - id: move2kube.services.gateway.port
-          type: Select
-          description: 'Select port to be exposed for the service gateway :'
-          hints:
-            - Select Other if you want to expose the service gateway to some other port
-          options:
-            - "8080"
-            - Other (specify custom option)
-          default: "8080"
-          answer: "8080"
-        - id: move2kube.services.orders.activemavenprofiles
-          type: MultiSelect
-          description: Choose the Maven profile to be used for the service orders
-          hints:
-            - Selected Maven profiles will be used for setting configuration for the service orders
-          options:
-            - local
-            - openshift
-            - openshift-manual
-            - openshift-it
-          default:
-            - openshift
-          answer:
-            - local
-        - id: move2kube.services.orders.activespringbootprofiles
-          type: MultiSelect
-          description: Choose Springboot profiles to be used for the service orders
-          hints:
-            - Selected Springboot profiles will be used for setting configuration for the service orders
-          options:
-            - local
-            - openshift
-          default:
-            - local
-            - openshift
-          answer:
-            - local
-        - id: move2kube.services.orders.port
-          type: Select
-          description: 'Select port to be exposed for the service orders :'
-          hints:
-            - Select Other if you want to expose the service orders to some other port
-          options:
-            - "8080"
-            - Other (specify custom option)
-          default: "8080"
-          answer: "8080"
-        - id: move2kube.containerruntime
-          type: Select
-          description: 'Select the container runtime to use :'
-          hints:
-            - The container runtime selected will be used in the scripts
-          options:
-            - docker
-            - podman
-          default: docker
-          answer: docker
-        - id: move2kube.services."customers-tomcat"."8080".urlpath
+        - id: move2kube.services."myproject-java-war"."9080".urlpath
           type: Input
-          description: What URL/path should we expose the service customers-tomcat's 8080 port on?
+          description: What URL/path should we expose the service myproject-java-war's 9080 port on?
           hints:
             - Enter :- not expose the service
             - Leave out leading / to use first part as subdomain
             - Add :N as suffix for NodePort service type
             - Add :L for Load Balancer service type
-          default: /customers-tomcat
-          answer: /customers-tomcat
-        - id: move2kube.services."inventory"."8080".urlpath
+          default: /myproject-java-war
+          answer: /myproject-java-war
+        - id: move2kube.services."java-maven"."9080".urlpath
           type: Input
-          description: What URL/path should we expose the service inventory's 8080 port on?
+          description: What URL/path should we expose the service java-maven's 9080 port on?
           hints:
             - Enter :- not expose the service
             - Leave out leading / to use first part as subdomain
             - Add :N as suffix for NodePort service type
             - Add :L for Load Balancer service type
-          default: /inventory
-          answer: /inventory
+          default: /java-maven
+          answer: /java-maven
+        - id: move2kube.services."java-gradle"."9080".urlpath
+          type: Input
+          description: What URL/path should we expose the service java-gradle's 9080 port on?
+          hints:
+            - Enter :- not expose the service
+            - Leave out leading / to use first part as subdomain
+            - Add :N as suffix for NodePort service type
+            - Add :L for Load Balancer service type
+          default: /java-gradle
+          answer: /java-gradle
     ```
     </details>
     The cache file contains both the questions and the answers. It also contains additional information about each question, such as the default answer,
     the type of the question, the id of the questions, any hints that were provided, etc.
 
 1. The config file stores the answer to a question under the key specified by the question's id.  
-For example, the question `What URL/path should we expose the service inventory's 8080 port on?` has the id `move2kube.services."inventory"."8080".urlpath`.
-So we find the answer `/inventory` stored as
+For example, the question `What URL/path should we expose the service java-maven's 9080 port on?` has the id `move2kube.services."java-maven"."9080".urlpath`.
+So we find the answer `/java-maven` stored as
     ```yaml
     move2kube:
       services:
-        inventory:
-          "8080":
-            urlpath: /inventory
+        java-maven:
+          "9080":
+            urlpath: /java-maven
     ```
     in the config file. Every time Move2Kube goes to ask a question, it first checks the config file to see if it has already been answered using the question's id.
     If the id is not present in the config file, Move2Kube will usually ask the user for the answer. This means we can provide the answer to any question by storing it in the config file.
 
-
-
 1. Let's run the transform again but this time with the config file we generated.
 
     ```console
-    $ mv myproject old # rename the output folder from the previous run to avoid conflicts
+    $ mv myproject old # rename the output directory from the previous run to avoid conflicts
     $ ls
-    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	old		src		src.zip
+    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	old		language-platforms
     $ move2kube transform --config m2kconfig.yaml
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
     INFO[0000] Starting Plan Transformation                 
@@ -592,7 +644,7 @@ So we find the answer `/inventory` stored as
     INFO[0007] Plan Transformation done                     
     INFO[0007] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
     $ ls
-    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	old		src		src.zip
+    m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	old		language-platforms
     ```
     This time Move2Kube didn't ask us any questions because we provided all of the answers using the config file.
     We can edit the config file directly if we need to change the answer to a question. We can also remove some of the answers

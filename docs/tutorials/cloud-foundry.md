@@ -10,36 +10,38 @@ nav_order: 4
 
 ## Description
 
-This document takes us through the steps that will install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. It also takes through the process to customize for a specific cluster. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
+This document takes us through the steps that will install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
 
+### TLDR
+
+```console
+$ move2kube transform -s cloud-foundry
+```
+
+Move2Kube will automatically analyse all the artifacts in the cloud-foundry directory and transform and create all artifacts required for deploying the application in Kubernetes.
 
 ## Prerequisites
 
-1. A source folder which contains the source code files and/or the manifest.yml file of a Cloud Foundry application.
+1. A source directory which contains the source code files and/or the manifest.yml file of a Cloud Foundry application.
 
    A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. In this tutorial, we will be using the `cloud-foundry` sample from this repository.
+    ```console
+    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/cloud-foundry -r move2kube-demos
+    ```
 
-   To clone the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository run the below command.
-
-   ```console
-   $ git clone https://github.com/konveyor/move2kube-demos.git
-   ```
-
-   ```console
-   $ cd move2kube-demos
-   ```
-
-   Let's see the structure inside the `./samples/cloud-foundry` directory. The `cloud-foundry` folder contains the source code files and the manifest.yml file.
+   Let's see the structure inside the `./cloud-foundry` directory. The `cloud-foundry` directory contains the source code files and the manifest.yml file.
 
    ```console
-   move2kube-demos git:(main) $ tree samples/cloud-foundry
-   samples/cloud-foundry
-   ├── cfapps.yaml
-   ├── cluster.yaml
-   ├── main.js
-   ├── manifest.yml
-   ├── package-lock.json
-   └── package.json
+  $ tree cloud-foundry
+  cloud-foundry/
+  ├── cfnodejsapp
+  │   ├── main.js
+  │   ├── manifest.yml
+  │   ├── package-lock.json
+  │   └── package.json
+  └── m2k_collect
+      └── cf
+          └── cfapps.yaml
    ```
 
 1. Install [Move2Kube](/installation)
@@ -65,67 +67,59 @@ This document takes us through the steps that will install Move2Kube and use Mov
 
 1. Install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 
-1. To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the `move2kube-demos/samples/cloud-foundry` directory. If you want to try out Move2Kube on your CF application, then in place of our sample `cloud-foundry` directory, you should provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the *plan* phase.
+1. To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the `cloud-foundry/cfnodejsapp` directory. If you want to try out Move2Kube on your CF application, then in place of our sample `cloud-foundry` directory, you should provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the *plan* phase.
 
-1. We will deploy a simple nodejs application into CF. If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
+1. Optional: We will deploy a simple nodejs application into CF. If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
    1. Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints)).
    1. Login to CF using
        ```console
-       move2kube-demos git:(main) $ cf login -a <YOUR CF API endpoint>
+       $ cf login -a <YOUR CF API endpoint>
        ```
-   1. From the root folder of this repo run this to deploy the sample application
+   1. From the root directory of this repo run this to deploy the sample application
        ```console
-       move2kube-demos git:(main) $ cf push -f ./samples/cloud-foundry/
+       $ cf push -f ./cloud-foundry/
        ```
    1. You can visit the URL of the application (you can get this by running `cf apps`) to see it running.
 
 
 ## Steps to generate target artifacts
 
-Now that we have a running CF app we can transform it using Move2Kube. We will be using the three stage process (*collect*, *plan* and *transform*) for the transformation. Run these steps from the `./samples/` folder:
+Now that we have a running CF app we can transform it using Move2Kube. We will be using the three stage process (*collect*, *plan* and *transform*) for the transformation. Run these steps from the directory where `cloud-foundry` directory is present:
 
-1. We will first collect some data about your running CF application. We can also capture the data about the target Kubernetes cluster using `move2kube collect` command. But, here we will be using the `-a cf` annotation flag with the command to only select the collector subset for cloud foundry.  
-
-    ```console
-    move2kube-demos git:(main) $ cd samples/
-    ```
+1. Optional: This step is required only if you are interested in metadata such as environment variables from a running instance. If you don't have a running app, you can use the m2k_collect directoy that comes with the sample.
+ We will first collect some data about your running CF application. Here we will limit the collect to only cloud foundry information using the `-a cf` annotation flag.  
 
     ```console
-    samples git:(main) $ move2kube collect -a cf
+    $ cf login -a <YOUR CF API endpoint>
+    $ move2kube collect -a cf
     INFO[0000] Begin collection                             
     INFO[0000] [*collector.CfAppsCollector] Begin collection 
     INFO[0013] [*collector.CfAppsCollector] Done            
     INFO[0013] [*collector.CfServicesCollector] Begin collection 
     INFO[0027] [*collector.CfServicesCollector] Done        
     INFO[0027] Collection done                              
-    INFO[0027] Collect Output in [/Users/username/github/move2kube-demos/samples/m2k_collect]. Copy this directory into the source directory to be used for planning.
+    INFO[0027] Collect Output in [/Users/username/m2k_collect]. Copy this directory into the source directory to be used for planning.
     ```
 
-    * The data we collected will be stored in a new folder called `./m2k_collect`.
+    * The data we collected will be stored in a new directory called `./m2k_collect`.
 
     ```console
-    samples git:(main) $ ls m2k_collect
+    $ ls m2k_collect
     cf
     ```
 
-    * The `./m2k_collect/cf` folder contains the yaml file which has the runtime information of the particular application that you are trying to transform. There is information about the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it collects that information too.
+    * The `./m2k_collect/cf` directory contains the yaml file which has the runtime information of the particular application that you are trying to transform. There is information about the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it collects that information too.
 
-    * Move the `./m2k_collect/cf` folder into the source directory `./cloud-foundry`.
+    * Move the `./m2k_collect/cf` directory into the source directory `./cloud-foundry`.
 
     ```console
-    samples git:(main) $ mv m2k_collect/cf cloud-foundry/cf
+    $ mv m2k_collect cloud-foundry/
     ```
 
-    * (Additional Info) If you had run `move2kube collect` command without specifying the annotation flag `-a cf`, then Move2Kube will also collect the information about the target Kubernetes cluster, but you are required to be logged-in to your Kubernetes cluster before running the collect command. In this case, `./m2k_collect/clusters` folder will have the cluster metadata yaml file which has the target cluster information.
-
-    * For this tutorial, we have copied these files into the source directory already and renamed them as [*cfapps.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cfapps.yaml) and [*cluster.yaml*](https://github.com/konveyor/move2kube-demos/blob/main/samples/cloud-foundry/cluster.yaml).
-
-    * If runtime metadata such as env variables which are not in the manifest, but in the deployed app needs to be used in Kubernetes, then you should run the *collect* phase described in this step before running the *plan* phase. But, it is necessary to have the source artifacts of the CF application to run the *plan* phase.
-
-2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime artifacts with source artifacts and going to come up with a *plan* for us. Here, we provide to Move2Kube the path to the source directory (containing the source code and/or manifest files of CF application) using the `-s` flag.
+2. Then we create a *plan* on how to transform your app to run on Kubernetes. In the *plan* phase, it is going to combine the runtime metadata (if present) with source artifacts and come up with a *plan* for us. Here, we provide to Move2Kube the path to the source directory (containing the source code and/or manifest files of CF application) using the `-s` flag.
 
     ```console
-    samples git:(main) $ move2kube plan -s cloud-foundry
+    $ move2kube plan -s cloud-foundry
     INFO[0000] Loading Configuration                        
     INFO[0000] [*configuration.ClusterMDLoader] Loading configuration 
     INFO[0000] [*configuration.ClusterMDLoader] Done        
@@ -148,7 +142,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     INFO[0000] [Directory Walk] Identified 1 namedservices and 0 unnamed transformer plans 
     INFO[0000] [Named Services] Identified 1 namedservices  
     INFO[0000] No of services identified : 1                
-    INFO[0000] Plan can be found at [/Users/username/github/move2kube-demos/samples/m2k.plan].
+    INFO[0000] Plan can be found at [/Users/username/m2k.plan].
     ```
 
     * It has created a *m2k.plan* which is essentially a yaml file. Let's see what is inside the *plan* file.
@@ -166,80 +160,80 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     ```
     </summary>
     ```yaml
-    apiVersion: move2kube.konveyor.io/v1alpha1
-    kind: Plan
-    metadata:
-      name: myproject
-    spec:
-      sourceDir: cloud-foundry
-      services:
-        cfnodejsapp:
-          - transformerName: CloudFoundry
-            paths:
-              CfManifest:
-                - manifest.yml
-              CfRunningManifest:
-                - cfapps.yaml
-              ServiceDirPath:
-                - .
-            configs:
-              CloudFoundryService:
-                serviceName: cfnodejsapp
-              ContainerizationOptions:
-                - Nodejs-Dockerfile
-          - transformerName: Nodejs-Dockerfile
-            paths:
-              ServiceDirPath:
-                - .
-      transformers:
-        Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
-        CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
-        ClusterSelector: m2kassets/inbuilt/transformers/kubernetes/clusterselector/clusterselector.yaml
-        ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
-        ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
-        ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
-        DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
-        DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
-        DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
-        DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
-        EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
-        EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
-        Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
-        Gradle: m2kassets/inbuilt/transformers/dockerfilegenerator/java/gradle/gradle.yaml
-        Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
-        Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
-        Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
-        Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
-        KubernetesVersionChanger: m2kassets/inbuilt/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
-        Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
-        Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
-        Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
-        PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
-        Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizer/parameterizer.yaml
-        Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
-        ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
-        Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
-        Rust-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
-        Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
-        Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
-        WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
-        WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
-        WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
-        WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
-        WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
-        ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
+      apiVersion: move2kube.konveyor.io/v1alpha1
+      kind: Plan
+      metadata:
+        name: myproject
+      spec:
+        sourceDir: cloud-foundry
+        services:
+          cfnodejsapp:
+            - transformerName: CloudFoundry
+              paths:
+                CfManifest:
+                  - cfnodejsapp/manifest.yml
+                CfRunningManifest:
+                  - m2k_collect/cf/cfapps.yaml
+                ServiceDirPath:
+                  - cfnodejsapp
+              configs:
+                CloudFoundryService:
+                  serviceName: cfnodejsapp
+                ContainerizationOptions:
+                  - Nodejs-Dockerfile
+            - transformerName: Nodejs-Dockerfile
+              paths:
+                ServiceDirPath:
+                  - cfnodejsapp
+        transformers:
+          Buildconfig: m2kassets/inbuilt/transformers/kubernetes/buildconfig/buildconfig.yaml
+          CloudFoundry: m2kassets/inbuilt/transformers/cloudfoundry/cloudfoundry.yaml
+          ClusterSelector: m2kassets/inbuilt/transformers/kubernetes/clusterselector/clusterselector.yaml
+          ComposeAnalyser: m2kassets/inbuilt/transformers/compose/composeanalyser/composeanalyser.yaml
+          ComposeGenerator: m2kassets/inbuilt/transformers/compose/composegenerator/composegenerator.yaml
+          ContainerImagesPushScriptGenerator: m2kassets/inbuilt/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
+          DockerfileDetector: m2kassets/inbuilt/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
+          DockerfileImageBuildScript: m2kassets/inbuilt/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
+          DockerfileParser: m2kassets/inbuilt/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
+          DotNetCore-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
+          EarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
+          EarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
+          Golang-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/golang/golang.yaml
+          Gradle: m2kassets/inbuilt/transformers/dockerfilegenerator/java/gradle/gradle.yaml
+          Jar: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jar/jar.yaml
+          Jboss: m2kassets/inbuilt/transformers/dockerfilegenerator/java/jboss/jboss.yaml
+          Knative: m2kassets/inbuilt/transformers/kubernetes/knative/knative.yaml
+          Kubernetes: m2kassets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml
+          KubernetesVersionChanger: m2kassets/inbuilt/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
+          Liberty: m2kassets/inbuilt/transformers/dockerfilegenerator/java/liberty/liberty.yaml
+          Maven: m2kassets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml
+          Nodejs-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml
+          PHP-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/php/php.yaml
+          Parameterizer: m2kassets/inbuilt/transformers/kubernetes/parameterizer/parameterizer.yaml
+          Python-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/python/python.yaml
+          ReadMeGenerator: m2kassets/inbuilt/transformers/readmegenerator/readmegenerator.yaml
+          Ruby-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/ruby/ruby.yaml
+          Rust-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/rust/rust.yaml
+          Tekton: m2kassets/inbuilt/transformers/kubernetes/tekton/tekton.yaml
+          Tomcat: m2kassets/inbuilt/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
+          WarAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/waranalyser/war.yaml
+          WarRouter: m2kassets/inbuilt/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
+          WinConsoleApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
+          WinSLWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
+          WinWebApp-Dockerfile: m2kassets/inbuilt/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
+          ZuulAnalyser: m2kassets/inbuilt/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
     ```
     </details>
 
     * In the plan, you can see that Move2Kube has detected the `cfnodejsapp` service, which is the name of our sample CF application from it's manifest.yml.
     * And the plan file is saying that the application can be transformed using two transformers `CloudFoundry` or `Nodejs-Dockerfile`.
-    * It can use the source artifacts `manifest.yaml` and also the runtime information from `cfapps.yaml` and combine all of them and do the transformation.
+    * It can use the source artifacts `manifest.yaml` and also the runtime information from `cfapps.yaml` and combine all of them and do the transformation. 
 
 3. Let's invoke `move2kube transform` on this *plan*.
 
     ```console
-    samples git:(main) $ move2kube transform
-    INFO[0000] Detected a plan file at path /Users/username/github/move2kube-demos/samples/m2k.plan. Will transform using this plan. 
+    $ move2kube transform
+    INFO[0000] Detected a plan file at path /Users/username/m2k.plan. Will transform using this plan. 
     ? Select all transformer types that you are interested in:
     Hints:
     [Services that don't support any of the transformer types you are interested in will be ignored.]
@@ -539,7 +533,7 @@ Now that we have a running CF app we can transform it using Move2Kube. We will b
     INFO[1185] Transformed target artifacts can be found at [/Users/username/github/move2kube-demos/samples/myproject].
     ```
 
-Finally, the transformation is successful and the target artifacts can be found inside the `./myproject` folder. The structure of the *./myproject* folder can be seen by executing the below command.
+Finally, the transformation is successful and the target artifacts can be found inside the `./myproject` directory. The structure of the *./myproject* directory can be seen by executing the below command.
 
 <details markdown="block">
 <summary markdown="block">
@@ -552,11 +546,12 @@ $  tree myproject
 
 ```console
 $  tree myproject
-myproject
+myproject/
 ├── Readme.md
 ├── deploy
 │   ├── cicd
 │   │   ├── tekton
+│   │   │   ├── cfnodejsapp-vcapasenv-secret.yaml
 │   │   │   ├── myproject-clone-build-push-pipeline.yaml
 │   │   │   ├── myproject-clone-push-serviceaccount.yaml
 │   │   │   ├── myproject-git-event-triggerbinding.yaml
@@ -572,6 +567,7 @@ myproject
 │   │       │   └── myproject
 │   │       │       ├── Chart.yaml
 │   │       │       └── templates
+│   │       │           ├── cfnodejsapp-vcapasenv-secret.yaml
 │   │       │           ├── myproject-clone-build-push-pipeline.yaml
 │   │       │           ├── myproject-clone-push-serviceaccount.yaml
 │   │       │           ├── myproject-git-event-triggerbinding.yaml
@@ -584,6 +580,7 @@ myproject
 │   │       │           └── myproject-tekton-triggers-admin-serviceaccount.yaml
 │   │       ├── kustomize
 │   │       │   └── base
+│   │       │       ├── cfnodejsapp-vcapasenv-secret.yaml
 │   │       │       ├── kustomization.yaml
 │   │       │       ├── myproject-clone-build-push-pipeline.yaml
 │   │       │       ├── myproject-clone-push-serviceaccount.yaml
@@ -616,6 +613,7 @@ myproject
 │   ├── yamls
 │   │   ├── cfnodejsapp-deployment.yaml
 │   │   ├── cfnodejsapp-service.yaml
+│   │   ├── cfnodejsapp-vcapasenv-secret.yaml
 │   │   └── myproject-ingress.yaml
 │   └── yamls-parameterized
 │       ├── helm-chart
@@ -624,6 +622,7 @@ myproject
 │       │       ├── templates
 │       │       │   ├── cfnodejsapp-deployment.yaml
 │       │       │   ├── cfnodejsapp-service.yaml
+│       │       │   ├── cfnodejsapp-vcapasenv-secret.yaml
 │       │       │   └── myproject-ingress.yaml
 │       │       ├── values-dev.yaml
 │       │       ├── values-prod.yaml
@@ -632,6 +631,7 @@ myproject
 │       │   ├── base
 │       │   │   ├── cfnodejsapp-deployment.yaml
 │       │   │   ├── cfnodejsapp-service.yaml
+│       │   │   ├── cfnodejsapp-vcapasenv-secret.yaml
 │       │   │   ├── kustomization.yaml
 │       │   │   └── myproject-ingress.yaml
 │       │   └── overlays
@@ -655,40 +655,40 @@ myproject
 │   ├── pushimages.bat
 │   └── pushimages.sh
 └── source
-    ├── cfapp.yaml
-    ├── cluster.yaml
-    ├── Dockerfile 
-    ├── main.js
-    ├── manifest.yml
-    ├── package-lock.json
-    └── package.json
-
-33 directories, 76 files
+    ├── cfnodejsapp
+    │   ├── Dockerfile
+    │   ├── main.js
+    │   ├── manifest.yml
+    │   ├── package-lock.json
+    │   └── package.json
+    └── m2k_collect
+        └── cf
+            └── cfapps.yaml
 ```
 </details>
 
-So, Move2Kube has created all the deployment artifacts which are present inside the *./myproject* folder.
+So, Move2Kube has created all the deployment artifacts which are present inside the *./myproject* directory.
 
 ## Deploying the application to Kubernetes with the generated target artifacts
 
 1. Let's get inside the *./myproject* directory.
 
      ```console
-     samples git:(main) $ cd myproject/
+     $ cd myproject/
 
-     myproject git:(main) $ ls
+     $ ls
      Readme.md deploy    scripts   source
      ```
 
 
-2. Next we run the *builddockerimages.sh* script inside the `./myproject/scripts` folder. This step may take some time to complete.
+2. Next we run the *builddockerimages.sh* script inside the `./myproject/scripts` directory. This step may take some time to complete.
 
     ```console
-    myproject git:(main) $ cd scripts
+    $ cd scripts
     ```
 
     ```console
-    scripts git:(main) $ ./builddockerimages.sh
+    $ ./builddockerimages.sh
     [+] Building 7.1s (8/8) FINISHED                             
     => [internal] load build definition from Dockerfile    0.1s
     => => transferring dockerfile: 37B                     0.0s
@@ -712,7 +712,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
 3. Now using the *pushimages.sh* script we can push our applications images to the registry that we specified during the *transform* phase. For this step, you are required to log in to your Docker registry. To log in to `quay.io` run `docker login quay.io`. To log in to IBM Cloud `us.icr.io` registry refer [here](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_access#registry_access_apikey_auth_docker).
 
     ```console
-    scripts git:(main) $ ./pushimages.sh
+    $ ./pushimages.sh
     Using default tag: latest
     The push refers to repository [quay.io/m2k-tutorial/cfnodejsapp]
     d98785f949ff: Layer already exists 
@@ -728,12 +728,12 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     NOTE: If you have pushed the image repository to `quay.io`, then in the Repository's Visibility in [quay.io](https://quay.io) `cfnodejsapp` repository's Settings, select whether you want the repository `cfnodejsapp` to be public or private so that it can be properly accessed by the Kubernetes cluster.
 
 
-4. Finally we are going to deploy the application with *kubectl apply* command using the yaml files which Move2Kube has created for us inside the `./myproject/deploy/yamls` folder.
+4. Finally we are going to deploy the application with *kubectl apply* command using the yaml files which Move2Kube has created for us inside the `./myproject/deploy/yamls` directory.
 
     ```console
-    scripts git:(main) $ cd ..
+    $ cd ..
 
-    myproject git:(main) $ kubectl apply -f deploy/yamls
+    $ kubectl apply -f deploy/yamls
     deployment.apps/cfnodejsapp created
     service/cfnodejsapp created
     ingress.networking.k8s.io/myproject created
@@ -742,7 +742,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     Now our application is accessible on the cluster. You can check the status of pods by running the command mentioned below.
 
     ```console
-    myproject git:(main) $ kubectl get pods
+    $ kubectl get pods
 
     NAME                           READY   STATUS    RESTARTS   AGE
     cfnodejsapp-58d777bd44-8ct2m   1/1     Running   0          7s
@@ -752,7 +752,7 @@ So, Move2Kube has created all the deployment artifacts which are present inside 
     We can get the ingress to see the URL where the app has been deployed to.
 
     ```console
-    myproject git:(main) $ kubectl get ingress myproject
+    $ kubectl get ingress myproject
     ```
 
     cfnodejsapp
