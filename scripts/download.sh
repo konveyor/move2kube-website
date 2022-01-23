@@ -16,48 +16,62 @@
 
 repo='move2kube-transformers'
 unset dir
+unset outputdir
 zip_flag="false"
 
 print_usage() {
-  printf "Usage: ./download.sh -d <dir> -r <repo>"
+  printf "Usage: ./download.sh -d <dir> -r <repo> -o <outputdir>"
   printf "use -z if output is required as zip"
   printf ""
 }
 
-while getopts 'r:d:z' flag; do
+while getopts 'r:d:o:z' flag; do
   case "${flag}" in
     r) repo="${OPTARG}" ;;
     d) dir="${OPTARG}" ;;
+    o) outputdir="${OPTARG}" ;;
     z) zip_flag="true" ;;
     *) print_usage
        exit 1 ;;
   esac
 done
 
+if [ ! -z "$outputdir" ] 
+then
+  mkdir -p $outputdir
+  cd $outputdir
+fi
+
 if [ -z "$dir" ] 
 then
-    curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
-    rm -rf ${repo}.zip
-    unzip ${repo}.zip "${repo}-main/*"
+  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+  unzip -q ${repo}.zip "${repo}-main/*"
+  rm -rf ${repo}.zip
+  rm -rf "${repo}"
+  mv "${repo}-main/" "${repo}"
+  rm -rf "${repo}-main"
+  if [ $zip_flag == "true" ] 
+  then 
+    zip -q -r ${repo}.zip ${repo}/
     rm -rf "${repo}"
-    mv "${repo}-main/" "${repo}"
-    rm -rf "${repo}-main"
-    if [ $zip_flag == "true" ] 
-    then 
-        zip -r ${repo}.zip ${repo}/
-        rm -rf "${repo}"
-    fi
+    echo ${PWD}/${repo}.zip created
+  else 
+    echo ${PWD}/${repo} created
+  fi
 else
-    base_dir=${dir##*/}
-    curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
-    rm -rf ${repo}.zip
-    unzip ${repo}.zip "${repo}-main/$dir/*"
+  base_dir=${dir##*/}
+  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+  unzip -q ${repo}.zip "${repo}-main/$dir/*"
+  rm -rf ${repo}.zip
+  rm -rf "${base_dir}"
+  mv "${repo}-main/$dir" "${base_dir}"
+  rm -rf "${repo}-main"
+  if [ $zip_flag == "true" ] 
+  then 
+    zip -q -r ${base_dir}.zip ${base_dir}/
     rm -rf "${base_dir}"
-    mv "${repo}-main/$dir" "${base_dir}"
-    rm -rf "${repo}-main"
-    if [ $zip_flag == "true" ] 
-    then 
-        zip -r ${base_dir}.zip ${base_dir}/
-        rm -rf "${base_dir}"
-    fi
+    echo ${PWD}/${base_dir}.zip created
+  else
+    echo ${PWD}/${base_dir} created
+  fi
 fi
