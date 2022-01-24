@@ -3,7 +3,7 @@ layout: default
 title: "Migrating and deploying .NET Core apps to Kubernetes"
 permalink: /tutorials/netcore/
 parent: Tutorials
-nav_order: 6
+nav_order: 8
 ---
 
 # Migrating and deploying .NET Core applications to Kubernetes
