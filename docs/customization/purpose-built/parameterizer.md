@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Parameterizer
-permalink: /documentation/customization/purpose-built/parameterizer
-parent: Purpose-Built
+permalink: /customization/purpose-built/parameterizer
+parent: Purpose Built
 grand_parent: Customization
 has_children: false
 nav_order: 1

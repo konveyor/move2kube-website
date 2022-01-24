@@ -1,9 +1,8 @@
 ---
 layout: default
 title: "Path Mapping"
-permalink: /documentation/concepts/path-mapping
+permalink: /concepts/path-mapping
 parent: Concepts
-grand_parent: Documentation
 nav_order: 2
 ---
 

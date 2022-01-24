@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Executable
-permalink: /documentation/customization/external/executable
+permalink: /customization/external/executable
 parent: External
 grand_parent: Customization
 has_children: false

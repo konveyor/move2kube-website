@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Special
-permalink: /documentation/customization/special
+permalink: /customization/special
 parent: Customization
-grand_parent: Documentation
 has_children: true
 nav_order: 3
 ---

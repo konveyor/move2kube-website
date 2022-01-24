@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Presentation
-permalink: /documentation/presentation
-parent: Documentation
-nav_order: 4
+permalink: /presentation
+nav_order: 6
 ---
 
 # Konveyor Move2Kube Presentation
