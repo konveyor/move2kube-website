@@ -30,7 +30,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
   ```console
       $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/orders-deployment.yaml && rm -rf myproject
 
-      {% raw %} apiVersion: apps/v1
+      apiVersion: apps/v1
       kind: Deployment
       metadata:
           annotations:
@@ -41,7 +41,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
           name: orders
       spec:
           progressDeadlineSeconds: 600
-          replicas: {{ index .Values "common" "replicas" }}
+          {% raw %} replicas: {{ index .Values "common" "replicas" }{% endraw %}
           revisionHistoryLimit: 10
           selector:
               matchLabels:
@@ -81,7 +81,6 @@ In this example, we illustrate how we could parameterize a custom field in the h
                   securityContext: {}
                   terminationGracePeriodSeconds: 30
       status: {}
-      {% endraw %}
   ```
 As you might notice, except the replicas field no other field is parameterized. Now let's look at parameterizing the other fields in the transformer.
 
