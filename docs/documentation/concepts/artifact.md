@@ -4,7 +4,7 @@ title: Artifact
 permalink: /documentation/concepts/artifact
 parent: Concepts
 grand_parent: Documentation
-nav_order: 1
+nav_order: 3
 ---
 
 # Artifact
