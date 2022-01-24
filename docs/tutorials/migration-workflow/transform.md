@@ -55,7 +55,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     ? Select all services that are needed:
     Hints:
     [The services unselected here will be ignored.]
-     customers-tomcat, frontend, gateway, inventory, orders
+     customers, frontend, gateway, inventory, orders
     INFO[0003] Starting Plan Transformation                 
     INFO[0003] Iteration 1                                  
     INFO[0003] Iteration 2 - 5 artifacts to process         
@@ -69,7 +69,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     [Select Other if you want to expose the service inventory to some other port]
      8080
     INFO[0005] Transformer WarRouter processing 2 artifacts 
-    ? Select the transformer to use for service customers-tomcat
+    ? Select the transformer to use for service customers
      Tomcat
     INFO[0007] Transformer WarRouter Done                   
     INFO[0007] Transformer Maven Done                       
@@ -194,10 +194,10 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     INFO[0034] Created 18 pathMappings and 10 artifacts. Total Path Mappings : 60. Total Artifacts : 29. 
     INFO[0034] Iteration 5 - 10 artifacts to process        
     INFO[0034] Transformer ComposeGenerator processing 2 artifacts 
-    ? What URL/path should we expose the service customers-tomcat's 8080 port on?
+    ? What URL/path should we expose the service customers's 8080 port on?
     Hints:
     [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /customers-tomcat
+     /customers
     ? What URL/path should we expose the service inventory's 8080 port on?
     Hints:
     [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
