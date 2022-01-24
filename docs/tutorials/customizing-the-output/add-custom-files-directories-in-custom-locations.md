@@ -7,7 +7,7 @@ grand_parent: Tutorials
 nav_order: 4
 ---
 
-# Generating a custom Helm chart to illustrate custom files and directories could be added in custom locations
+# Generating custom Helm charts to illustrate adding custom files and directories in custom locations
 
 ## Big picture
 
