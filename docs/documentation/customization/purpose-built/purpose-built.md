@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Purpose Built
+title: Purpose-Built
 permalink: /documentation/customization/purpose-built
 parent: Customization
 has_children: true

@@ -2,7 +2,7 @@
 layout: default
 title: Parameterizer
 permalink: /documentation/customization/purpose-built/parameterizer
-parent: Purpose Built
+parent: Purpose-Built
 has_children: false
 nav_order: 1
 ---
