@@ -240,5 +240,3 @@ def getServiceName(filePath):
             return t2[0]
 {% endraw %}
 ```
-
-Next step [Customizing generated Dockerfile and behavior of inbuilt transformer](/tutorials/customizing-the-output/custom-dockerfile-change-inbuilt-behavior)
