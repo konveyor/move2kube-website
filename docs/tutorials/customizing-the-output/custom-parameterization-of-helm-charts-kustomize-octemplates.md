@@ -29,7 +29,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
 3. Let's first run Move2Kube **without** any customization. The relevant snippet from the deployment yaml generated in the path `myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/orders-deployment.yaml` looks like this. Once done, lets delete the `myproject` directory.
   ```console
       $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/orders-deployment.yaml && rm -rf myproject
-
+      
       apiVersion: apps/v1
       kind: Deployment
       metadata:
@@ -41,7 +41,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
           name: orders
       spec:
           progressDeadlineSeconds: 600
-          replicas: {{ index .Values "common" "replicas" }}
+          replicas: {% raw %}{{ index .Values "common" "replicas" }}{% endraw %}
           revisionHistoryLimit: 10
           selector:
               matchLabels:
