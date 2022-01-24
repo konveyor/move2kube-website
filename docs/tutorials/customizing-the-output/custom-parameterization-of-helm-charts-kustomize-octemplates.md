@@ -41,7 +41,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
           name: orders
       spec:
           progressDeadlineSeconds: 600
-          {% raw %}replicas: {{ index .Values "common" "replicas" }{% endraw %}
+          replicas: {{ index .Values "common" "replicas" }
           revisionHistoryLimit: 10
           selector:
               matchLabels:
