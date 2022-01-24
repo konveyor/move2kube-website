@@ -14,7 +14,7 @@ In this tutorial we will see how we can transform a set of sample applications t
 
 ## Prerequisites
 
-1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli/)
+1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli)
 
 1. We will use [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
 
