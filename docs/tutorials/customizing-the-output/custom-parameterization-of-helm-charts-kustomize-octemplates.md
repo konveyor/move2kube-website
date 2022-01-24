@@ -30,7 +30,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
   ```console
       $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/orders-deployment.yaml && rm -rf myproject
 
-      {% raw %}apiVersion: apps/v1
+      {% raw %} apiVersion: apps/v1
       kind: Deployment
       metadata:
           annotations:
