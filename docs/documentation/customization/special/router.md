@@ -3,6 +3,7 @@ layout: default
 title: Router
 permalink: /documentation/customization/special/router
 parent: Special
+grand_parent: Customization
 has_children: false
 nav_order: 1
 ---

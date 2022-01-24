@@ -3,6 +3,7 @@ layout: default
 title: External
 permalink: /documentation/customization/external
 parent: Customization
+grand_parent: Documentation
 has_children: true
 nav_order: 2
 ---
