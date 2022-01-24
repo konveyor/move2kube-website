@@ -23,7 +23,7 @@ Move2Kube generates Kubernetes yamls based on the needs of the application. But 
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
       
       $ ls src
-      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
+      README.md		config-utils		customers	docs			frontend		gateway			orders
   ```
 
 3. Let's first run Move2Kube **without** any customization. The output ingress does not have any annotation. Once done, lets delete the `myproject` directory.

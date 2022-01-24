@@ -23,7 +23,7 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
 
       $ ls src
-      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
+      README.md		config-utils		customers	docs			frontend		gateway			orders
   ```
 
 3. Let's first run Move2Kube **without** any customization. 

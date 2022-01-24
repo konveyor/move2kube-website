@@ -23,7 +23,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
 
       $ ls src
-      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
+      README.md		config-utils		customers	docs			frontend		gateway			orders
   ```
 
 3. Let's first run Move2Kube **without** any customization. The relevant snippet from the deployment yaml generated in the path `myproject/deploy/yamls-parameterized/helm-chart/myproject/templates/orders-deployment.yaml` looks like this. Once done, lets delete the `myproject` directory.
@@ -166,9 +166,9 @@ Few of the parameterized yamls are:
             image:
               name: myimage
               tag: latest
-      customers-tomcat:
+      customers:
         containers:
-          customers-tomcat:
+          customers:
             image:
               name: myimage
               tag: latest

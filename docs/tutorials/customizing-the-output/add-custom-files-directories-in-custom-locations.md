@@ -23,7 +23,7 @@ Move2Kube allows custom templated files to be added to directories of choice. In
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
       
       $ ls src
-      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
+      README.md		config-utils		customers	docs			frontend		gateway			orders
   ```
 In this project, all the apps have a pom.xml file. Lets use a custom transformer to put a helm chart created out of a template into each of those project directories.
 
@@ -60,15 +60,15 @@ Once the output is generated, we can observe one helm-chart is generated for eac
             │                       └── demo
             │                           └── config
             │                               └── ApplicationConfiguration.java
-            ├── customers-tomcat
+            ├── customers
             │   ├── Makefile
             │   ├── helm-chart
-            │   │   └── customers-tomcat
+            │   │   └── customers
             │   │       ├── Chart.yaml
             │   │       ├── templates
-            │   │       │   ├── customers-tomcat-deployment.yaml
-            │   │       │   ├── customers-tomcat-ingress.yaml
-            │   │       │   └── customers-tomcat-service.yaml
+            │   │       │   ├── customers-deployment.yaml
+            │   │       │   ├── customers-ingress.yaml
+            │   │       │   └── customers-service.yaml
             │   │       └── values.yaml
             │   ├── pom.xml
             │   └── src

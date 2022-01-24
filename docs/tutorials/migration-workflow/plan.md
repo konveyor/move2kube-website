@@ -22,7 +22,7 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
   ```console
       $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
       $ ls src
-      README.md		config-utils		customers-tomcat	docs			frontend		gateway			orders
+      README.md		config-utils		customers	docs			frontend		gateway			orders
   ```
 
 ## Planning using the CLI
@@ -51,7 +51,7 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
     INFO[0000] Transformation planning - Base Directory done 
     INFO[0000] Planning Transformation - Directory Walk     
     INFO[0000] Identified 1 named services and 0 to-be-named services in config-utils
-    INFO[0000] Identified 1 named services and 0 to-be-named services in customers-tomcat
+    INFO[0000] Identified 1 named services and 0 to-be-named services in customers
     INFO[0000] Identified 1 named services and 0 to-be-named services in frontend 
     INFO[0000] Identified 1 named services and 0 to-be-named services in gateway 
     INFO[0000] Identified 1 named services and 0 to-be-named services in orders 
@@ -97,16 +97,16 @@ spec:
           Maven:
             mavenAppName: config-utils
             artifactType: jar
-    customers-tomcat:
+    customers:
       - transformerName: Maven
         paths:
           MavenPom:
-            - customers-tomcat/pom.xml
+            - customers/pom.xml
           ServiceDirPath:
-            - customers-tomcat
+            - customers
         configs:
           Maven:
-            mavenAppName: customers-tomcat
+            mavenAppName: customers
             artifactType: war
           SpringBoot:
             springBootVersion: 2.5.0
