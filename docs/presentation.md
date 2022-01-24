@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Presentation
-permalink: /documentation/presentation
-parent: Documentation
+permalink: /presentation
 nav_order: 4
 ---
 

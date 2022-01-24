@@ -46,12 +46,6 @@ Move2Kube takes as input the source files and outputs the target deployment file
 
 ![Move2Kube-Usage](assets/images/move2kube-3-step-workflow.jpeg)
 
-
-For more detailed information :
-* [Installation](/installation)
-* [Tutorials](/tutorials)
-* [Documentation](/documentation)
-
 ## Discussion
 
 To discuss with the maintainers, reach out in [slack](https://kubernetes.slack.com/archives/CR85S82A2) in [kubernetes](https://slack.k8s.io/) workspace or reach out to us in the [forum](https://groups.google.com/g/move2kube-dev).

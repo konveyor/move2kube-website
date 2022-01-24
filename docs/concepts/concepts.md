@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Concepts
-permalink: /documentation/concepts
-parent: Documentation
+permalink: /concepts
 has_children: true
 nav_order: 2
 ---
@@ -14,7 +13,7 @@ In this section we go over some of the more important ones. If you have not foll
 
 ## Transformer
 
-Move2Kube uses [transformers](/documentation/concepts/transformer) which come together to effect transformation of input into output of desired form. Each transformer consumes [Artifacts](/documentation/concepts/artifact) and outputs [Artifacts](/documentation/concepts/artifact) and [PathMappings](/documentation/concepts/path-mapping). The Artifacts allow multiple transformers to be chained together to achieve a end to end transformation. The PathMappings are used for persisting the changes in the filesystem.
+Move2Kube uses [transformers](/concepts/transformer) which come together to effect transformation of input into output of desired form. Each transformer consumes [Artifacts](/concepts/artifact) and outputs [Artifacts](/concepts/artifact) and [PathMappings](/concepts/path-mapping). The Artifacts allow multiple transformers to be chained together to achieve a end to end transformation. The PathMappings are used for persisting the changes in the filesystem.
 
 Some transformers have detect capability to go through the various directories in the source to identify directories it understand and create new Artifacts to kick start the process.
 
@@ -36,4 +35,4 @@ This phase is started by running the `move2kube transform` command.
 
 Move2Kube evaluates which transformers to run in an iterative manner. Each iteration Move2Kube will evaluate the list of artifacts produced during the previous iteration and run all transformers that consume those artifact types. This continues until it hits an iteration where there are no more artifacts or no more transformers that consume those artifact types. At this point the transformation phase is finished.
 
-The evaluated result of all [PathMappings](/documentation/concepts/path-mapping) is the output.
+The evaluated result of all [PathMappings](/concepts/path-mapping) is the output.

@@ -1,15 +1,14 @@
 ---
 layout: default
 title: Transformer
-permalink: /documentation/concepts/transformer
+permalink: /concepts/transformer
 parent: Concepts
-grand_parent: Documentation
 nav_order: 1
 ---
 
 # Transformer
 
-Each transformer consumes [Artifacts](/documentation/concepts/artifact) and outputs [Artifacts](/documentation/concepts/artifact) and [PathMappings](/documentation/concepts/path-mapping). The Artifacts allow multiple transformers to be chained together to achieve a end to end transformation. The PathMappings are used for persisting the changes in the filesystem.
+Each transformer consumes [Artifacts](/concepts/artifact) and outputs [Artifacts](/concepts/artifact) and [PathMappings](/concepts/path-mapping). The Artifacts allow multiple transformers to be chained together to achieve a end to end transformation. The PathMappings are used for persisting the changes in the filesystem.
 
 Each transformer generally has its own directory ([in-built transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers) or [external transformer](https://github.com/konveyor/move2kube-transformers)) which has all the configuration required for that transformer. The transformer YAML is the most important part of the transformer definition, which specifies its behavior. It also can have `templates` directory for putting template files to be used by the transformer, and other files/configuration that are specific to each transformer.
 
@@ -103,7 +102,7 @@ This is the interface all transformers are expected to implement.
 
 - The major function that needs to be implemented is `Transform`.
 - If you want your transformer to do something during the planning phase then you can implement `DirectoryDetect` as well. If implement this function, be sure to set
-	`directoryDetect` to a value other than `0` in the transformer YAML as well. See [transformer-yaml](/documentation/concepts/transformer-yaml) for more details.
+	`directoryDetect` to a value other than `0` in the transformer YAML as well. See [transformer-yaml](/concepts/transformer-yaml) for more details.
 - The `Init` and `GetConfig` functions are fixed and cannot be implemented by custom transformers. They are implemented by transformers built into Move2Kube.
 
 ### Methods
@@ -125,4 +124,4 @@ This is the interface all transformers are expected to implement.
 	- The second input is a list of artifacts that the transformer has already seen.
 	- The first output is a list of path mappings. A path mapping is a way for transformers to add files to the output directory of Move2Kube.
 		Path mappings can be used to generate new files, delete exiting files, modify the output directory structure, etc.
-		See [Path Mapping](/documentation/concepts/path-mapping) for details.
+		See [Path Mapping](/concepts/path-mapping) for details.
