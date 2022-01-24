@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Customizing generated Dockerfile and behavior of inbuilt transformer"
-permalink: /tutorials/customizing-the-output/custom-dockerfile-change-inbuilt-behavior
+permalink: /tutorials/customizing-the-output/custom-dockerfile-change-inbuilt-behavior/
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 1

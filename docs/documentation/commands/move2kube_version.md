@@ -1,7 +1,7 @@
 ---
 layout: default
 title: version
-permalink: /documentation/commands/version
+permalink: /documentation/commands/version/
 parent: Move2Kube commands
 grand_parent: Documentation
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Artifact
-permalink: /documentation/concepts/artifact
+permalink: /documentation/concepts/artifact/
 parent: Concepts
 grand_parent: Documentation
 nav_order: 1

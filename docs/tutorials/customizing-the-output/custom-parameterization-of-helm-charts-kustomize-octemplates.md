@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Parameterizing custom fields in Helm Chart, Kustomize, OC Templates"
-permalink: /tutorials/customizing-the-output/custom-parameterization-of-helm-charts-kustomize-octemplates
+permalink: /tutorials/customizing-the-output/custom-parameterization-of-helm-charts-kustomize-octemplates/
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 3

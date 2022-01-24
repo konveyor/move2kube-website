@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Adding custom annotations to Kubernetes YAMLs"
-permalink: /tutorials/customizing-the-output/custom-annotations
+permalink: /tutorials/customizing-the-output/custom-annotations/
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 2

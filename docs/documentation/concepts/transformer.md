@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Transformer
-permalink: /documentation/concepts/transformer
+permalink: /documentation/concepts/transformer/
 parent: Concepts
 grand_parent: Documentation
 nav_order: 3

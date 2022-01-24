@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Migrating from Docker Compose to Kubernetes"
-permalink: /tutorials/migrating-from-docker-compose-to-kubernetes
+permalink: /tutorials/migrating-from-docker-compose-to-kubernetes/
 parent: Tutorials
 nav_order: 5
 ---

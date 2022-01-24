@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tutorials
-permalink: /tutorials
+permalink: /tutorials/
 nav_order: 3
 has_children: true
 ---

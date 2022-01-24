@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Concepts
-permalink: /documentation/concepts
+permalink: /documentation/concepts/
 parent: Documentation
 has_children: true
 nav_order: 2

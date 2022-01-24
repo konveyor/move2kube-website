@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Transformer YAML"
-permalink: /documentation/concepts/transformer-yaml
+permalink: /documentation/concepts/transformer-yaml/
 parent: Concepts
 grand_parent: Documentation
 nav_order: 4

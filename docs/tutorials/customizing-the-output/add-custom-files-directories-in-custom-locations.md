@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Adding custom files and directories in custom locations"
-permalink: /tutorials/customizing-the-output/add-custom-files-directories-in-custom-locations
+permalink: /tutorials/customizing-the-output/add-custom-files-directories-in-custom-locations/
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 4

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Using Move2Kube CLI"
-permalink: /tutorials/cli
+permalink: /tutorials/cli/
 parent: Tutorials
 nav_order: 1
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: plan
-permalink: /documentation/commands/plan
+permalink: /documentation/commands/plan/
 parent: Move2Kube commands
 grand_parent: Documentation
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Using Move2Kube UI"
-permalink: /tutorials/ui
+permalink: /tutorials/ui/
 parent: Tutorials
 nav_order: 2
 ---

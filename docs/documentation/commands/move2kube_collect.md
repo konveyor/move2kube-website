@@ -1,7 +1,7 @@
 ---
 layout: default
 title: collect
-permalink: /documentation/commands/collect
+permalink: /documentation/commands/collect/
 parent: Move2Kube commands
 grand_parent: Documentation
 ---

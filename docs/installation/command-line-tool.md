@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Command Line Tool"
-permalink: /installation/cli
+permalink: /installation/cli/
 parent: Installation
 nav_order: 1
 ---

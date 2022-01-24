@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Running non-interactively"
-permalink: /tutorials/running-non-interactively
+permalink: /tutorials/running-non-interactively/
 parent: Tutorials
 nav_order: 3
 ---
