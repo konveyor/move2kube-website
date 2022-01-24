@@ -3,6 +3,7 @@ layout: default
 title: Purpose-Built
 permalink: /documentation/customization/purpose-built
 parent: Customization
+grand_parent: Documentation
 has_children: true
 nav_order: 1
 ---
