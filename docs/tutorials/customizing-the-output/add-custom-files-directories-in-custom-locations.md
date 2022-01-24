@@ -7,7 +7,7 @@ grand_parent: Tutorials
 nav_order: 4
 ---
 
-# Generating a custom Helm chart
+# Generating custom Helm charts to illustrate adding custom files and directories in custom locations
 
 ## Big picture
 
@@ -38,7 +38,8 @@ In this project, all the apps have a pom.xml file. Lets use a custom transformer
   ``` 
 
 Once the output is generated, we can observe one helm-chart is generated for each service and placed within the service directory. Also, note that every helm-chart project is named after the service it is meant for. The contents are shown below for reference:
-    ```console 
+    ```
+    {% raw %} 
         $ tree myproject
             myproject/
             ├── config-utils
@@ -168,6 +169,7 @@ Once the output is generated, we can observe one helm-chart is generated for eac
                         └── resources
                             ├── application-test.properties
                             └── bootstrap.properties
+    {% endraw %}
     ```
 
 ## Anatomy of transformer in `add-custom-files-directories-in-custom-locations`
@@ -238,5 +240,3 @@ def getServiceName(filePath):
             return t2[0]
 {% endraw %}
 ```
-
-Next step [Customize in-built transformer behavior](/tutorials/customizing-the-output/customize-inbuilt-transformer-behavior)
