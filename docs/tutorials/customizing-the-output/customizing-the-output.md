@@ -3,7 +3,7 @@ layout: default
 title: "Customizing the output"
 permalink: /tutorials/customizing-the-output
 parent: Tutorials
-nav_order: 7
+nav_order: 9
 has_children: true
 ---
 
