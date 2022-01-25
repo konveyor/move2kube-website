@@ -29,21 +29,21 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
   - If we notice the `Dockerfile` generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as base image
   - There are no scripts named `start-nodejs.sh` in the `frontend` service directory
   - The Kubernetes yamls are generated in `myproject/deploy/yamls` directory
-  ```console
-  $ move2kube transform -s src/ --qa-skip
-  $ ls myproject/source/frontend
-  Dockerfile		README.md		dr-surge.js		manifest.yml		package-lock.json	server.js		stories			test-setup.js		webpack.common.js	webpack.prod.js LICENSE		__mocks__		jest.config.js		nodemon.json		package.json		src			stylePaths.js		tsconfig.json		webpack.dev.js
-  $ cat myproject/source/frontend/Dockerfile
-  FROM registry.access.redhat.com/ubi8/nodejs-12
-  COPY . .
-  RUN npm install
-  RUN npm run build
-  EXPOSE 8080
-  CMD npm run start
-  $ ls myproject/deploy
-  cicd			compose			knative			knative-parameterized	yamls			yamls-parameterized
-  $ rm -rf myproject
-  ```
+
+    ```console
+    $ move2kube transform -s src/ --qa-skip && ls myproject/source/frontend && cat myproject/source/frontend/Dockerfile && ls myproject/deploy && rm -rf myproject
+    Dockerfile		README.md		dr-surge.js		manifest.yml		package-lock.json	server.js		stories			test-setup.js		webpack.common.js	webpack.prod.js LICENSE		__mocks__		jest.config.js		nodemon.json		package.json		src			stylePaths.js		tsconfig.json		webpack.dev.js
+
+    FROM registry.access.redhat.com/ubi8/nodejs-12
+    COPY . .
+    RUN npm install
+    RUN npm run build
+    EXPOSE 8080
+    CMD npm run start
+
+    cicd			compose			knative			knative-parameterized	yamls			yamls-parameterized
+    ```
+
   Let's say, we want to change 
   - The base image of the Dockerfile generated for nodejs from `registry.access.redhat.com/ubi8/nodejs-12` to `quay.io/konveyor/nodejs-12`
   - Add a new script named `start-nodejs.sh` in the nodejs app directories along with the Dockerfile, in our case `frontend` directory
