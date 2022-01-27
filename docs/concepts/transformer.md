@@ -102,7 +102,7 @@ This is the interface all transformers are expected to implement.
 
 - The major function that needs to be implemented is `Transform`.
 - If you want your transformer to do something during the planning phase then you can implement `DirectoryDetect` as well. If implement this function, be sure to set
-	`directoryDetect` to a value other than `0` in the transformer YAML as well. See [transformer-yaml](/concepts/transformer-yaml) for more details.
+	`directoryDetect` to a value other than `0` in the transformer YAML as well. 
 - The `Init` and `GetConfig` functions are fixed and cannot be implemented by custom transformers. They are implemented by transformers built into Move2Kube.
 
 ### Methods

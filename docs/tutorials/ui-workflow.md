@@ -23,6 +23,8 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 1. Download the language platforms sample as a zip. 
     ```console
     $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos -z
+    $ ls
+    language-platforms.zip
     ```
 
 1. Do a `docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui`.  
@@ -54,7 +56,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
     ![Create project]({{ site.baseurl }}/assets/images/ui-workflow/07-create-project.jpeg)
     ![New project]({{ site.baseurl }}/assets/images/ui-workflow/08-new-project.jpeg)
 
-1. Scroll down to the `Project inputs` section and upload the [language-platforms.zip](https://github.com/konveyor/move2kube-demos/blob/main/samples/language-platforms.zip) file which we downloaded earlier in this tutorial and wait for it to finish uploading.
+1. Scroll down to the `Project inputs` section and upload the language-platforms.zip file which we downloaded earlier in this tutorial and wait for it to finish uploading.
 
     ![No project inputs]({{ site.baseurl }}/assets/images/ui-workflow/09-no-project-inputs.jpeg)
     ![Create project input]({{ site.baseurl }}/assets/images/ui-workflow/11-create-project-input.jpeg)

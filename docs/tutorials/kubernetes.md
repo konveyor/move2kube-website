@@ -264,7 +264,7 @@ Some things we can observe:
 - We can also see that, in each case, there are 3 environments `dev`, `staging` and `prod`.
 - It is possible to have different parameterizations for each environment.
 
-For more details on how to customize the parameterization that Move2Kube does look at the [documentation](/documentation/parameterization-syntax).
+For more details on how to customize the parameterization that Move2Kube does look at the [documentation](/customization/purpose-built/parameterizer).
 
 ## Conclusion
 
