@@ -2,7 +2,7 @@
 layout: default
 title: Presentation
 permalink: /presentation
-nav_order: 6
+nav_order: 7
 ---
 
 # Konveyor Move2Kube Presentation
