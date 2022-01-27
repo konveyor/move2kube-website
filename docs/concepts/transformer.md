@@ -10,7 +10,7 @@ nav_order: 1
 
 Each transformer consumes [Artifacts](/concepts/artifact) and outputs [Artifacts](/concepts/artifact) and [PathMappings](/concepts/path-mapping). The Artifacts allow multiple transformers to be chained together to achieve a end to end transformation. The PathMappings are used for persisting the changes in the filesystem.
 
-Each transformer generally has its own directory ([in-built transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers) or [external transformer](https://github.com/konveyor/move2kube-transformers)) which has all the configuration required for that transformer. The transformer YAML is the most important part of the transformer definition, which specifies its behavior. It also can have `templates` directory for putting template files to be used by the transformer, and other files/configuration that are specific to each transformer.
+Each transformer generally has its own directory ([built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) or [external transformer](https://github.com/konveyor/move2kube-transformers)) which has all the configuration required for that transformer. The transformer YAML is the most important part of the transformer definition, which specifies its behavior. It also can have `templates` directory for putting template files to be used by the transformer, and other files/configuration that are specific to each transformer.
 
 ## Transformer YAML
 
@@ -59,19 +59,19 @@ Below we have the details of each field in the YAML. The `apiVersion` and `kind`
 			- `-1` Run on the source directory and all of its sub-directories.
 			- `0` Skip directory detect entirely. Does not run on any directories.
 			- `1` Run on just the source directory, not on any of its sub-directories.
-	- `externalFiles` : `object ([string]: string)` - This can be used to specify files that needs to be copied from [outside the context of this transformer](https://github.com/konveyor/move2kube/blob/2b74b572dea2a85cb91eaf0d79ef901a5f426169/assets/inbuilt/transformers/dockerfilegenerator/java/maven/maven.yaml#L22-L24) into the transformer. This is helpful to specify files used by multiple transformers in a single location.
+	- `externalFiles` : `object ([string]: string)` - This can be used to specify files that needs to be copied from [outside the context of this transformer](https://github.com/konveyor/move2kube/blob/2b74b572dea2a85cb91eaf0d79ef901a5f426169/assets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml#L22-L24) into the transformer. This is helpful to specify files used by multiple transformers in a single location.
 	- `consumes` : `object ([string]: object)` - This can be used to narrow down the artifacts that your transformer runs on during the transformation phase.
 		The key is a string containing the type of the artifact. The value is an object with the following fields:
 		- `merge` : `boolean` - If true all artifacts of this type will be merged into a single one before being passed to your transformer.
 	- `produces` : `object ([string]: object)` - This can be used to tell Move2Kube the type of output artifacts your transformer will return.
 		The key is a string containing the type of the artifact. The value is an object with the following fields:
 		- `changeTypeTo` : `string` - This can be used to change the artifact type to something else. Useful for overriding the behavior of existing transformers.
-	- `dependency` : `any` - If the transformer wants the artifacts that are about to be processed by this transformer to be [preprocessed](https://github.com/konveyor/move2kube/blob/2b74b572dea2a85cb91eaf0d79ef901a5f426169/assets/inbuilt/transformers/kubernetes/kubernetes/kubernetes.yaml#L17-L19) by another transformer, this field can be used to specify the transformer to use for proprocessing. 
+	- `dependency` : `any` - If the transformer wants the artifacts that are about to be processed by this transformer to be [preprocessed](https://github.com/konveyor/move2kube/blob/2b74b572dea2a85cb91eaf0d79ef901a5f426169/assets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml#L17-L19) by another transformer, this field can be used to specify the transformer to use for proprocessing. 
 	- `override` : `any` - If this transformer overrides the behavior of other transformers, a [selector](https://github.com/konveyor/move2kube-transformers/blob/c4974378ff3a908a1443dc77e02d5b7268e7d64c/custom-helm-kustomize-octemplates-parameterization/parameterizers.yaml#L14-L16) can be specified here to disable those transformers that match the selector. 
 	- `templates` : `string` - Specifies the template directory. The default value is `templates`
 	- `config` : `any` - Each transformer has a type/class specified by the `class` field shown above. Each class exposes certain configuration options.
 		All such options can be configured here. For more details refer to the documentation for the transformer class that you are using.
-		Example: [assets/inbuilt/transformers/kubernetes/parameterizers/parameterizers.yaml#L14-L18](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/assets/inbuilt/transformers/kubernetes/parameterizers/parameterizers.yaml#L14-L18)
+		Example: [assets/built-in/transformers/kubernetes/parameterizers/parameterizers.yaml#L14-L18](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/assets/built-in/transformers/kubernetes/parameterizers/parameterizers.yaml#L14-L18)
 
 ## Other files/directories
 

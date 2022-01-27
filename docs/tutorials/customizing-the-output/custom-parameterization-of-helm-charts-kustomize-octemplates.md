@@ -84,7 +84,7 @@ In this example, we illustrate how we could parameterize a custom field in the h
   ```
   As you might notice, except the replicas field no other field is parameterized. Now let's look at parameterizing the other fields in the transformer.
 
-1. We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-helm-kustomize-octemplates-parameterization) of the [parameterizer transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers/kubernetes/parameterizer) to achieve this. We copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-helm-kustomize-octemplates-parameterization) into the `customizations` sub-directory.
+1. We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-helm-kustomize-octemplates-parameterization) of the [parameterizer transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/parameterizer) to achieve this. We copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-helm-kustomize-octemplates-parameterization) into the `customizations` sub-directory.
   ```console
   $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d custom-helm-kustomize-octemplates-parameterization -r move2kube-transformers -o customizations
   ```

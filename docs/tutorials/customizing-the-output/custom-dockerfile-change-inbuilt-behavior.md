@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Customizing generated Dockerfile and behavior of inbuilt transformer"
-permalink: /tutorials/customizing-the-output/custom-dockerfile-change-inbuilt-behavior
+title: "Customizing generated Dockerfile and behavior of built-in transformer"
+permalink: /tutorials/customizing-the-output/custom-dockerfile-change-built-in-behavior
 parent: "Customizing the output"
 grand_parent: Tutorials
 nav_order: 1
 ---
 
-# Customizing generated Dockerfile and behavior of inbuilt transformer
+# Customizing generated Dockerfile and behavior of built-in transformer
 
 ## Big picture
 
@@ -49,9 +49,9 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
   - Add a new script named `start-nodejs.sh` in the nodejs app directories along with the Dockerfile, in our case `frontend` directory
   - Change the location of Kubernetes yamls from `myproject/deploy/yamls` to `myproject/yamls-elsewhere`
 
-1. We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-inbuilt-behavior) of the [nodejs in-built transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers/dockerfilegenerator/nodejs) and [kubernetes in-built transformer](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers/kubernetes/kubernetes) to achieve this. We copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-inbuilt-behavior) into the `customizations` sub-directory.
+1. We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-built-in-behavior) of the [nodejs built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/dockerfilegenerator/nodejs) and [kubernetes built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/kubernetes) to achieve this. We copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-built-in-behavior) into the `customizations` sub-directory.
   ```console
-  $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d custom-dockerfile-change-inbuilt-behavior -r move2kube-transformers -o customizations
+  $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d custom-dockerfile-change-built-in-behavior -r move2kube-transformers -o customizations
   ```
 
 1. Now lets transform with this customization. Specify the customization using the `-c` flag. 
@@ -77,14 +77,14 @@ Once the output is generated, we can observe
   Readme.md			deploy				scripts				source				yamls-elsewhere			yamls-elsewhere-parameterized
   ```
 
-## Anatomy of transformers in `custom-dockerfile-change-inbuilt-behavior`
+## Anatomy of transformers in `custom-dockerfile-change-built-in-behavior`
 
 The two customized transformers in the directory are `nodejs` and `kubernetes`. 
 The contents of `custom-dockerfile-custom-files` are as shown below:
   ```console
   $ tree customizations
   customizations
-  └── custom-dockerfile-change-inbuilt-behavior
+  └── custom-dockerfile-change-built-in-behavior
       ├── kubernetes
       │   └── kubernetes.yaml
       └── nodejs
@@ -93,13 +93,13 @@ The contents of `custom-dockerfile-custom-files` are as shown below:
               ├── Dockerfile
               └── start-nodejs.sh
   ```
-To custom configure an in-built transformer, you can copy the [in-built transformer's configuration directory](https://github.com/konveyor/move2kube/tree/main/assets/inbuilt/transformers) from `move2kube` source, change the configurations and use it as a customization. You can make it override the inbuilt transformer using the `override` config in the yaml.
+To custom configure an built-in transformer, you can copy the [built-in transformer's configuration directory](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) from `move2kube` source, change the configurations and use it as a customization. You can make it override the built-in transformer using the `override` config in the yaml.
 
 In this case, we change the Dockerfile template, add a script and change the transformer configuration yaml.
 
-1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-inbuilt-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the in-built transformer](https://github.com/konveyor/move2kube/blob/main/assets/inbuilt/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except that we are using a custom base image and a custom `CMD` here.
+1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except that we are using a custom base image and a custom `CMD` here.
   ```
-  {% raw %}$ cat customizations/custom-dockerfile-change-inbuilt-behavior/nodejs/templates/Dockerfile
+  {% raw %}$ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile
   FROM quay.io/konveyor/nodejs-12
   COPY . .
   RUN npm install
@@ -110,17 +110,17 @@ In this case, we change the Dockerfile template, add a script and change the tra
   CMD sh start-nodejs.sh{% endraw %}
   ```
 
-1. Add `customizations/custom-dockerfile-change-inbuilt-behavior/nodejs/templates/start-nodejs.sh`.
+1. Add `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/start-nodejs.sh`.
   ```console
-  $ ls customizations/custom-dockerfile-change-inbuilt-behavior/nodejs/templates/
+  $ ls customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/
   Dockerfile	start-nodejs.sh
   ```
 
-1. The `nodejs.yaml` is the transformer configuration. We have [two changes](https://github.com/konveyor/move2kube/blob/main/assets/inbuilt/transformers/dockerfilegenerator/nodejs/nodejs.yaml) here compared to the built-in transformer: 
+1. The `nodejs.yaml` is the transformer configuration. We have [two changes](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml) here compared to the built-in transformer: 
   - The name of our custom transformer is `Nodejs-CustomFiles` (see `name` field in the `metadata` section). 
   - We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if this transformer is present.
   ```console
-  $ cat customizations/custom-dockerfile-change-inbuilt-behavior/nodejs/nodejs.yaml
+  $ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/nodejs.yaml
   ```
   ```yaml
   apiVersion: move2kube.konveyor.io/v1alpha1
@@ -129,7 +129,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
     name: Nodejs-CustomFiles
     labels:
       move2kube.konveyor.io/task: containerization
-      move2kube.konveyor.io/inbuilt: true
+      move2kube.konveyor.io/built-in: true
   spec:
     class: "NodejsDockerfileGenerator"
     directoryDetect:
@@ -151,7 +151,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
 
 1. In the `kubernetes` transformer, we change the name and override config too. But in addition, we change the default behavior of the transformer, which is to put the Kubernetes yamls in `deploy/yamls` directory by changing the `spec.config.outputPath` to `yamls-elsewhere`.
   ```console
-  $ cat customizations/custom-dockerfile-change-inbuilt-behavior/kubernetes/kubernetes.yaml
+  $ cat customizations/custom-dockerfile-change-built-in-behavior/kubernetes/kubernetes.yaml
   ```
   ```yaml
   {% raw %}apiVersion: move2kube.konveyor.io/v1alpha1
@@ -159,7 +159,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
   metadata:
     name: KubernetesWithCustomOutputDirectory
     labels:
-      move2kube.konveyor.io/inbuilt: true
+      move2kube.konveyor.io/built-in: true
   spec:
     class: "Kubernetes"
     directoryDetect:
