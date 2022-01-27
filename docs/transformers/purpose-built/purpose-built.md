@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Purpose Built
-permalink: /customization/purpose-built
-parent: Customization
+permalink: /transformers/purpose-built
+parent: Transformers
 has_children: true
 nav_order: 1
 ---

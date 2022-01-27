@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Starlark
-permalink: /customization/external/starlark
+permalink: /transformers/external/starlark
 parent: External
-grand_parent: Customization
+grand_parent: Transformers
 has_children: false
 nav_order: 1
 ---

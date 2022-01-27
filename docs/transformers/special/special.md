@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Special
-permalink: /customization/special
-parent: Customization
+permalink: /transformers/special
+parent: Transformers
 has_children: true
 nav_order: 3
 ---
