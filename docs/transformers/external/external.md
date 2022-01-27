@@ -1,8 +1,8 @@
 ---
 layout: default
 title: External
-permalink: /customization/external
-parent: Customization
+permalink: /transformers/external
+parent: Transformers
 has_children: true
 nav_order: 2
 ---

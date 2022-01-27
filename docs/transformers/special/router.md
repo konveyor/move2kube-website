@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Router
-permalink: /customization/special/router
+permalink: /transformers/special/router
 parent: Special
-grand_parent: Customization
+grand_parent: Transformers
 has_children: false
 nav_order: 1
 ---

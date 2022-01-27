@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Parameterizer
-permalink: /customization/purpose-built/parameterizer
-grand_parent: Customization
+permalink: /transformers/purpose-built/parameterizer
+grand_parent: Transformers
 parent: "Purpose Built"
 nav_order: 1
 ---

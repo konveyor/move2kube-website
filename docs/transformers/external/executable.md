@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Executable
-permalink: /customization/external/executable
+permalink: /transformers/external/executable
 parent: External
-grand_parent: Customization
+grand_parent: Transformers
 has_children: false
 nav_order: 2
 ---
