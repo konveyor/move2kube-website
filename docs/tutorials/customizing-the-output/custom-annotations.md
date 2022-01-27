@@ -82,7 +82,7 @@ The configuration yaml specifies that the custom transformer consumes and produc
   metadata:
     name: IngressAnnotator
     labels: 
-      move2kube.konveyor.io/inbuilt: false
+      move2kube.konveyor.io/built-in: false
   spec:
     class: "Starlark"
     consumes:
