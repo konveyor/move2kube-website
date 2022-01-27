@@ -74,7 +74,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     ```
     The `CfApps` file contains all the information that was collected about our app such as service names, environment variables, ports, etc.
 
-    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/cfapps.yaml)
+    An example is provided [here](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/collect/cf/cfapps.yaml)
 
     <details markdown="block">
     <summary markdown="block">

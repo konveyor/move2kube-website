@@ -116,7 +116,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
   Dockerfile	start-nodejs.sh
   ```
 
-1. The `nodejs.yaml` is the transformer configuration. We have [two changes](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml) here compared to the built-in transformer: 
+1. The `transformer.yaml` is the transformer configuration. We have [two changes](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml) here compared to the built-in transformer: 
   - The name of our custom transformer is `Nodejs-CustomFiles` (see `name` field in the `metadata` section). 
   - We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if this transformer is present.
   ```console
