@@ -26,7 +26,7 @@ Move2Kube allows custom templated files to be added to directories of choice. In
     ```
     In this project, all the apps have a pom.xml file. Lets use a custom transformer to put a helm chart created out of a template into each of those project directories.
 
-1. We will use the starlark based custom transformer in [here](ttps://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations). We copy it into the `customizations` sub-directory.
+1. We will use the starlark based custom transformer in [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations). We copy it into the `customizations` sub-directory.
     ```console
     $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-files-directories-in-custom-locations -r move2kube-transformers -o customizations
     ```
