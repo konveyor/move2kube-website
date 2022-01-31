@@ -1,16 +1,16 @@
 ---
 layout: default
-title: "Migrating and deploying .NET apps (.Net framework version 4.x) to Kubernetes"
+title: "Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes"
 permalink: /tutorials/dotnet/
 parent: Tutorials
-nav_order: 7
+nav_order: 10
 ---
 
-# Migrating and deploying .NET applications (4.x .NET Framework) to Kubernetes
+# Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes
 
 ## Description
 
-In this tutorial, we will learn how to migrate and deploy .NET applications developed for 4.x versions of .NET framework, to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
+In this tutorial, we will learn how containerize .NET applications developed for 4.x versions of .NET framework using windows containers and deploy them to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
 
 ## Prerequisites
 
