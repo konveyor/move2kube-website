@@ -3,7 +3,7 @@ layout: default
 title: "Parameterizing Kubernetes YAMLs"
 permalink: /tutorials/parameterizing-kubernetes-yamls
 parent: Tutorials
-nav_order: 7
+nav_order: 8
 ---
 
 # Parameterizing Kubernetes YAMLs

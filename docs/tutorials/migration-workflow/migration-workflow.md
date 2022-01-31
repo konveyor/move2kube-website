@@ -3,7 +3,7 @@ layout: default
 title: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 permalink: /tutorials/migration-workflow
 parent: Tutorials
-nav_order: 8
+nav_order: 9
 has_children: true
 ---
 
