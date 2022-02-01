@@ -18,6 +18,7 @@ repo='move2kube-transformers'
 unset dir
 unset outputdir
 zip_flag="false"
+quiet_flag="false"
 
 print_usage() {
   printf "Usage: ./download.sh -d <dir> -r <repo> -o <outputdir>"
@@ -25,12 +26,13 @@ print_usage() {
   printf ""
 }
 
-while getopts 'r:d:o:z' flag; do
+while getopts 'r:d:o:zq' flag; do
   case "${flag}" in
     r) repo="${OPTARG}" ;;
     d) dir="${OPTARG}" ;;
     o) outputdir="${OPTARG}" ;;
     z) zip_flag="true" ;;
+    q) quiet_flag="true" ;;
     *) print_usage
        exit 1 ;;
   esac
@@ -42,36 +44,34 @@ then
   cd $outputdir
 fi
 
+if [ $quiet_flag == "true" ]
+then
+  curl -sS -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+else 
+  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+fi
+
+base_dir=${repo}
+
 if [ -z "$dir" ] 
 then
-  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
   unzip -q ${repo}.zip "${repo}-main/*"
-  rm -rf ${repo}.zip
-  rm -rf "${repo}"
   mv "${repo}-main/" "${repo}"
-  rm -rf "${repo}-main"
-  if [ $zip_flag == "true" ] 
-  then 
-    zip -q -r ${repo}.zip ${repo}/
-    rm -rf "${repo}"
-    echo ${PWD}/${repo}.zip created
-  else 
-    echo ${PWD}/${repo} created
-  fi
-else
+else 
   base_dir=${dir##*/}
-  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
   unzip -q ${repo}.zip "${repo}-main/$dir/*"
-  rm -rf ${repo}.zip
   rm -rf "${base_dir}"
   mv "${repo}-main/$dir" "${base_dir}"
-  rm -rf "${repo}-main"
-  if [ $zip_flag == "true" ] 
-  then 
-    zip -q -r ${base_dir}.zip ${base_dir}/
-    rm -rf "${base_dir}"
-    echo ${PWD}/${base_dir}.zip created
-  else
-    echo ${PWD}/${base_dir} created
-  fi
+fi
+
+rm -rf ${repo}.zip
+rm -rf "${repo}-main"
+
+if [ $zip_flag == "true" ] 
+then 
+  zip -q -r ${base_dir}.zip ${base_dir}/
+  rm -rf "${base_dir}"
+  echo ${PWD}/${base_dir}.zip created
+else
+  echo ${PWD}/${base_dir} created
 fi
