@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Parameterizing Kubernetes YAMLs"
+title: "Creating Helm-charts, Kustomize overlays from Kubernetes Yamls"
 permalink: /tutorials/parameterizing-kubernetes-yamls
 parent: Tutorials
 nav_order: 8
 ---
 
-# Parameterizing Kubernetes YAMLs
+# Creating Helm-charts, Kustomize overlays from Kubernetes Yamls
 
 ## Description
 
@@ -263,6 +263,12 @@ Some things we can observe:
 - We can see the Openshift Template in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/openshift-template` directory.
 - We can also see that, in each case, there are 3 environments `dev`, `staging` and `prod`.
 - It is possible to have different parameterizations for each environment.
+
+You might have noticied that the directory name has `versionchanged` in it. This is because two transformers are currently in play here, 
+* The Kubernetes version change transformer, which was asking for the Kubernetes version to target, and which created the version changed yamls to suit the target cluster supported Kinds and versions.
+* The Parameterizer transformer, which was taking the version changed yamls and creating Helm charts, Kustomize overlays and OC templates.
+
+If the intention was to retain the kind and verisons of Kubernetes yamls, we can disable the `KubernetesVersionChanger` transformer either in the QA, config or in plan, and then the yamls will be parameterized as is.
 
 For more details on how to customize the parameterization that Move2Kube does look at the [documentation](/transformers/purpose-built/parameterizer).
 
