@@ -14,6 +14,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+
+HAS_UNZIP="$(command -v unzzip >/dev/null && echo true || echo false)"
+HAS_ZIP="$(command -v zip >/dev/null && echo true || echo false)"
+
+if [ "$HAS_UNZIP" = 'true' ]; then
+  echo 'failed, please install unzip and run this download script again'
+  exit 1
+fi
+
 repo='move2kube-transformers'
 unset dir
 unset outputdir
@@ -38,40 +47,40 @@ while getopts 'r:d:o:zq' flag; do
   esac
 done
 
-if [ ! -z "$outputdir" ] 
-then
-  mkdir -p $outputdir
-  cd $outputdir
+if [ -n "$outputdir" ]; then
+  mkdir -p "$outputdir"
+  cd "$outputdir" || exit 1
 fi
 
-if [ $quiet_flag == "true" ]
-then
-  curl -sS -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+if [ $quiet_flag == "true" ]; then
+  curl -sS -Lo "${repo}.zip" "https://github.com/konveyor/${repo}/archive/refs/heads/main.zip"
 else 
-  curl -Lo ${repo}.zip https://github.com/konveyor/${repo}/archive/refs/heads/main.zip 
+  curl -Lo "${repo}.zip" "https://github.com/konveyor/${repo}/archive/refs/heads/main.zip"
 fi
 
 base_dir=${repo}
 
-if [ -z "$dir" ] 
-then
-  unzip -q ${repo}.zip "${repo}-main/*"
+if [ -z "$dir" ]; then
+  unzip -q "${repo}.zip" "${repo}-main/*"
   mv "${repo}-main/" "${repo}"
 else 
   base_dir=${dir##*/}
-  unzip -q ${repo}.zip "${repo}-main/$dir/*"
+  unzip -q "${repo}.zip" "${repo}-main/$dir/*"
   rm -rf "${base_dir}"
   mv "${repo}-main/$dir" "${base_dir}"
 fi
 
-rm -rf ${repo}.zip
+rm -rf "${repo}.zip"
 rm -rf "${repo}-main"
 
-if [ $zip_flag == "true" ] 
-then 
-  zip -q -r ${base_dir}.zip ${base_dir}/
+if [ "$zip_flag" = 'true' ]; then
+  if [ "$HAS_ZIP" != 'true' ]; then
+    echo 'failed, please install zip and run this download script again'
+    exit 1
+  fi
+  zip -q -r "${base_dir}.zip" "${base_dir}/"
   rm -rf "${base_dir}"
-  echo ${PWD}/${base_dir}.zip created
+  echo "${PWD}/${base_dir}.zip created"
 else
-  echo ${PWD}/${base_dir} created
+  echo "${PWD}/${base_dir} created"
 fi
