@@ -18,7 +18,7 @@
 HAS_UNZIP="$(command -v unzzip >/dev/null && echo true || echo false)"
 HAS_ZIP="$(command -v zip >/dev/null && echo true || echo false)"
 
-if [ "$HAS_UNZIP" = 'true' ]; then
+if [ "$HAS_UNZIP" != 'true' ]; then
   echo 'failed, please install unzip and run this download script again'
   exit 1
 fi
