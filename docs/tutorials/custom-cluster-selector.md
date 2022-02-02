@@ -10,7 +10,7 @@ nav_order: 9
 
 ## Description
 
-Move2Kube already supports targeting amongst multiple Kubernetes cluster, like- Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS, but there might be situations where you might require generating Kubernetes YAMLs to target particular cluster. In this tutorial we will see how we can use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.
+Move2Kube already supports targeting amongst multiple cluster, like- Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS, but there might be situations where you might require generating Kubernetes YAMLs to target a particular cluster. In this tutorial we will see how we can use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Move2Kube already supports targeting amongst multiple Kubernetes cluster, like- 
 
 ## Steps
 
-1. Let's first collect the data about your Kubernetes cluster using `move2kube collect`. Here we will limit the collect to only cluster information using the `-a k8s` annotation flag. Please note: Before running the below command, log in to your target cluster.
+1. Let's first collect the data about your Kubernetes cluster using `move2kube collect`. Here we will limit the collect to only cluster information using the `-a k8s` annotation flag. Please note: Before running the below command, log in to your target cluster. To check whether you are logged in to the target cluster run `kubectl get pods`.
 
     ```console
     $ move2kube collect -a k8s
