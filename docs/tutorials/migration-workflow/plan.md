@@ -246,7 +246,7 @@ Next step [Transform](/tutorials/migration-workflow/transform)
 
 1. Bring up the UI:
     ```console
-    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0
+    $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.1
     INFO[0000] Starting Move2Kube API server at port: 8080
     ```
 
