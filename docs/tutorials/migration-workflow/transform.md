@@ -30,7 +30,20 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
 
 ## Transforming using the CLI
 
-1. Run `move2kube transform` in the same directory as the plan file. This will detect the plan file and use it to find the source directory.
+1. Run the transformation in the same directory as the plan file. This will detect the plan file and use it to find the source directory.
+    ```
+    $ move2kube transform
+    ```
+
+    <details markdown="block">
+    <summary markdown="block">
+        Optional: Provide answers to questions using a config file...
+    </summary>
+    If you want to avoid the question answers during transformation, you can use this [config file](https://github.com/konveyor/move2kube-demos/blob/main/samples/enterprise-app/config/m2kconfig.yaml)
+    ```
+    $ move2kube transform --config m2kconfig.yaml
+    ```
+    </details>
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
     - A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. We could also do this by editing the plan file.
@@ -46,7 +59,6 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     ```
     </summary>
     ```console
-    $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
     ? Select all transformer types that you are interested in:
     Hints:

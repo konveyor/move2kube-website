@@ -37,7 +37,6 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
     ```
     </summary>
     ```console
-    $ move2kube plan -s src
     INFO[0000] Configuration loading done                   
     INFO[0000] Planning Transformation - Base Directory     
     INFO[0000] [ComposeAnalyser] Planning transformation    
@@ -80,157 +79,172 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
     </summary>
     ```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
-kind: Plan
-metadata:
-  name: myproject
-spec:
-  sourceDir: src
-  services:
-    config-utils:
-      - transformerName: Maven
-        paths:
-          MavenPom:
-            - config-utils/pom.xml
-          ServiceDirPath:
-            - config-utils
-        configs:
-          Maven:
-            mavenAppName: config-utils
-            artifactType: jar
-    customers:
-      - transformerName: Maven
-        paths:
-          MavenPom:
-            - customers/pom.xml
-          ServiceDirPath:
-            - customers
-        configs:
-          Maven:
-            mavenAppName: customers
-            artifactType: war
-          SpringBoot:
-            springBootVersion: 2.5.0
-    frontend:
-      - transformerName: CloudFoundry
-        paths:
-          CfManifest:
-            - frontend/manifest.yml
-          ServiceDirPath:
-            - frontend
-        configs:
-          CloudFoundryService:
-            serviceName: frontend
-          ContainerizationOptions:
-            - Nodejs-Dockerfile
-      - transformerName: Nodejs-Dockerfile
-        paths:
-          ServiceDirPath:
-            - frontend
-    gateway:
-      - transformerName: CloudFoundry
-        paths:
-          BuildArtifact:
-            - gateway/target/gateway-2.0.0-SNAPSHOT-exec.jar
-          CfManifest:
-            - gateway/manifest.yml
-          ServiceDirPath:
-            - gateway
-        configs:
-          CloudFoundryService:
-            serviceName: gateway
-          ContainerizationOptions:
-            - Maven
-      - transformerName: Maven
-        paths:
-          MavenPom:
-            - gateway/pom.xml
-          ServiceDirPath:
-            - gateway
-        configs:
-          Maven:
-            mavenAppName: gateway
-            artifactType: jar
-            mavenProfiles:
-              - local
-              - openshift
-              - openshift-manual
-              - openshift-it
-          SpringBoot:
-            springBootAppName: gateway
-            springBootProfiles:
-              - local
-              - openshift
-    orders:
-      - transformerName: CloudFoundry
-        paths:
-          BuildArtifact:
-            - orders/target/orders-2.0.0-SNAPSHOT-exec.jar
-          CfManifest:
-            - orders/manifest.yml
-          ServiceDirPath:
-            - orders
-        configs:
-          CloudFoundryService:
-            serviceName: orders
-          ContainerizationOptions:
-            - Maven
-      - transformerName: Maven
-        paths:
-          MavenPom:
-            - orders/pom.xml
-          ServiceDirPath:
-            - orders
-        configs:
-          Maven:
-            mavenAppName: orders
-            artifactType: jar
-            mavenProfiles:
-              - local
-              - openshift
-              - openshift-manual
-              - openshift-it
-          SpringBoot:
-            springBootAppName: orders
-            springBootProfiles:
-              - local
-              - openshift
-  transformers:
-    Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/buildconfig.yaml
-    CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/cloudfoundry.yaml
-    ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/clusterselector.yaml
-    ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/composeanalyser.yaml
-    ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/composegenerator.yaml
-    ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
-    DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
-    DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
-    DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
-    DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
-    EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
-    EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
-    Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/golang.yaml
-    Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/gradle.yaml
-    Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/jar.yaml
-    Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/jboss.yaml
-    Knative: m2kassets/built-in/transformers/kubernetes/knative/knative.yaml
-    Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml
-    KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
-    Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/liberty.yaml
-    Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml
-    Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml
-    PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/php.yaml
-    Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/parameterizer.yaml
-    Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/python.yaml
-    ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/readmegenerator.yaml
-    Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/ruby.yaml
-    Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/rust.yaml
-    Tekton: m2kassets/built-in/transformers/kubernetes/tekton/tekton.yaml
-    Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
-    WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/war.yaml
-    WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
-    WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
-    WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
-    WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
-    ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
+    kind: Plan
+    metadata:
+      name: myproject
+    spec:
+      sourceDir: src
+      services:
+        config-utils:
+          - transformerName: Maven
+            paths:
+              MavenPom:
+                - config-utils/pom.xml
+              ServiceDirPath:
+                - config-utils
+            configs:
+              Maven:
+                mavenAppName: config-utils
+                artifactType: jar
+                mvnwPresent: false
+        customers:
+          - transformerName: Maven
+            paths:
+              MavenPom:
+                - customers/pom.xml
+              ServiceDirPath:
+                - customers
+            configs:
+              Maven:
+                mavenAppName: customers
+                artifactType: war
+                mavenProfiles:
+                  - local
+                  - cloudfoundry
+                mvnwPresent: true
+              SpringBoot:
+                springBootVersion: 2.5.0
+                springBootProfiles:
+                  - cloudfoundry
+                  - local
+                  - openshift
+        frontend:
+          - transformerName: CloudFoundry
+            paths:
+              CfManifest:
+                - frontend/manifest.yml
+              ServiceDirPath:
+                - frontend
+            configs:
+              CloudFoundryService:
+                serviceName: frontend
+              ContainerizationOptions:
+                - Nodejs-Dockerfile
+          - transformerName: Nodejs-Dockerfile
+            paths:
+              ServiceDirPath:
+                - frontend
+        gateway:
+          - transformerName: CloudFoundry
+            paths:
+              BuildArtifact:
+                - gateway/target/ROOT.jar
+              CfManifest:
+                - gateway/manifest.yml
+              ServiceDirPath:
+                - gateway
+            configs:
+              CloudFoundryService:
+                serviceName: gateway
+              ContainerizationOptions:
+                - Maven
+          - transformerName: Maven
+            paths:
+              MavenPom:
+                - gateway/pom.xml
+              ServiceDirPath:
+                - gateway
+            configs:
+              Maven:
+                mavenAppName: gateway
+                artifactType: jar
+                mavenProfiles:
+                  - local
+                  - cloudfoundry
+                  - openshift
+                  - openshift-manual
+                  - openshift-it
+                mvnwPresent: true
+              SpringBoot:
+                springBootAppName: gateway
+                springBootProfiles:
+                  - cloudfoundry
+                  - local
+                  - openshift
+        orders:
+          - transformerName: CloudFoundry
+            paths:
+              BuildArtifact:
+                - orders/target/ROOT.jar
+              CfManifest:
+                - orders/manifest.yml
+              ServiceDirPath:
+                - orders
+            configs:
+              CloudFoundryService:
+                serviceName: orders
+              ContainerizationOptions:
+                - Maven
+          - transformerName: Maven
+            paths:
+              MavenPom:
+                - orders/pom.xml
+              ServiceDirPath:
+                - orders
+            configs:
+              Maven:
+                mavenAppName: orders
+                artifactType: jar
+                mavenProfiles:
+                  - local
+                  - cloudfoundry
+                  - openshift
+                  - openshift-manual
+                  - openshift-it
+                mvnwPresent: true
+              SpringBoot:
+                springBootAppName: orders
+                springBootProfiles:
+                  - cloudfoundry
+                  - local
+                  - openshift
+      transformers:
+        Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
+        CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
+        ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/transformer.yaml
+        ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml
+        ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml
+        ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml
+        DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml
+        DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml
+        DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml
+        DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml
+        EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml
+        EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml
+        Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml
+        Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml
+        Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml
+        Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml
+        Knative: m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml
+        Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml
+        KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml
+        Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml
+        Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml
+        Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml
+        PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml
+        Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml
+        Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml
+        ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/transformer.yaml
+        Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml
+        Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml
+        Tekton: m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml
+        Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml
+        WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml
+        WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml
+        WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml
+        WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
+        WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
+        ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
     ```
     </details>
 
