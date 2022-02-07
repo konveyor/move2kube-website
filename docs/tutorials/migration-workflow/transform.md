@@ -47,7 +47,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
     - A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. We could also do this by editing the plan file.
-    - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `local` profile. Similar questions for the SpringBoot profiles.
+    - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `dev-inmemorydb` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
 
@@ -60,219 +60,241 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     </summary>
     ```console
     INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan. 
+    INFO[0000] Starting Plan Transformation                 
     ? Select all transformer types that you are interested in:
+    ID: move2kube.transformers.types
     Hints:
     [Services that don't support any of the transformer types you are interested in will be ignored.]
-     ComposeGenerator, Maven, Nodejs-Dockerfile, ReadMeGenerator, WarAnalyser, WinSLWebApp-Dockerfile, WinWebApp-Dockerfile, Buildconfig, Golang-Dockerfile,    KubernetesVersionChanger, Python-Dockerfile, Tekton, WinConsoleApp-Dockerfile, ContainerImagesPushScriptGenerator, Jboss, Rust-Dockerfile, Tomcat, DotNetCore-Dockerfile,  DockerfileDetector, EarAnalyser, Knative, Liberty, PHP-Dockerfile, ComposeAnalyser, Jar, Parameterizer, DockerfileParser, DockerfileImageBuildScript, EarRouter, Gradle,     Kubernetes, WarRouter, ZuulAnalyser, CloudFoundry, Ruby-Dockerfile, ClusterSelector
+     Buildconfig, CloudFoundry, ClusterSelector, ComposeAnalyser, ComposeGenerator, ContainerImagesPushScriptGenerator, DockerfileDetector,     DockerfileImageBuildScript, DockerfileParser, DotNetCore-Dockerfile, EarAnalyser, EarRouter, Golang-Dockerfile, Gradle, Jar, Jboss, Knative, Kubernetes,    KubernetesVersionChanger, Liberty, Maven, Nodejs-Dockerfile, PHP-Dockerfile, Parameterizer, Python-Dockerfile, ReadMeGenerator, Ruby-Dockerfile,   Rust-Dockerfile, Tekton, Tomcat, WarAnalyser, WarRouter, WinConsoleApp-Dockerfile, WinSLWebApp-Dockerfile, WinWebApp-Dockerfile, ZuulAnalyser
     ? Select all services that are needed:
+    ID: move2kube.services.[].enable
     Hints:
     [The services unselected here will be ignored.]
      customers, frontend, gateway, inventory, orders
-    INFO[0003] Starting Plan Transformation                 
-    INFO[0003] Iteration 1                                  
-    INFO[0003] Iteration 2 - 5 artifacts to process         
-    INFO[0003] Transformer Maven processing 2 artifacts     
+    INFO[0002] Iteration 1                                  
+    INFO[0002] Iteration 2 - 5 artifacts to process         
+    INFO[0002] Transformer CloudFoundry processing 3 artifacts 
+    INFO[0002] Transformer CloudFoundry Done                
+    INFO[0002] Transformer Maven processing 2 artifacts     
+    ? Choose the Maven profile to be used for the service customers
+    ID: move2kube.services.customers.activemavenprofiles
+    Hints:
+    [Selected Maven profiles will be used for setting configuration for the service customers]
+     dev-inmemorydb
+    ? Choose Springboot profiles to be used for the service customers
+    ID: move2kube.services.customers.activespringbootprofiles
+    Hints:
+    [Selected Springboot profiles will be used for setting configuration for the service customers]
+     dev-inmemorydb
     ? Choose the Maven profile to be used for the service inventory
+    ID: move2kube.services.inventory.activemavenprofiles
     Hints:
     [Selected Maven profiles will be used for setting configuration for the service inventory]
-     local
+     dev-inmemorydb
+    ? Choose Springboot profiles to be used for the service inventory
+    ID: move2kube.services.inventory.activespringbootprofiles
+    Hints:
+    [Selected Springboot profiles will be used for setting configuration for the service inventory]
+     dev-inmemorydb
     ? Select port to be exposed for the service inventory :
+    ID: move2kube.services.inventory.port
     Hints:
     [Select Other if you want to expose the service inventory to some other port]
-     8080
-    INFO[0005] Transformer WarRouter processing 2 artifacts 
+     Other (specify custom option)
+    ? Input Select port to be exposed for the service inventory :
+    ID: move2kube.services.inventory.port
+     8083
+    INFO[0273] Transformer WarRouter processing 2 artifacts 
     ? Select the transformer to use for service customers
+    ID: move2kube.services.customers.wartransformer
      Tomcat
-    INFO[0007] Transformer WarRouter Done                   
-    INFO[0007] Transformer Maven Done                       
-    INFO[0007] Transformer CloudFoundry processing 3 artifacts 
-    INFO[0007] Transformer ZuulAnalyser processing 2 artifacts 
-    INFO[0007] Transformer ZuulAnalyser Done                
-    INFO[0007] Transformer CloudFoundry Done                
-    INFO[0007] Created 2 pathMappings and 8 artifacts. Total Path Mappings : 2. Total Artifacts : 5. 
-    INFO[0007] Iteration 3 - 8 artifacts to process         
-    INFO[0007] Transformer Jar processing 1 artifacts       
-    INFO[0007] Transformer Jar Done                         
-    INFO[0007] Transformer ClusterSelector processing 2 artifacts 
-    ? Choose the cluster type:
-    Hints:
-    [Choose the cluster type you would like to target]
-     Kubernetes
-    INFO[0008] Transformer ClusterSelector Done             
-    INFO[0008] Transformer Buildconfig processing 2 artifacts 
-    ? What URL/path should we expose the service frontend's 8080 port on?
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /frontend
-    ? What URL/path should we expose the service orders's 8080 port on?
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /orders
-    ? What URL/path should we expose the service gateway's 8080 port on?
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /gateway
-    ? Provide the minimum number of replicas each service should have
-    Hints:
-    [If the value is 0 pods won't be started by default]
-     2
-    ? Enter the URL of the image registry : 
-    Hints:
-    [You can always change it later by changing the yamls.]
-     quay.io
-    ? Enter the namespace where the new images should be pushed : 
-    Hints:
-    [Ex : myproject]
-     move2kube
-    ? [quay.io] What type of container registry login do you want to use?
-    Hints:
-    [Docker login from config mode, will use the default config from your local machine.]
-     No authentication
-    INFO[0016] Transformer Buildconfig Done                 
-    INFO[0016] Transformer Tomcat processing 2 artifacts    
-    INFO[0016] Transformer Tomcat Done                      
-    INFO[0016] Transformer Maven processing 2 artifacts     
+    INFO[0275] Transformer WarRouter Done                   
+    INFO[0275] Transformer Maven Done                       
+    INFO[0275] Created 2 pathMappings and 6 artifacts. Total Path Mappings : 2. Total Artifacts : 5. 
+    INFO[0275] Iteration 3 - 6 artifacts to process         
+    INFO[0275] Transformer Jar processing 1 artifacts       
+    INFO[0275] Transformer Jar Done                         
+    INFO[0275] Transformer Maven processing 2 artifacts     
     ? Choose the Maven profile to be used for the service gateway
+    ID: move2kube.services.gateway.activemavenprofiles
     Hints:
     [Selected Maven profiles will be used for setting configuration for the service gateway]
-     local
+     dev
     ? Choose Springboot profiles to be used for the service gateway
+    ID: move2kube.services.gateway.activespringbootprofiles
     Hints:
     [Selected Springboot profiles will be used for setting configuration for the service gateway]
-     local
+     dev
     ? Select port to be exposed for the service gateway :
+    ID: move2kube.services.gateway.port
     Hints:
     [Select Other if you want to expose the service gateway to some other port]
      8080
     ? Choose the Maven profile to be used for the service orders
+    ID: move2kube.services.orders.activemavenprofiles
     Hints:
     [Selected Maven profiles will be used for setting configuration for the service orders]
-     local
+     dev-inmemorydb
     ? Choose Springboot profiles to be used for the service orders
+    ID: move2kube.services.orders.activespringbootprofiles
     Hints:
     [Selected Springboot profiles will be used for setting configuration for the service orders]
-     local
+     dev-inmemorydb
     ? Select port to be exposed for the service orders :
+    ID: move2kube.services.orders.port
     Hints:
     [Select Other if you want to expose the service orders to some other port]
+     Other (specify custom option)
+    ? Input Select port to be exposed for the service orders :
+    ID: move2kube.services.orders.port
+     8081
+    INFO[0337] Transformer Maven Done                       
+    INFO[0337] Transformer Nodejs-Dockerfile processing 1 artifacts 
+    ? Enter the port to be exposed for the service frontend: 
+    ID: move2kube.services.frontend.port
+    Hints:
+    [The service frontend will be exposed to the specified port]
      8080
-    INFO[0026] Transformer Maven Done                       
-    INFO[0026] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0026] Transformer ClusterSelector Done             
-    INFO[0026] Transformer Kubernetes processing 2 artifacts 
+    INFO[0369] Transformer Nodejs-Dockerfile Done           
+    INFO[0369] Transformer Tomcat processing 2 artifacts    
+    INFO[0369] Transformer Tomcat Done                      
+    INFO[0370] Created 10 pathMappings and 10 artifacts. Total Path Mappings : 12. Total Artifacts : 11. 
+    INFO[0370] Iteration 4 - 10 artifacts to process        
+    INFO[0370] Transformer DockerfileImageBuildScript processing 4 artifacts 
+    ? Select the container runtime to use :
+    ID: move2kube.containerruntime
+    Hints:
+    [The container runtime selected will be used in the scripts]
+     docker
+    INFO[0372] Transformer DockerfileImageBuildScript Done  
+    INFO[0372] Transformer DockerfileParser processing 4 artifacts 
+    INFO[0372] Transformer ZuulAnalyser processing 2 artifacts 
+    INFO[0372] Transformer ZuulAnalyser Done                
+    INFO[0372] Transformer DockerfileParser Done            
+    INFO[0372] Transformer Jar processing 2 artifacts       
+    INFO[0372] Transformer Jar Done                         
+    INFO[0372] Created 5 pathMappings and 10 artifacts. Total Path Mappings : 17. Total Artifacts : 21. 
+    INFO[0372] Iteration 5 - 10 artifacts to process        
+    INFO[0372] Transformer ClusterSelector processing 2 artifacts 
+    ? Choose the cluster type:
+    ID: move2kube.target.clustertype
+    Hints:
+    [Choose the cluster type you would like to target]
+     Kubernetes
+    INFO[0375] Transformer ClusterSelector Done             
+    INFO[0375] Transformer Buildconfig processing 2 artifacts 
+    ? What URL/path should we expose the service inventory's 8083 port on?
+    ID: move2kube.services."inventory"."8083".urlpath
+    Hints:
+    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer  service type]
+     :-
+    ? What URL/path should we expose the service customers's 8080 port on?
+    ID: move2kube.services."customers"."8080".urlpath
+    Hints:
+    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer  service type]
+     :-
+    ? What URL/path should we expose the service frontend's 8080 port on?
+    ID: move2kube.services."frontend"."8080".urlpath
+    Hints:
+    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer  service type]
+     /
+    ? Provide the minimum number of replicas each service should have
+    ID: move2kube.minreplicas
+    Hints:
+    [If the value is 0 pods won't be started by default]
+     2
+    ? Enter the URL of the image registry : 
+    ID: move2kube.target.imageregistry.url
+    Hints:
+    [You can always change it later by changing the yamls.]
+     quay.io
+    ? Enter the namespace where the new images should be pushed : 
+    ID: move2kube.target.imageregistry.namespace
+    Hints:
+    [Ex : myproject]
+     move2kube
+    ? [quay.io] What type of container registry login do you want to use?
+    ID: move2kube.target.imageregistry.logintype
+    Hints:
+    [Docker login from config mode, will use the default config from your local machine.]
+     No authentication
+    INFO[0387] Transformer Buildconfig Done                 
+    INFO[0387] Transformer ComposeGenerator processing 2 artifacts 
+    INFO[0388] Transformer ComposeGenerator Done            
+    INFO[0388] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts 
+    INFO[0388] Transformer ContainerImagesPushScriptGenerator Done 
+    INFO[0388] Transformer DockerfileImageBuildScript processing 3 artifacts 
+    INFO[0388] Transformer DockerfileImageBuildScript Done  
+    INFO[0388] Transformer DockerfileParser processing 2 artifacts 
+    INFO[0388] Transformer ZuulAnalyser processing 2 artifacts 
+    INFO[0388] Transformer ZuulAnalyser Done                
+    INFO[0388] Transformer DockerfileParser Done            
+    INFO[0388] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0388] Transformer ClusterSelector Done             
+    INFO[0388] Transformer Knative processing 2 artifacts   
+    INFO[0388] Transformer Knative Done                     
+    INFO[0388] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0388] Transformer ClusterSelector Done             
+    INFO[0388] Transformer Kubernetes processing 2 artifacts 
     ? Provide the ingress host domain
+    ID: move2kube.target.ingress.host
     Hints:
     [Ingress host domain is part of service URL]
      localhost
     ? Provide the TLS secret for ingress
+    ID: move2kube.target.ingress.tls
     Hints:
     [Leave empty to use http]
     
-    INFO[0030] Transformer Kubernetes Done                  
-    INFO[0030] Transformer ComposeGenerator processing 2 artifacts 
-    INFO[0030] Transformer ComposeGenerator Done            
-    INFO[0030] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0030] Transformer ClusterSelector Done             
-    INFO[0030] Transformer Knative processing 2 artifacts   
-    INFO[0030] Transformer Knative Done                     
-    INFO[0030] Transformer Nodejs-Dockerfile processing 1 artifacts 
-    ? Select port to be exposed for the service frontend :
+    INFO[0414] Transformer Kubernetes Done                  
+    INFO[0414] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0414] Transformer ClusterSelector Done             
+    INFO[0414] Transformer Tekton processing 2 artifacts    
+    INFO[0414] Transformer Tekton Done                      
+    INFO[0414] Created 34 pathMappings and 15 artifacts. Total Path Mappings : 51. Total Artifacts : 31. 
+    INFO[0414] Iteration 6 - 15 artifacts to process        
+    INFO[0414] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0414] Transformer ClusterSelector Done             
+    INFO[0414] Transformer Buildconfig processing 2 artifacts 
+    ? What URL/path should we expose the service gateway's 8080 port on?
+    ID: move2kube.services."gateway"."8080".urlpath
     Hints:
-    [Select Other if you want to expose the service frontend to some other port]
-     8080
-    INFO[0031] Transformer Nodejs-Dockerfile Done           
-    INFO[0031] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0031] Transformer ClusterSelector Done             
-    INFO[0031] Transformer Tekton processing 2 artifacts    
-    INFO[0031] Transformer Tekton Done                      
-    INFO[0032] Created 40 pathMappings and 16 artifacts. Total Path Mappings : 42. Total Artifacts : 13. 
-    INFO[0032] Iteration 4 - 16 artifacts to process        
-    INFO[0032] Transformer Parameterizer processing 4 artifacts 
-    INFO[0032] Transformer Parameterizer Done               
-    INFO[0032] Transformer Jar processing 2 artifacts       
-    INFO[0032] Transformer Jar Done                         
-    INFO[0032] Transformer DockerfileParser processing 4 artifacts 
-    INFO[0032] Transformer ZuulAnalyser processing 2 artifacts 
-    INFO[0032] Transformer ZuulAnalyser Done                
-    INFO[0032] Transformer DockerfileParser Done            
-    INFO[0032] Transformer DockerfileImageBuildScript processing 4 artifacts 
-    ? Select the container runtime to use :
+    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer  service type]
+     :-
+    ? What URL/path should we expose the service orders's 8081 port on?
+    ID: move2kube.services."orders"."8081".urlpath
     Hints:
-    [The container runtime selected will be used in the scripts]
-     docker
-    INFO[0033] Transformer DockerfileImageBuildScript Done  
-    INFO[0033] Transformer ReadMeGenerator processing 4 artifacts 
-    INFO[0033] Transformer ReadMeGenerator Done             
-    INFO[0034] Created 18 pathMappings and 10 artifacts. Total Path Mappings : 60. Total Artifacts : 29. 
-    INFO[0034] Iteration 5 - 10 artifacts to process        
-    INFO[0034] Transformer ComposeGenerator processing 2 artifacts 
-    ? What URL/path should we expose the service customers's 8080 port on?
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /customers
-    ? What URL/path should we expose the service inventory's 8080 port on?
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-     /inventory
-    INFO[0036] Transformer ComposeGenerator Done            
-    INFO[0036] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0036] Transformer ClusterSelector Done             
-    INFO[0036] Transformer Knative processing 2 artifacts   
-    INFO[0036] Transformer Knative Done                     
-    INFO[0036] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0036] Transformer ClusterSelector Done             
-    INFO[0036] Transformer Tekton processing 2 artifacts    
-    INFO[0036] Transformer Tekton Done                      
-    INFO[0036] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0036] Transformer ClusterSelector Done             
-    INFO[0036] Transformer Buildconfig processing 2 artifacts 
-    INFO[0036] Transformer Buildconfig Done                 
-    INFO[0036] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts 
-    INFO[0036] Transformer ContainerImagesPushScriptGenerator Done 
-    INFO[0036] Transformer DockerfileParser processing 2 artifacts 
-    INFO[0037] Transformer ZuulAnalyser processing 2 artifacts 
-    INFO[0037] Transformer ZuulAnalyser Done                
-    INFO[0037] Transformer DockerfileParser Done            
-    INFO[0037] Transformer DockerfileImageBuildScript processing 3 artifacts 
-    INFO[0037] Transformer DockerfileImageBuildScript Done  
-    INFO[0037] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0037] Transformer ClusterSelector Done             
-    INFO[0037] Transformer Kubernetes processing 2 artifacts 
-    INFO[0037] Transformer Kubernetes Done                  
-    INFO[0037] Created 36 pathMappings and 15 artifacts. Total Path Mappings : 96. Total Artifacts : 39. 
-    INFO[0037] Iteration 6 - 15 artifacts to process        
-    INFO[0037] Transformer ComposeGenerator processing 2 artifacts 
-    INFO[0037] Transformer ComposeGenerator Done            
-    INFO[0037] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0037] Transformer ClusterSelector Done             
-    INFO[0037] Transformer Knative processing 2 artifacts   
-    INFO[0038] Transformer Knative Done                     
-    INFO[0038] Transformer Parameterizer processing 4 artifacts 
-    INFO[0038] Transformer Parameterizer Done               
-    INFO[0038] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0038] Transformer ClusterSelector Done             
-    INFO[0038] Transformer Tekton processing 2 artifacts    
-    INFO[0038] Transformer Tekton Done                      
-    INFO[0038] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0039] Transformer ClusterSelector Done             
-    INFO[0039] Transformer Buildconfig processing 2 artifacts 
-    INFO[0039] Transformer Buildconfig Done                 
-    INFO[0039] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts 
-    INFO[0039] Transformer ContainerImagesPushScriptGenerator Done 
-    INFO[0039] Transformer ClusterSelector processing 2 artifacts 
-    INFO[0039] Transformer ClusterSelector Done             
-    INFO[0039] Transformer Kubernetes processing 2 artifacts 
-    INFO[0039] Transformer Kubernetes Done                  
-    INFO[0039] Transformer ReadMeGenerator processing 5 artifacts 
-    INFO[0039] Transformer ReadMeGenerator Done             
-    INFO[0040] Created 48 pathMappings and 7 artifacts. Total Path Mappings : 144. Total Artifacts : 54. 
-    INFO[0040] Iteration 7 - 7 artifacts to process         
-    INFO[0040] Transformer ReadMeGenerator processing 5 artifacts 
-    INFO[0040] Transformer ReadMeGenerator Done             
-    INFO[0040] Transformer Parameterizer processing 4 artifacts 
-    INFO[0040] Transformer Parameterizer Done               
-    INFO[0040] Plan Transformation done                     
-    INFO[0040] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject]. 
+    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer  service type]
+     :-
+    INFO[0418] Transformer Buildconfig Done                 
+    INFO[0418] Transformer ComposeGenerator processing 2 artifacts 
+    INFO[0419] Transformer ComposeGenerator Done            
+    INFO[0419] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts 
+    INFO[0419] Transformer ContainerImagesPushScriptGenerator Done 
+    INFO[0419] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0419] Transformer ClusterSelector Done             
+    INFO[0419] Transformer Knative processing 2 artifacts   
+    INFO[0419] Transformer Knative Done                     
+    INFO[0419] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0419] Transformer ClusterSelector Done             
+    INFO[0419] Transformer Kubernetes processing 2 artifacts 
+    INFO[0419] Transformer Kubernetes Done                  
+    INFO[0419] Transformer Parameterizer processing 4 artifacts 
+    INFO[0419] Transformer Parameterizer Done               
+    INFO[0419] Transformer ReadMeGenerator processing 5 artifacts 
+    INFO[0419] Transformer ReadMeGenerator Done             
+    INFO[0419] Transformer ClusterSelector processing 2 artifacts 
+    INFO[0420] Transformer ClusterSelector Done             
+    INFO[0420] Transformer Tekton processing 2 artifacts    
+    INFO[0420] Transformer Tekton Done                      
+    INFO[0420] Created 54 pathMappings and 7 artifacts. Total Path Mappings : 105. Total Artifacts : 46. 
+    INFO[0420] Iteration 7 - 7 artifacts to process         
+    INFO[0420] Transformer Parameterizer processing 4 artifacts 
+    INFO[0420] Transformer Parameterizer Done               
+    INFO[0420] Transformer ReadMeGenerator processing 5 artifacts 
+    INFO[0421] Transformer ReadMeGenerator Done             
+    INFO[0421] Plan Transformation done                     
+    INFO[0421] Transformed target artifacts can be found at [/Users/user/temp/t2/myproject]. 
     ```
     </details>
 
@@ -288,7 +310,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
 
 1. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
     - A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in. Again, we could have done this by editing the plan file.
-    - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `local` profile. Similar questions for the SpringBoot profiles.
+    - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `dev-inmemorydb` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
 
