@@ -39,26 +39,27 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
     ```console
     INFO[0000] Configuration loading done                   
     INFO[0000] Planning Transformation - Base Directory     
-    INFO[0000] [ComposeAnalyser] Planning transformation    
-    INFO[0000] [ComposeAnalyser] Done                       
     INFO[0000] [CloudFoundry] Planning transformation       
     INFO[0000] Identified 3 named services and 0 to-be-named services 
     INFO[0000] [CloudFoundry] Done                          
+    INFO[0000] [ComposeAnalyser] Planning transformation    
+    INFO[0000] [ComposeAnalyser] Done                       
     INFO[0000] [DockerfileDetector] Planning transformation 
     INFO[0000] [DockerfileDetector] Done                    
     INFO[0000] [Base Directory] Identified 3 named services and 0 to-be-named services 
     INFO[0000] Transformation planning - Base Directory done 
     INFO[0000] Planning Transformation - Directory Walk     
-    INFO[0000] Identified 1 named services and 0 to-be-named services in config-utils
-    INFO[0000] Identified 1 named services and 0 to-be-named services in customers
+    INFO[0000] Identified 1 named services and 0 to-be-named services in config-utils 
+    INFO[0000] Identified 1 named services and 0 to-be-named services in customers 
     INFO[0000] Identified 1 named services and 0 to-be-named services in frontend 
     INFO[0000] Identified 1 named services and 0 to-be-named services in gateway 
+    INFO[0000] Identified 1 named services and 0 to-be-named services in inventory 
     INFO[0000] Identified 1 named services and 0 to-be-named services in orders 
     INFO[0000] Transformation planning - Directory Walk done 
-    INFO[0000] [Directory Walk] Identified 5 named services and 0 to-be-named services 
-    INFO[0000] [Named Services] Identified 5 named services 
-    INFO[0000] No of services identified : 5                
-    INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]. 
+    INFO[0000] [Directory Walk] Identified 6 named services and 0 to-be-named services 
+    INFO[0000] [Named Services] Identified 6 named services 
+    INFO[0000] No of services identified : 6                
+    INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
     ```
     </details>
 
@@ -109,15 +110,14 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
                 mavenAppName: customers
                 artifactType: war
                 mavenProfiles:
-                  - local
-                  - cloudfoundry
+                  - dev-inmemorydb
+                  - prod-externaldb
                 mvnwPresent: true
               SpringBoot:
                 springBootVersion: 2.5.0
                 springBootProfiles:
-                  - cloudfoundry
-                  - local
-                  - openshift
+                  - dev-inmemorydb
+                  - prod-externaldb
         frontend:
           - transformerName: CloudFoundry
             paths:
@@ -159,18 +159,33 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
                 mavenAppName: gateway
                 artifactType: jar
                 mavenProfiles:
-                  - local
-                  - cloudfoundry
-                  - openshift
-                  - openshift-manual
-                  - openshift-it
+                  - dev
+                  - prod
                 mvnwPresent: true
               SpringBoot:
                 springBootAppName: gateway
                 springBootProfiles:
-                  - cloudfoundry
-                  - local
-                  - openshift
+                  - dev
+                  - prod
+        inventory:
+          - transformerName: Maven
+            paths:
+              MavenPom:
+                - inventory/pom.xml
+              ServiceDirPath:
+                - inventory
+            configs:
+              Maven:
+                mavenAppName: inventory
+                artifactType: jar
+                mavenProfiles:
+                  - dev-inmemorydb
+                  - prod-externaldb
+                mvnwPresent: true
+              SpringBoot:
+                springBootProfiles:
+                  - dev-inmemorydb
+                  - prod-externaldb
         orders:
           - transformerName: CloudFoundry
             paths:
@@ -196,18 +211,14 @@ We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demo
                 mavenAppName: orders
                 artifactType: jar
                 mavenProfiles:
-                  - local
-                  - cloudfoundry
-                  - openshift
-                  - openshift-manual
-                  - openshift-it
+                  - dev-inmemorydb
+                  - prod-externaldb
                 mvnwPresent: true
               SpringBoot:
                 springBootAppName: orders
                 springBootProfiles:
-                  - cloudfoundry
-                  - local
-                  - openshift
+                  - dev-inmemorydb
+                  - prod-externaldb
       transformers:
         Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
         CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
