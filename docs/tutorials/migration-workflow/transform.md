@@ -50,7 +50,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     - Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube then select the `dev-inmemorydb` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
-    - We will select `:C` for the path to expose the `order` `customers` `inventory` and `gateway` services. We will choose `/` as the path to expose the `frontend` service on. This way only the `frontend` will be exposed outside the cluster through the Ingress.
+    - We will select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. We will choose `Ingress` and `/` as the path to expose the `frontend` service on. This way only the `frontend` will be exposed outside the cluster through the Ingress.
 
     <details markdown="block">
     <summary markdown="block">
@@ -313,6 +313,7 @@ In addition Move2Kube also generates the CI/CD pipeline and parameterized versio
     - Move2Kube has detected the Maven profiles for each of the Java services. Since we are deploying to a cluster (like MiniKube) we will select the `prod-externaldb` profile. Similar questions for the SpringBoot profiles.
     - The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
     - The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
+    - We will select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. We will choose `Ingress` and `/` as the path to expose the `frontend` service on. This way only the `frontend` will be exposed outside the cluster through the Ingress.
 
     ![QA 2]({{ site.baseurl }}/assets/images/migration-workflow/17-qa-2.jpg)
     ![QA 3]({{ site.baseurl }}/assets/images/migration-workflow/18-qa-3.jpg)
