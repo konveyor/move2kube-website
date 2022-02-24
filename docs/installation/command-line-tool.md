@@ -12,7 +12,7 @@ nav_order: 1
 
 The easiest way to get Move2Kube is to download the binary from the list of releases on Github:
 
-https://github.com/konveyor/move2kube/releases
+[https://github.com/konveyor/move2kube/releases](https://github.com/konveyor/move2kube/releases)
 
 We provide pre-built binaries for Linux, MacOS and Windows.
 
