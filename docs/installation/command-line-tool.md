@@ -8,6 +8,14 @@ nav_order: 1
 
 # Move2Kube Command Line Tool
 
+## Download the binary
+
+The easiest way to get Move2Kube is to download the binary from the list of releases on Github:
+
+https://github.com/konveyor/move2kube/releases
+
+We provide pre-built binaries for Linux, MacOS and Windows.
+
 ## Linux / MacOS / Windows WSL **(Recommended)**:
 
 To install the latest stable version:
@@ -23,6 +31,16 @@ MOVE2KUBE_TAG='v0.3.0-beta.0' bash <(curl https://raw.githubusercontent.com/konv
 To install the bleeding edge version:
 ```
 BLEEDING_EDGE='true' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+```
+
+To install without sudo
+```
+USE_SUDO=false bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+```
+
+By default the script installs to `/usr/local/bin`. To install to a different directory
+```
+MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
 
 ## Alternate ways of installing Move2Kube:
@@ -45,7 +63,3 @@ Installing using `go get` pulls from the main branch of [Move2Kube](https://gith
 ```
 go get -u github.com/konveyor/move2kube
 ```
-
-**Github release**
-
-The binary can be downloaded from the [GitHub releases page](https://github.com/konveyor/move2kube/releases) of Move2Kube.
