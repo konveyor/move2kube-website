@@ -42,6 +42,12 @@ By default the script installs to `/usr/local/bin`. To install to a different di
 ```
 MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
+You might want to put the installation directory in the `PATH` to run Move2Kube as `move2kube` instead of `/my/new/install/dir/move2kube`
+
+And finally you can combine the above two environment variables to install without sudo and install to a different directory
+```
+USE_SUDO=false MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+```
 
 ## Alternate ways of installing Move2Kube:
 
