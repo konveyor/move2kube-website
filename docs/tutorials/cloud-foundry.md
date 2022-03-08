@@ -75,10 +75,12 @@ Move2Kube will automatically analyse all the artifacts in the cloud-foundry dire
        ```console
        $ cf login -a <YOUR CF API endpoint>
        ```
-   1. From the root directory of this repo run this to deploy the sample application
+   1. Run the below commands to deploy the sample application to Cloud Foundry. The source code of the sample application is present inside `./cloud-foundry/cfnodejsapp` folder.
+
        ```console
-       $ cf push -f ./cloud-foundry/
+       $ cf push -f ./cloud-foundry/cfnodejsapp -p ./cloud-foundry/cfnodejsapp
        ```
+
    1. You can visit the URL of the application (you can get this by running `cf apps`) to see it running.
 
 
