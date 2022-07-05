@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   move2kube:
   - apiVersion: v2
+    appVersion: v0.3.3-rc.2
+    created: "2022-07-04T16:30:12.429551982Z"
+    description: A generated Helm Chart for move2kube
+    digest: 2e1b937674fb79eb0418f3cea100784d11c73a5c8909de2550afe305e6ac206f
+    icon: https://raw.githubusercontent.com/konveyor/community/main/brand/logo/konveyor-logo-move2kube.svg
+    keywords:
+    - move2kube
+    name: move2kube
+    type: application
+    urls:
+    - https://github.com/konveyor/move2kube-ui/releases/download/v0.3.3-rc.2/move2kube-v0.3.3-rc.2.tgz
+    version: v0.3.3-rc.2
+  - apiVersion: v2
     appVersion: v0.3.3-rc.1
     created: "2022-05-04T12:12:04.96891639Z"
     description: A generated Helm Chart for move2kube
@@ -361,4 +374,4 @@ entries:
     urls:
     - https://github.com/konveyor/move2kube-operator/releases/download/v0.1.0/move2kube-v0.1.0.tgz
     version: v0.1.0
-generated: "2022-05-04T12:12:04.967433501Z"
+generated: "2022-07-04T16:30:12.42726169Z"
