@@ -58,6 +58,10 @@ function get_major_minor_patch(v) {
     const x = semver.parse(v);
     return x !== null ? `${x.major}.${x.minor}.${x.patch}` : "";
 }
+function get_major_minor_patch_zero(v) {
+    const x = semver.parse(v);
+    return x !== null ? `${x.major}.${x.minor}.0` : "";
+}
 function get_next_alpha_release(data) {
     // the commit to use for the release is always the top commit on main/master
     if (data.next_next.prerelease !== null) {
@@ -70,12 +74,12 @@ function get_next_alpha_release(data) {
         else {
             return {
                 tag: "v" + semver.inc(get_major_minor_patch(data.next.prerelease), "minor") + "-alpha.0",
-                prev_tag: "v" + get_major_minor_patch(data.next.prerelease) + "-beta.0",
+                prev_tag: "v" + get_major_minor_patch_zero(data.next.prerelease) + "-beta.0",
                 commit_ref: 'main',
             };
         }
     }
-    return { tag: "v" + semver.inc(data.current.release, "minor") + "-alpha.0", prev_tag: data.current.release + "-beta.0", commit_ref: 'main' };
+    return { tag: "v" + semver.inc(data.current.release, "minor") + "-alpha.0", prev_tag: get_major_minor_patch_zero(data.current.release) + "-beta.0", commit_ref: 'main' };
 }
 function get_next_beta_release(data) {
     if (data.next.prerelease !== null) {
