@@ -29,7 +29,7 @@ Move2Kube will automatically analyse all the artifacts in the cloud-foundry dire
     $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/cloud-foundry -r move2kube-demos
     ```
 
-   Let's see the structure inside the `./cloud-foundry` directory. The `cloud-foundry` directory contains the source code files and the manifest.yml file.
+   Now let's see the structure inside the `./cloud-foundry` directory. The `cloud-foundry` directory contains the source code files and the manifest.yml file.
 
    ```console
   $ tree cloud-foundry
