@@ -10,7 +10,7 @@ nav_order: 4
 
 ## Description
 
-This document takes us through the steps that will install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
+This document takes us through the steps that will help you install Move2Kube and use Move2Kube's 3 step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps. Here, we are going to use the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
 
 ### TLDR
 
