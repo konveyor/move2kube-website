@@ -78,7 +78,7 @@ function get_next_alpha_release(data) {
             };
         }
     }
-    return { tag: "v" + semver.inc(data.current.release, "minor") + "-alpha.0", prev_tag: get_major_minor_patch_zero(data.current.release) + "-beta.0", commit_ref: 'main' };
+    return { tag: "v" + semver.inc(data.current.release, "minor") + "-alpha.0", prev_tag: "v" + get_major_minor_patch_zero(data.current.release) + "-beta.0", commit_ref: 'main' };
 }
 function get_next_beta_release(data) {
     if (data.next.prerelease !== null) {
