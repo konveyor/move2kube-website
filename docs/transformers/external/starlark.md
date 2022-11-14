@@ -18,11 +18,19 @@ Samples of use of this transform class can be found in [here](https://github.com
 
 ### Transform
 
-* `directory_detect()`, `transform()` - These functions are used for Move2Kube transformtion and details can be found [here](https://move2kube.konveyor.io/concepts/transformer#methods).
+* `directory_detect()` - It should be implemented to check if there are relevant files in the directory to invoke the transformer.
+* `transform()` - It should be implemented to make changes on the input artifacts and output relevant artifacts for the rest of the transformation journey.
+
+More details can be found [here](https://move2kube.konveyor.io/concepts/transformer#methods). 
 
 
-### QAEngine
-* `query()` - Used to prompt Users for input. The function takes two arguments. First is a dictionary with key as variables in the QAEngine's Problem interface and value as value of the variables.
+### QA Engine
+
+The functions related to QA Engine are packaged within `m2k` package and they should be invoked with the package name.
+
+* `query()` - Used to prompt Users for input. The function takes two arguments. 
+
+First is a dictionary with key as variables in the QAEngine's Problem interface and value as value of the variables.
 
 | Variable (dict key) | Value (dict value) | Type |
 | ----------- | ----------- | ----------- | 
@@ -33,13 +41,13 @@ Samples of use of this transform class can be found in [here](https://github.com
 | options   | List of options to choose from usually used for `Select` and `MultiSelect` input types.      | []string |
 | default   | Default input value if the user provide no input | type same as input type |
 
-Second argument which is optional is the validator function. If the input from the user does not comply with the provided validator function then question is asked again until the expected input is received.
+Second argument which is optional is the validator function. If the input from the user does not comply with the provided validator function then question is asked until the expected input is received.
 
 Example usage can be found [here](https://github.com/konveyor/move2kube-transformers/blob/2a36d11efb996f2f38cdb3e3ecccfe9378e3a444/cloud-foundry-to-ce-iks-roks/cedockerfile/cedockerfile.star#L52-L63).
 
 
 ### File system
-Move2Kube provides a set a functions in starlark for filesystem based operations.
+Move2Kube provides a set a functions in starlark for filesystem based operations. The functions are packaged within `fs` package and they should be invoked with the package name.
 
 | Function name in starlark | Purpose | Arguments | Returns |
 | ----------- | ----------- | ----------- | ----------- | 
@@ -56,7 +64,7 @@ Move2Kube provides a set a functions in starlark for filesystem based operations
 | `path_rel` | Return relative path | base path as string <br/> target path as string | string
 
 ### Cryptography
-Move2Kube provides a set a functions in starlark for Cryptography.
+Move2Kube provides a set a functions in starlark for Cryptography. The functions are packaged within `crypto` package and they should be invoked with the package name.
 
 | Function name in starlark | Purpose | Arguments | Returns |
 | ----------- | ----------- | ----------- | ----------- | 
@@ -65,7 +73,7 @@ Move2Kube provides a set a functions in starlark for Cryptography.
 
 
 ### Archival
-Move2Kube provides a set a functions in starlark for Archival.
+Move2Kube provides a set a functions in starlark for Archival. The functions are packaged within `archive` package and they should be invoked with the package name.
 
 | Function name in starlark | Purpose | Arguments | Returns |
 | ----------- | ----------- | ----------- | ----------- | 
@@ -74,14 +82,14 @@ Move2Kube provides a set a functions in starlark for Archival.
 
 
 ## Variables
-Move2Kube provides a set of variables that can be used in the starlark transformer code.
+Move2Kube provides variables which expose values required by the transformer.
 
-* `source_dir` - Stores the source path in the environment.
-* `context_dir` - Stores the context path in the environment.
-* `temp_dir` - Stores the environment temporary path.
-* `templates_reldir` - Stores the relative path to the templates directory.
-* `config` - Stores the transformer meta data.
-* `resources_dir` - Stores the path to the resources directory.
-* `output_dir` - Stores the path to the output directory where the transformer output artifacts are produced.
+* `source_dir` - Exposes the source path in the environment.
+* `context_dir` - Exposes the context path in the environment.
+* `temp_dir` - Exposes the environment temporary path.
+* `templates_reldir` - Exposes the relative path to the templates directory.
+* `config` - Exposes the transformer meta data.
+* `resources_dir` - Exposes the path to the resources directory.
+* `output_dir` - Exposes the path to the output directory where the transformer output artifacts are produced.
 
-Head over to [move2kube-transformers repo](https://github.com/konveyor/move2kube-transformers) for example usages.
+Here are some starlark transformer examples: [add-custom-files-directories-in-custom-locations](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations), [add-custom-kubernetes-annotation](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation), [cloud-foundry-to-ce-iks-roks](https://github.com/konveyor/move2kube-transformers/tree/main/cloud-foundry-to-ce-iks-roks), [custom-default-transformer](https://github.com/konveyor/move2kube-transformers/tree/main/custom-default-transformer), [custom-m2kcollect-yaml-file-to-csv-file](https://github.com/konveyor/move2kube-transformers/tree/main/custom-m2kcollect-yaml-file-to-csv-file).
