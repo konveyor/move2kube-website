@@ -24,6 +24,10 @@ Samples of use of this transform class can be found in [here](https://github.com
 More details can be found [here](https://move2kube.konveyor.io/concepts/transformer#methods). 
 
 
+## In-built functions
+
+Move2Kube also makes available many functions, which can be used by transformer developers in the custom transformers.
+
 ### QA Engine
 
 The functions related to QA Engine are packaged within `m2k` package and they should be invoked with the package name.
