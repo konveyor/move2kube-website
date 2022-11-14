@@ -14,7 +14,7 @@ A `Starlark` class based transformer allows for writing a full fledged transform
 
 Samples of use of this transform class can be found in [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation) and [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations)
 
-## Functions
+## Functions to Implement
 
 ### Transform
 
