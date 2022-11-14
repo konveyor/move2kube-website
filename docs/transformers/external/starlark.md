@@ -18,7 +18,7 @@ Samples of use of this transform class can be found in [here](https://github.com
 
 ### Transform
 
-* `base_directory_detect()`, `directory_detect()`, `transform()` - These functions are used for Move2Kube transformtion and details can be found [here](https://move2kube.konveyor.io/concepts/transformer#methods).
+* `directory_detect()`, `transform()` - These functions are used for Move2Kube transformtion and details can be found [here](https://move2kube.konveyor.io/concepts/transformer#methods).
 
 
 ### QAEngine
