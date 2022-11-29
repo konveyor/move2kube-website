@@ -134,6 +134,27 @@ common:
     replicas: 10
 ```
 
+---
+
+If we only want to override the default value if the field is not present then we can use `keepOriginalValueIfPresent: true`
+
+Example:
+If the `Deployment` yaml had
+```
+spec:
+    replicas: 2
+```
+The `values.yaml` would keep that value as well.
+```yaml
+common:
+    replicas: 2
+```
+but if the `spec.replicas` field was missing from the `Deployment` yaml and if we had set `keepOriginalValueIfPresent: true` and `default: 10` then the `values.yaml` would have
+```yaml
+common:
+    replicas: 10
+```
+
 ### Example 2
 
 Now let's look at a more complicated scenario. Let's say we are parameterizing the image name of some container in a Deployment YAML.
