@@ -26,18 +26,24 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
   ```
 
 1. Let's first run Move2Kube **without** any customization. 
-  - If we notice the `Dockerfile` generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as base image
+  - If we notice the `Dockerfile` generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-14` as base image
   - There are no scripts named `start-nodejs.sh` in the `frontend` service directory
   - The Kubernetes yamls are generated in `myproject/deploy/yamls` directory
 
     ```console
     $ move2kube transform -s src/ --qa-skip && ls myproject/source/frontend && cat myproject/source/frontend/Dockerfile && ls myproject/deploy && rm -rf myproject
-    Dockerfile		README.md		dr-surge.js		manifest.yml		package-lock.json	server.js		stories			test-setup.js		webpack.common.js	webpack.prod.js LICENSE		__mocks__		jest.config.js		nodemon.json		package.json		src			stylePaths.js		tsconfig.json		webpack.dev.js
+    Dockerfile      __mocks__       jest.config.js    package-lock.json    src               test-setup.js         webpack.dev.js
+    LICENSE         dist            manifest.yml      package.json         stories           tsconfig.json         webpack.prod.js
+    README.md       dr-surge.js     nodemon.json      server.js            stylePaths.js     webpack.common.js
 
-    FROM registry.access.redhat.com/ubi8/nodejs-12
+    FROM registry.access.redhat.com/ubi8/nodejs-14
     COPY . .
     RUN npm install
     RUN npm run build
+    USER root
+    RUN chown -R 1001:0 /opt/app-root/src/.npm
+    RUN chmod -R 775 /opt/app-root/src/.npm
+    USER 1001
     EXPOSE 8080
     CMD npm run start
 
@@ -45,7 +51,7 @@ In this example, we look at how to make Move2Kube add custom Dockerfile and a cu
     ```
 
   Let's say, we want to change 
-  - The base image of the Dockerfile generated for nodejs from `registry.access.redhat.com/ubi8/nodejs-12` to `quay.io/konveyor/nodejs-12`
+  - The base image of the Dockerfile generated for nodejs from `registry.access.redhat.com/ubi8/nodejs-14` to `registry.access.redhat.com/ubi8/nodejs-14-minimal`
   - Add a new script named `start-nodejs.sh` in the nodejs app directories along with the Dockerfile, in our case `frontend` directory
   - Change the location of Kubernetes yamls from `myproject/deploy/yamls` to `myproject/yamls-elsewhere`
 
@@ -65,9 +71,11 @@ Once the output is generated, we can observe
 - The kubernetes yamls are now generated in `myproject/yamls-elsewhere` directory, and hence the parameterized yamls are also in `myproject/yamls-elsewhere-parameterized` directory.
   ```console
   $ ls myproject/source/frontend
-  Dockerfile		README.md		dr-surge.js		manifest.yml		package-lock.json	server.js		start-nodejs.sh		stylePaths.js		tsconfig.json		webpack.dev.js LICENSE		__mocks__		jest.config.js		nodemon.json		package.json		src			stories			test-setup.js		webpack.common.js	webpack.prod.js
+  Dockerfile        __mocks__         jest.config.js    package-lock.json src               stylePaths.js     webpack.common.js
+  LICENSE           dist              manifest.yml      package.json      start-nodejs.sh   test-setup.js     webpack.dev.js
+  README.md         dr-surge.js       nodemon.json      server.js         stories           tsconfig.json     webpack.prod.js
   $ cat myproject/source/frontend/Dockerfile
-  FROM quay.io/konveyor/nodejs-12
+  FROM registry.access.redhat.com/ubi8/nodejs-14-minimal
   COPY . .
   RUN npm install
   RUN npm run build
@@ -86,12 +94,14 @@ The contents of `custom-dockerfile-custom-files` are as shown below:
   customizations
   └── custom-dockerfile-change-built-in-behavior
       ├── kubernetes
-      │   └── kubernetes.yaml
+      │   └── transformer.yaml
       └── nodejs
-          ├── nodejs.yaml
-          └── templates
-              ├── Dockerfile
-              └── start-nodejs.sh
+          ├── mappings
+          │   └── nodeversions.yaml
+          ├── templates
+          │   ├── Dockerfile
+          │   └── start-nodejs.sh
+          └── transformer.yaml
   ```
 To custom configure an built-in transformer, you can copy the [built-in transformer's configuration directory](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) from `move2kube` source, change the configurations and use it as a customization. You can make it override the built-in transformer using the `override` config in the yaml.
 
@@ -100,7 +110,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
 1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except that we are using a custom base image and a custom `CMD` here.
   ```
   {% raw %}$ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile
-  FROM quay.io/konveyor/nodejs-12
+  FROM registry.access.redhat.com/ubi8/nodejs-14-minimal
   COPY . .
   RUN npm install
   {{- if .Build }}
@@ -120,7 +130,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
   - The name of our custom transformer is `Nodejs-CustomFiles` (see `name` field in the `metadata` section). 
   - We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if this transformer is present.
   ```console
-  $ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/nodejs.yaml
+  $ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/transformer.yaml
   ```
   ```yaml
   apiVersion: move2kube.konveyor.io/v1alpha1
@@ -129,13 +139,13 @@ In this case, we change the Dockerfile template, add a script and change the tra
     name: Nodejs-CustomFiles
     labels:
       move2kube.konveyor.io/task: containerization
-      move2kube.konveyor.io/built-in: true
+      move2kube.konveyor.io/built-in: false
   spec:
     class: "NodejsDockerfileGenerator"
     directoryDetect:
       levels: -1
     consumes:
-      Service: 
+      Service:
         merge: false
     produces:
       Dockerfile:
@@ -143,15 +153,13 @@ In this case, we change the Dockerfile template, add a script and change the tra
       DockerfileForService:
         disabled: false
     override:
-      matchLabels: 
+      matchLabels:
         move2kube.konveyor.io/name: Nodejs-Dockerfile
-    config:
-      defaultNodejsVersion: "12"
   ```
 
 1. In the `kubernetes` transformer, we change the name and override config too. But in addition, we change the default behavior of the transformer, which is to put the Kubernetes yamls in `deploy/yamls` directory by changing the `spec.config.outputPath` to `yamls-elsewhere`.
   ```console
-  $ cat customizations/custom-dockerfile-change-built-in-behavior/kubernetes/kubernetes.yaml
+  $ cat customizations/custom-dockerfile-change-built-in-behavior/kubernetes/transformer.yaml
   ```
   ```yaml
   {% raw %}apiVersion: move2kube.konveyor.io/v1alpha1
@@ -159,7 +167,7 @@ In this case, we change the Dockerfile template, add a script and change the tra
   metadata:
     name: KubernetesWithCustomOutputDirectory
     labels:
-      move2kube.konveyor.io/built-in: true
+      move2kube.konveyor.io/built-in: false
   spec:
     class: "Kubernetes"
     directoryDetect:
