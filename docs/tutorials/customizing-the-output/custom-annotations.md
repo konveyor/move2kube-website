@@ -111,16 +111,17 @@ The code of the starlark script is shown below. At a high-level, the code requir
           serviceName = a["name"]
           artifacts.append(a)
 
-          fileList = fs.readdir(yamlsPath)
+          fileList = fs.read_dir(yamlsPath)
           yamlsBasePath = yamlsPath.split("/")[-1]
           # Create a custom path template for the service, whose values gets filled and can be used in other pathmappings
-          pathTemplateName = serviceName.replace("-", "") + yamlsBasePath
+          pathTemplateName = serviceName + yamlsBasePath
+          pathTemplateName = pathTemplateName.replace("-", "")
           tplPathData = {'PathTemplateName': pathTemplateName}
           pathMappings.append({'type': 'PathTemplate', \
                               'sourcePath': "{{ OutputRel \"" + yamlsPath + "\" }}", \
                               'templateConfig': tplPathData})
           for f in fileList:
-              filePath = fs.pathjoin(yamlsPath, f)
+              filePath = fs.path_join(yamlsPath, f)
               s = fs.read(filePath)
               yamlData = yaml.loads(s)
               if yamlData['kind'] != 'Ingress':
@@ -134,7 +135,7 @@ The code of the starlark script is shown below. At a high-level, the code requir
               pathMappings.append({'type': 'Default', \
                       'sourcePath': yamlsPath, \
                       'destinationPath': "{{ ." + pathTemplateName + " }}"})
-          
+
       return {'pathMappings': pathMappings, 'artifacts': artifacts}{% endraw %}
   ```
 
