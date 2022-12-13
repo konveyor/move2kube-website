@@ -78,5 +78,5 @@ Once the output is generated, we can observe one helm-chart is generated for eac
         ├── orders-helmchart
         ├── pom.xml
         └── src
-  {% endraw %}
+{% endraw %}
 ```
