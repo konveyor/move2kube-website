@@ -49,6 +49,7 @@ Move2Kube allows defining containerized or native transformers where-in the `dir
     ```
 Once the output is generated, we can observe one helm-chart is generated for each service and placed within the service directory. Also, note that every helm-chart project is named after the service it is meant for. The contents are shown below for reference:
 ```
+{% raw %}
     myproject
     ├── config-utils
     │   ├── config-utils-helmchart
@@ -77,4 +78,5 @@ Once the output is generated, we can observe one helm-chart is generated for eac
         ├── orders-helmchart
         ├── pom.xml
         └── src
+  {% endraw %}
 ```
