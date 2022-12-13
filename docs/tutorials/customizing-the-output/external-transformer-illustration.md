@@ -48,35 +48,136 @@ Move2Kube allows defining containerized or native transformers where-in the `dir
     (y/N) 
     ```
 Once the output is generated, we can observe one helm-chart is generated for each service and placed within the service directory. Also, note that every helm-chart project is named after the service it is meant for. The contents are shown below for reference:
-```
-{% raw %}
-    myproject
-    ├── config-utils
-    │   ├── config-utils-helmchart
-    │   ├── pom.xml
-    │   └── src
-    ├── customers
-    │   ├── Makefile
-    │   ├── README.md
-    │   ├── customers-helmchart
-    │   ├── mvnw
-    │   ├── mvnw.cmd
-    │   ├── pom.xml
-    │   └── src
-    ├── gateway
-    │   ├── gateway-helmchart
-    │   ├── manifest.yml
-    │   ├── mvnw
-    │   ├── mvnw.cmd
-    │   ├── pom.xml
-    │   └── src
-    └── orders
-        ├── README.md
-        ├── manifest.yml
-        ├── mvnw
-        ├── mvnw.cmd
-        ├── orders-helmchart
-        ├── pom.xml
-        └── src
-{% endraw %}
-```
+    ```
+    {% raw %}
+        $ tree myproject
+            myproject/
+            ├── config-utils
+            │   ├── helm-chart
+            │   │   └── config-utils
+            │   │       ├── Chart.yaml
+            │   │       ├── templates
+            │   │       │   ├── config-utils-deployment.yaml
+            │   │       │   ├── config-utils-ingress.yaml
+            │   │       │   └── config-utils-service.yaml
+            │   │       └── values.yaml
+            │   ├── pom.xml
+            │   └── src
+            │       └── main
+            │           └── java
+            │               └── io
+            │                   └── konveyor
+            │                       └── demo
+            │                           └── config
+            │                               └── ApplicationConfiguration.java
+            ├── customers
+            │   ├── Makefile
+            │   ├── helm-chart
+            │   │   └── customers
+            │   │       ├── Chart.yaml
+            │   │       ├── templates
+            │   │       │   ├── customers-deployment.yaml
+            │   │       │   ├── customers-ingress.yaml
+            │   │       │   └── customers-service.yaml
+            │   │       └── values.yaml
+            │   ├── pom.xml
+            │   └── src
+            │       └── main
+            │           ├── java
+            │           │   └── io
+            │           │       └── konveyor
+            │           │           └── demo
+            │           │               └── ordermanagement
+            │           │                   ├── OrderManagementAppInitializer.java
+            │           │                   ├── config
+            │           │                   │   ├── PersistenceConfig.java
+            │           │                   │   └── WebConfig.java
+            │           │                   ├── controller
+            │           │                   │   └── CustomerController.java
+            │           │                   ├── exception
+            │           │                   │   ├── ResourceNotFoundException.java
+            │           │                   │   └── handler
+            │           │                   │       └── ExceptionHandlingController.java
+            │           │                   ├── model
+            │           │                   │   └── Customer.java
+            │           │                   ├── repository
+            │           │                   │   └── CustomerRepository.java
+            │           │                   └── service
+            │           │                       └── CustomerService.java
+            │           └── resources
+            │               ├── import.sql
+            │               └── persistence.properties
+            └── gateway
+                ├── helm-chart
+                │   └── snowdrop-dependencies
+                │       ├── Chart.yaml
+                │       ├── templates
+                │       │   ├── snowdrop-dependencies-deployment.yaml
+                │       │   ├── snowdrop-dependencies-ingress.yaml
+                │       │   └── snowdrop-dependencies-service.yaml
+                │       └── values.yaml
+                ├── manifest.yml
+                ├── pom.xml
+                └── src
+                    ├── main
+                    │   ├── java
+                    │   │   ├── META-INF
+                    │   │   │   └── MANIFEST.MF
+                    │   │   └── io
+                    │   │       └── konveyor
+                    │   │           └── demo
+                    │   │               └── gateway
+                    │   │                   ├── Application.java
+                    │   │                   ├── command
+                    │   │                   │   └── ProductCommand.java
+                    │   │                   ├── controller
+                    │   │                   │   ├── CustomersController.java
+                    │   │                   │   ├── InventoryController.java
+                    │   │                   │   └── OrdersController.java
+                    │   │                   ├── exception
+                    │   │                   │   ├── ResourceNotFoundException.java
+                    │   │                   │   └── handler
+                    │   │                   │       └── ExceptionHandlingController.java
+                    │   │                   ├── model
+                    │   │                   │   ├── Customer.java
+                    │   │                   │   ├── Order.java
+                    │   │                   │   ├── OrderItem.java
+                    │   │                   │   ├── OrderSummary.java
+                    │   │                   │   └── Product.java
+                    │   │                   ├── repository
+                    │   │                   │   ├── CustomerRepository.java
+                    │   │                   │   ├── GenericRepository.java
+                    │   │                   │   ├── InventoryRepository.java
+                    │   │                   │   └── OrderRepository.java
+                    │   │                   ├── serialization
+                    │   │                   │   ├── CustomerDeserializer.java
+                    │   │                   │   └── ProductDeserializer.java
+                    │   │                   └── service
+                    │   │                       ├── CustomersService.java
+                    │   │                       ├── InventoryService.java
+                    │   │                       └── OrdersService.java
+                    │   └── resources
+                    │       ├── application-local.properties
+                    │       ├── application-openshift.properties
+                    │       └── bootstrap.properties
+                    └── test
+                        ├── java
+                        │   └── io
+                        │       └── konveyor
+                        │           └── demo
+                        │               └── gateway
+                        │                   ├── controller
+                        │                   │   └── OrdersControllerTest.java
+                        │                   ├── model
+                        │                   │   └── OrderTest.java
+                        │                   ├── repository
+                        │                   │   ├── CustomerRepositoryTest.java
+                        │                   │   ├── InventoryRepositoryTest.java
+                        │                   │   └── OrderRepositoryTest.java
+                        │                   └── service
+                        │                       └── OrdersServiceTest.java
+                        └── resources
+                            ├── application-test.properties
+                            └── bootstrap.properties
+    {% endraw %}
+    ```
