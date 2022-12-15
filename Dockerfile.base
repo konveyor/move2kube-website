@@ -1,0 +1,6 @@
+# base image built from https://github.com/just-the-docs/just-the-docs/blob/main/Dockerfile
+FROM quay.io/konveyor/just-the-docs:v0.4.0.rc3
+WORKDIR /node
+RUN wget https://nodejs.org/dist/v18.12.1/node-v18.12.1-linux-x64.tar.xz && tar -xf node-v18.12.1-linux-x64.tar.xz
+ENV PATH="$PATH:/node/node-v18.12.1-linux-x64/bin"
+RUN corepack enable

@@ -1,6 +1,7 @@
 {
   "name": "move2kube-website",
   "version": "0.3.0",
+  "packageManager": "yarn@1.22.19",
   "description": "This repository holds the code that generates the Move2Kube Project's web page https://movekube.konveyor.io/",
   "repository": "https://github.com/konveyor/move2kube",
   "license": "Apache-2.0",
