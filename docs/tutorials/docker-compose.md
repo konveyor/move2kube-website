@@ -639,9 +639,9 @@ Below we show the steps for migrating the second sample. The steps for the first
     🔎  Verifying Kubernetes components...
         ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
     🔎  Verifying ingress addon...
     🌟  Enabled addons: storage-provisioner, default-storageclass, ingress
     🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
@@ -651,9 +651,9 @@ Below we show the steps for migrating the second sample. The steps for the first
     ```console
     $ minikube addons enable ingress
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
     🔎  Verifying ingress addon...
     🌟  The 'ingress' addon is enabled
     ```
