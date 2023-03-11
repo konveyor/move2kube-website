@@ -17,10 +17,10 @@ $ move2kube transform -s docker-compose
 Move2Kube will automatically analyse all the yaml files in docker-compose directory and transform and create all artifacts required for deploying the application in Kubernetes.
 
 ## Prerequisites
-1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli). This tutorial has been created with `v0.3.3-rc.2` version of Move2Kube.
+1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli). This tutorial has been created with `v0.3.6` version of Move2Kube.
 
 ```console
-$ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+$ MOVE2KUBE_TAG='v0.3.6' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
 
 1. A Kubernetes cluster. If you don't have one, you can install [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
