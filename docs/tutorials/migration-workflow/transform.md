@@ -362,9 +362,9 @@ If you deployed to Minikube, make sure to enable the ingress addon and start `mi
     ```console
     $ minikube addons enable ingress
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
     🔎  Verifying ingress addon...
     🌟  The 'ingress' addon is enabled
     $ minikube addons enable ingress-dns
