@@ -1,0 +1,421 @@
+\documentclass[twocolumn]{article}
+
+\usepackage{lipsum} % For dummy text
+\usepackage{float} % For positioning tables
+\usepackage{colortbl} % For coloring table rules
+\usepackage[table]{xcolor} % For coloring table background
+\usepackage{xcolor} % For defining custom colors
+\usepackage{fancyhdr} % For custom headers and footers
+\usepackage[top=0.7in, bottom=3.5cm,  left=0.4in, right=0.4in]{geometry} % For setting page margins
+\usepackage{geometry} % For additional control over page layout
+\usepackage{graphicx} % For including images
+\usepackage{multicol} % For multicolumn layouts
+\usepackage{titlesec} % For customizing section titles
+\usepackage{hyperref} % For creating hyperlinks within the document
+\usepackage{fontspec} % For specifying fonts
+\usepackage{unicode-math} % For using Unicode fonts
+\usepackage[normalem]{ulem} % For underlining and striking through text.
+\usepackage[T1]{fontenc} % Enables the use of T1 font encoding, which supports more characters than the default encoding (OT1)
+
+\setmainfont{Lexend}[
+  UprightFont=*-Regular,
+  Path=./fonts/,
+  Extension=.ttf,
+]
+
+
+\newfontfamily\lightlexendfontfamily[
+  UprightFont=*-Light,
+  Path=./fonts/,
+  Extension=.ttf,
+]{Lexend}
+
+\newcommand{\lightlexendfont}[1]{{\lightlexendfontfamily #1}}
+
+\newcommand{\tfontsize}{\fontsize{6}{12}\selectfont}
+
+\newcommand{\dash}{\texttt{-}}
+\newcommand{\doubledash}{\texttt{--}}
+
+\renewcommand{\headrulewidth}{0pt} % remove header line
+
+\definecolor{tableBorderColor}{HTML}{efefef}
+\definecolor{tableBackgroudColor}{HTML}{F3F3F3}
+\definecolor{subTitleColor}{HTML}{666666}
+
+\hypersetup{
+  colorlinks=false,
+  urlcolor=blue,
+  pdfborder={0 0 0},
+}
+
+% Define the first page style without footer
+\fancypagestyle{firstpage}{
+  \fancyhf{} % clear all header and footer fields
+  \pagestyle{fancy}
+  \fancyhead[L]{\textbf{\fontsize{26}{16}\selectfont Move2Kube}}
+  \fancyhead[R]{\includegraphics[width=4cm]{./images/konveyor.png}}
+}
+
+% Define the second page style without header
+\fancypagestyle{secondpage}{
+  \fancyhf{} % clear all header and footer fields
+  \renewcommand{\headrulewidth}{0pt} % remove the header rule
+
+  \fancyfoot[L]{
+    \href{https://move2kube.konveyor.io/}{\hspace{12cm}{\raisebox{-1.7ex}{\rotatebox{0}{\includegraphics[width=2.5em]{./images/web_link.png}}}\hspace{0.5em}Move2kube.konveyor.io}} \\
+    \href{https://github.com/konveyor/move2kube}{\hspace{12cm}{\raisebox{-2ex}{\includegraphics[width=2.5em]{./images/github.png}}\hspace{0.5em}github.com/konveyor/move2kube}}
+
+  }
+  %\renewcommand{\footrulewidth}{0.4pt}% Line thickness
+}
+
+% Define format for section titles
+\titleformat{\section}
+{\small\bfseries\sffamily}% font size and style
+{}% label
+{0pt}% separation between label and title body
+{}% code preceding the title body
+
+\begin{document}
+
+\thispagestyle{firstpage} % apply header to only the first page
+
+\twocolumn[%
+\begin{flushleft}
+  \vspace{1cm}
+  \fontsize{16}{16}\selectfont \textcolor{subTitleColor}{CheatSheet}
+
+  \vspace{0.5cm}
+  \fontsize{12}{16}\selectfont Move2Kube is a tool which can speed up the journey from platforms like cloud foundry, and docker-compose to Kubernetes/OpenShift.
+\end{flushleft}
+\hrulefill % adds a horizontal line
+\vspace{0.8cm}
+]
+
+
+
+% Collect Commmands
+{\setlength{\tabcolsep}{4pt}
+\begin{table}[H]
+  \section*{\hspace{0.5em}\normalsize Collect}
+  \vspace{-0.25cm}
+  {\hspace{0.5em}\footnotesize Collect and process metadata from multiple sources.}
+  \vspace{0.25cm}
+
+  \renewcommand{\arraystretch}{2.5} % Increase row height
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+
+    \begin{tabular}{|>{\tfontsize}p{0.3\linewidth}|>{\tfontsize}p{0.55\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \hline
+      \rowcolor{white}
+      \multicolumn{2}{|c|}{\begin{tabular}[c]{@{}p{0.85\linewidth}@{}}
+                               \textbf{\small move2kube collect [flags]} \\
+                               \tfontsize Used to collect metadata from multiple sources (cluster, image repo etc), filter and summarize it into a YAML.
+                             \end{tabular}} \\
+
+      \hline
+      \dash a, \doubledash annotation string & \lightlexendfont{Specify annotations to select the collector subset.}                                \\
+      \hline
+      \dash h, \doubledash help              & \lightlexendfont{Help for collect.}                                                                  \\
+      \hline
+      \dash o, \doubledash output string     & \lightlexendfont{Specify the output directory for collection. (default “.”)}                         \\
+      \hline
+      \dash s, \doubledash source string     & \lightlexendfont{Specify the source directory for collecting artifacts.}                             \\
+      \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+
+
+% Plan Commmands
+{\setlength{\tabcolsep}{5pt}
+\begin{table}[H]
+  \vspace{0cm}
+  \section*{\hspace{0.5em}\normalsize Plan}
+  \vspace{-0.25cm}
+  {\hspace{0.5em}\footnotesize The command helps to plan out the move.}
+
+  \vspace{0.25cm}
+
+  \renewcommand{\arraystretch}{2.5} % Increase row height
+
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+    \begin{tabular}{|>{\tfontsize}p{0.4\linewidth}|>{\tfontsize}p{0.45\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \hline
+      \rowcolor{white}
+      \multicolumn{2}{|c|}{\begin{tabular}[c]{@{}l@{}}
+                               \hspace{-10em}\textbf{\small move2kube plan [flags]} \\
+                               \hspace{-10em}\tfontsize Discover and create a plan file based on an input directory.
+                             \end{tabular}}              \\
+      \hline
+
+      \dash f, \doubledash config strings                          & \lightlexendfont{Specify config file locations.}        \\
+      \hline
+      \dash c, \doubledash customizations string
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash disable\dash local\dash execution & \lightlexendfont{Specify customizations directory path.
+
+        \vspace{0.25\baselineskip}
+
+      Allow files to be executed locally.}                                                                                   \\ 
+      \hline \dash h, \doubledash help &
+      \lightlexendfont{Help for plan.}                                                                                       \\ 
+      \hline \dash n, \doubledash name string &
+      \lightlexendfont{Specify the project name.
+
+      (default “myproject”)}                                                                                                 \\
+      \hline
+      \dash p, \doubledash plan string
+      \vspace{1.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash preset strings
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash set\dash config stringArray       & \lightlexendfont{Specify a file path to save the plan.
+
+        ( default “m2k.plan”)
+
+        \vspace{0.25\baselineskip}
+
+        Specify the preset config to use.
+
+        \vspace{0.25\baselineskip}
+
+      Specify config key-value pairs.}                                                                                       \\ 
+        \hline \dash s, \doubledash source string &
+         \lightlexendfont{Specify the source directory.
+
+      (default “.”)}                                                                                                         \\
+      \hline
+      \dash t, \doubledash transformer\dash selector string        & \lightlexendfont{Specify the transformer selector.}     \\
+      \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+
+
+% Transform Commmands
+{\setlength{\tabcolsep}{5pt}
+\begin{table}[H]
+  \section*{\hspace{0.5em}\normalsize Transform}
+  \vspace{-0.25cm}
+  {\hspace{0.5em}\footnotesize Command helps to transform artifacts.}
+  \vspace{0.25cm}
+
+  \renewcommand{\arraystretch}{2.8} % Increase row height
+
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+    \begin{tabular}{|>{\tfontsize}p{0.4\linewidth}|>{\tfontsize}p{0.45\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \hline
+      \rowcolor{white}
+      \multicolumn{2}{|c|}{\begin{tabular}[c]{@{}l@{}}
+                               \hspace{-14em}\textbf{\small move2kube transform [flags]} \\
+                               \hspace{-14em}\tfontsize Transform artifacts using move2kube transform.
+                             \end{tabular}}                            \\
+      \hline
+
+      \dash f, \doubledash config strings
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.25cm} \doubledash config\dash out string           & \lightlexendfont{Specify config file locations.
+
+        \vspace{0.25\baselineskip}
+
+        Sets output config file location.
+
+      (default “.”)}                                                                                                         \\
+      \hline \dash c, \doubledash customizations string
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash disable\dash local\dash execution & \lightlexendfont{Specify customizations directory path.
+
+        \vspace{0.25\baselineskip}
+
+      Allow files to be executed locally.}                                                                                   \\ 
+      \hline
+
+      \dash h, \texttt{-{}-} help
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash ignore\dash env                   & \lightlexendfont{Get help for transforming.
+
+        \vspace{0.25\baselineskip}
+
+      Ignore data from the local machine.}                                                                                   \\ 
+      \hline \dash n, \doubledash name string                          & \lightlexendfont{Specify the project name.
+
+      (default “myproject”)}                                                                                                 \\
+      \hline
+      \dash o, \doubledash output string
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.36cm}\doubledash overwrite                         & \lightlexendfont{Path for output. (default “.”)
+
+        \vspace{0.25\baselineskip}
+
+      Overwrite the output directory if it exists. By default we don’t overwrite.}                                           \\
+      \hline \dash p, \doubledash plan string
+
+      \vspace{1.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash preset strings
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash qa\dash cache\dash out string
+
+      \vspace{1.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash qa\dash presist\dash passwords
+
+      \vspace{0.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash qa\dash skip
+
+      \vspace{1.25\baselineskip}
+
+      \hspace{0.3cm} \doubledash set\dash config stringArray       & \lightlexendfont{Specify a file path to save the plan.
+
+        ( default “m2k.plan”)
+
+        \vspace{0.25\baselineskip}
+
+        Specify the preset config to use.
+
+        \vspace{0.25\baselineskip}
+
+        Specify cache file output location.
+
+        (default “.”)
+
+        \vspace{0.25\baselineskip}
+
+        Stores passwords too in the config.
+
+        \vspace{0.25\baselineskip}
+
+        Toggle automatic QA responses on or off in the CLI subsystem.
+
+        \vspace{0.25\baselineskip}
+
+      Specify config key-value pairs.}                                                                                       \\ 
+         \hline \dash s, \doubledash source string &
+         \lightlexendfont{Specify source directory to transform. If you already have a
+           m2k.plan then this will override the sourceDir value specified in that plan.}
+      \\
+
+      \hline \dash t, \doubledash transformer-selector string      & \lightlexendfont{Specify the
+      transformer selector.}                                                                                                 \\
+      \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+\clearpage % start a new page
+\thispagestyle{secondpage}
+
+
+
+
+% Version Commmands
+\begin{table}[H]
+
+  \section*{\hspace{0.5em}\normalsize Version}
+  \vspace{-0.25cm}
+  {\hspace{0.5em}\tfontsize Print the version information.}
+  \vspace{0.25cm}
+
+  \renewcommand{\arraystretch}{3} % Increase row height
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+    \begin{tabular}{|p{0.895\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \textbf{\small move2kube version [flags]} \\
+      \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+
+
+% Options Commmands
+\begin{table}[H]
+
+  \section*{\hspace{0.5em}\normalsize Options}
+
+  \renewcommand{\arraystretch}{3} % Increase row height
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+    \begin{tabular}{|>{\tfontsize}p{0.35\linewidth}|>{\tfontsize}p{0.5\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \dash h, \doubledash help
+
+      \dash l, \doubledash long &
+
+      \lightlexendfont{Help for version.
+
+      Print the version details.} \\ \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+
+
+% Inherited Commmands
+{\setlength{\tabcolsep}{5pt}
+\begin{table}[p]
+  \vspace{-17.5cm}
+
+  \section*{\hspace{0.25em}\normalsize Options inherited from parent commands}
+  \vspace{-0.25cm}
+  \parbox{25em}{\hspace{0.25em}\tfontsize Additional options inherited from the
+    parent command. These options are likely
+
+    \hspace{0.25em} available to all commands in the Move2Kube tool.}
+  \vspace{0.25cm}
+
+  \renewcommand{\arraystretch}{5} % Increase row height
+  {\scriptsize % start script font size
+    \rowcolors{1}{tableBackgroudColor}{tableBackgroudColor}
+    \begin{tabular}{|>{\tfontsize}p{0.25\linewidth}|>{\tfontsize}p{0.6\linewidth}|}
+      \arrayrulecolor{tableBorderColor} % set the color of the vertical and horizontal lines
+
+      \doubledash log\dash file string
+
+      \vspace{4\baselineskip}
+
+      \doubledash log\dash level string &
+
+      \lightlexendfont{Specify the file where the logs should be stored.
+        By default, it only prints to the console.}
+
+      \vspace{1.5\baselineskip}
+
+      \lightlexendfont{Set logging levels. (default “info”)} \\
+      \hline
+    \end{tabular}
+  } % end script font size
+\end{table}
+
+\end{document}
