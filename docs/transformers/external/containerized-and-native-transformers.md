@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Executable
-permalink: /transformers/external/executable
+title: Containerize and native transformers
+permalink: /transformers/external/
 parent: External
 grand_parent: Transformers
 has_children: false
 nav_order: 2
 ---
 
-# External
+# Containerize and native transformers
 
 Move2Kube allows defining transformers which could be defined natively (e.g. developer's laptop) or in a containerized environment. The `directory_detect` and `transform` operations should be implemented as scripts residing within the container or natively so that they are invoked by Move2Kube. They should perform the following functions:
 * `directory_detect()` - It should be implemented to check if there are relevant files in the directory to invoke the transformer. See example [here](https://github.com/konveyor/move2kube-transformers/blob/main/containerized-external-transformer/detect.py).
