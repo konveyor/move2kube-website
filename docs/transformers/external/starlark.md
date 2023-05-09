@@ -81,7 +81,7 @@ Move2Kube provides a set a functions in starlark for filesystem based operations
 | `is_dir`| Check if the given path is a directory or not | path as string | boolean | 
 | `get_yamls_with_type_meta`| Return files by yaml kind | path to directory containing yamls as string <br/> kind of yamls required as string | []string| 
 | `find_xml_path`| Return XML value based on the [XPath expression](https://www.w3schools.com/xml/xml_xpath.asp) in the given XML file | path to XML file as string <br/> XPath expression | []interface{}| 
-| `get_files_with_pattern` | Get files in the given directory with a particular extension | path to directory as string <br/> list of extensions as []string | []string |
+| `get_files_with_pattern` | Get files in the given directory with a particular extension | path to directory as string <br/> extension as string | []string |
 | `path_join` | Join two paths | first as path as string <br/> second path as string| string |
 | `write` | Write data to a file and returns number of bytes written | path to a file as string <br/> data to be written as a string <br/> file permissions (optional) as an integer | int
 | `path_base` | Return last element of the given path | path as string | string
