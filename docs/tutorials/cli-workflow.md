@@ -6,7 +6,7 @@ parent: Tutorials
 nav_order: 1
 ---
 
-# Using Move2Kube CLI
+# Using the Move2Kube CLI
 
 ## Description
 

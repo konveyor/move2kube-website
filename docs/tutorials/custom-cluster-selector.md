@@ -3,7 +3,7 @@ layout: default
 title: "Customizing Kubernetes YAMLs to target specific cluster"
 permalink: /tutorials/customize-cluster-selector
 parent: Tutorials
-nav_order: 9
+nav_order: 10
 ---
 
 # Customizing Kubernetes YAMLs to target specific cluster
