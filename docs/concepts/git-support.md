@@ -8,7 +8,7 @@ nav_order: 5
 
 # Git Support
 
-Move2Kube supports git remote paths for `source` and `customization` options for `plan` and `transform` subcommands.
+Move2Kube supports git remote paths for `source`, `customization`, and `output` options for `plan` and `transform` subcommands.
 
 ## Git Remote Path Format
 
@@ -322,5 +322,100 @@ git+ssh://github.com/<org or username>/<repo name>.git:<path to the folder in th
     INFO[0016] Transformer Parameterizer Done
     INFO[0016] Transformation done
     INFO[0006] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
+    ```
+    </details>
+
+* Perform move2kube transform with source as git remote path with release-0.2 as branch and output pushed to git remote path to /output-m2k location on a new branch release-0.5.
+
+
+    <details markdown="block">
+    <summary markdown="block">
+    ```console
+    move2kube transform -s git+https://github.com/konveyor/move2kube-demos.git:samples/kubernetes-to-kubernetes@release-0.2 -o git+https://github.com/username/move2kube-output.git:/output-m2k@release-0.5
+    ```
+    </summary>
+    ```console
+    INFO[0000] Cloning the repository using git into /var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2ksources. This might take some time.
+    INFO[0005] Cloning the repository using git into /var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2koutputs. This might take some time.
+    ? Specify a Kubernetes style selector to select only the transformers that you want to run.
+    ID: move2kube.transformerselector
+    Hints:
+    - Leave empty to select everything. This is the default.
+
+
+    ? Select all transformer types that you are interested in:
+    ID: move2kube.transformers.types
+    Hints:
+    - Services that don't support any of the transformer types you are interested in will be ignored.
+
+    ArgoCD, Buildconfig, CNBContainerizer, CloudFoundry, ClusterSelector, ComposeAnalyser, ComposeGenerator, ContainerImagesPushScriptGenerator, DockerfileDetector, DockerfileImageBuildScript, DockerfileParser, DotNetCore-Dockerfile, EarAnalyser, EarRouter, Golang-Dockerfile, Gradle, Jar, Jboss, Knative, Kubernetes, KubernetesVersionChanger, Liberty, Maven, Nodejs-Dockerfile, OperatorTransformer, OperatorsFromTCA, PHP-Dockerfile, Parameterizer, Python-Dockerfile, ReadMeGenerator, Ruby-Dockerfile, Rust-Dockerfile, Tekton, Tomcat, WarAnalyser, WarRouter, WinWebApp-Dockerfile, ZuulAnalyser
+    ? Allow spawning containers?
+    ID: move2kube.spawncontainers
+    Hints:
+    - If this setting is set to false, those transformers that rely on containers will not work.
+
+    No
+    INFO[0009] Configuration loading done
+    INFO[0009] Start planning
+    INFO[0009] Planning started on the base directory: '/var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2ksources/konveyor/move2kube-demos.git/samples/kubernetes-to-kubernetes'
+    INFO[0009] [CloudFoundry] Planning
+    INFO[0009] [CloudFoundry] Done
+    INFO[0009] [ComposeAnalyser] Planning
+    INFO[0009] [ComposeAnalyser] Done
+    INFO[0009] [DockerfileDetector] Planning
+    INFO[0009] [DockerfileDetector] Done
+    INFO[0009] [Base Directory] Identified 0 named services and 0 to-be-named services
+    INFO[0009] Planning finished on the base directory: '/var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2ksources/konveyor/move2kube-demos.git/samples/kubernetes-to-kubernetes'
+    INFO[0009] Planning started on its sub directories
+    INFO[0009] Identified 1 named services and 0 to-be-named services in .
+    INFO[0009] Identified 1 named services and 0 to-be-named services in .
+    INFO[0009] Planning finished on its sub directories
+    INFO[0009] [Directory Walk] Identified 1 named services and 1 to-be-named services
+    INFO[0009] [Named Services] Identified 1 named services
+    INFO[0009] Planning done. Number of services identified: 1
+    INFO[0009] Starting transformation
+    INFO[0009] git repository might get overwritten at /var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2koutputs/username/move2kube-output.git
+    INFO[0009] Cloning the repository using git into /var/folders/65/8blqnjn175s37p_k6s2n50nm0000gq/T/move2kube1544016838/m2koutputs. This might take some time.
+
+    ? Select all services that are needed:
+    ID: move2kube.services.[].enable
+    Hints:
+    - The services unselected here will be ignored.
+
+    move2kube-demos
+    INFO[0010] Found multiple transformation options for the service 'move2kube-demos'. Selecting the first valid option.
+    INFO[0010] Using the transformation option 'KubernetesVersionChanger' for the service 'move2kube-demos'.
+    INFO[0010] Iteration 1
+    INFO[0010] Iteration 2 - 1 artifacts to process
+    INFO[0010] Transformer 'ClusterSelector' processing 1 artifacts
+    ? Choose the cluster type:
+    ID: move2kube.target."default".clustertype
+    Hints:
+    - Choose the cluster type you would like to target
+
+    Kubernetes
+    INFO[0011] Transformer ClusterSelector Done
+    INFO[0011] Transformer 'KubernetesVersionChanger' processing 1 artifacts
+    INFO[0011] Transformer KubernetesVersionChanger Done
+    INFO[0011] Created 1 pathMappings and 1 artifacts. Total Path Mappings : 1. Total Artifacts : 1.
+    INFO[0011] Iteration 3 - 1 artifacts to process
+    INFO[0011] Transformer 'Parameterizer' processing 1 artifacts
+    INFO[0011] Transformer Parameterizer Done
+    INFO[0011] Transformation done
+    WARN[0011] push to remote git repositories using credentials from the environment is not yet supported.
+    ? Enter git author name :
+    ID: move2kube.vcs.git.name
+    username
+    ? Enter git author email :
+    ID: move2kube.vcs.git.email
+    useremail@emailservice.com
+    ? Enter git username :
+    ID: move2kube.vcs.git.username
+    username
+    ? Enter git password :
+    ID: move2kube.vcs.git.pass
+    *********************************************
+    INFO[0034] move2kube generated artifcats are commited and pushed
+    INFO[0034] Transformed target artifacts can be found at [git+https://github.com/username/move2kube-output.git:/o1@release-0.5].
     ```
     </details>
