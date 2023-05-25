@@ -75,7 +75,7 @@ Similar to the command line tool, Move2Kube Web-UI can also be used to do the tr
 
     ![No outputs]({{ site.baseurl }}/assets/images/ui-workflow/16-no-project-outputs.jpg)
 
-1. Move2Kube will ask some questions to aid in the transfomation process.
+1. Move2Kube will ask some questions to aid in the transformation process.
 
     ![Start transformation]({{ site.baseurl }}/assets/images/ui-workflow/17-qa-1.jpg)
 
@@ -105,6 +105,6 @@ The steps for doing that are same as for the [CLI tutorial]({{ site.baseurl }}/t
 
 ## Conclusion
 
-We have seen how easy it is to to do a transformation using the UI. All the features of the Move2Kube CLI are available through the UI as well.
+We have seen how easy it is to do a transformation using the UI. All the features of the Move2Kube CLI are available through the UI as well.
 In addition, the UI can be hosted on a common server and used by different teams using different workspaces.
 It also has authentication and authorization capabilities to restrict access to particular workspaces.
