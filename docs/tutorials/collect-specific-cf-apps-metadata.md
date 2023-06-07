@@ -10,7 +10,7 @@ nav_order: 6
 
 To analyze your applications running in Cloud Foundry, the Move2Kube CLI tool provides a command called `collect`. As the name suggests the `collect` command can be used to collect information about applications running in the Cloud Foundry instance. It can also be used to collect the types of resources that are installed on your Kubernetes/OpenShift cluster, etc.
 
-- Install latest version of Move2Kube `v0.3.8-rc.0`.
+- Install the latest version of Move2Kube. This tutorial was created using Move2Kube `v0.3.8-rc.0`.
 
   ```console
   $ MOVE2KUBE_TAG='v0.3.8-rc.0' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
@@ -64,7 +64,7 @@ You can run `cf target` to check if you are logged in. The output should be simi
     $ cf target
     API endpoint:   https://api.cf.my.cloud.provider.com
     API version:    3.107.0
-    user:           user@gmail.com
+    user:           user123@xyz.com
     org:            my-org
     space:          dev
     ```
