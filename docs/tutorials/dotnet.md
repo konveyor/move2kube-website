@@ -3,7 +3,7 @@ layout: default
 title: "Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes"
 permalink: /tutorials/dotnet/
 parent: Tutorials
-nav_order: 8
+nav_order: 9
 ---
 
 # Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes

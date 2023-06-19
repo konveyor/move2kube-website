@@ -3,7 +3,7 @@ layout: default
 title: "Creating Helm-charts, Kustomize overlays from Kubernetes Yamls"
 permalink: /tutorials/parameterizing-kubernetes-yamls
 parent: Tutorials
-nav_order: 9
+nav_order: 10
 ---
 
 # Creating Helm-charts, Kustomize overlays from Kubernetes Yamls

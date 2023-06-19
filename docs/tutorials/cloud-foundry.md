@@ -88,8 +88,8 @@ Move2Kube will automatically analyse all the artifacts in the cloud-foundry dire
 
 Now that we have a running CF app we can transform it using Move2Kube. We will be using the three stage process (*collect*, *plan* and *transform*) for the transformation. Run these steps from the directory where `cloud-foundry` directory is present:
 
-1. Optional: This step is required only if you are interested in metadata such as environment variables from a running instance. If you don't have a running app, you can use the m2k_collect directoy that comes with the sample.
- We will first collect some data about your running CF application. Here we will limit the collect to only cloud foundry information using the `-a cf` annotation flag.  
+1. Optional: This step is required only if you are interested in metadata such as environment variables from a running Cloud Foundry instance. For this tutorial, if you don't have the apps running on Cloud Foundry, you can use the m2k_collect directly that comes with the sample.
+ We will first collect some data about your running CF applications. Here we will limit the `collect` to only Cloud Foundry information using the `-a cf` annotation flag. By default, `move2kube collect` collects the information of all the apps that are deployed on Cloud Foundry. But, it is also possible to collect the information of some specific application(s) deployed on Cloud Foundry using `move2kube collect` and there is a detailed tutorial about it [here](/tutorials/collect-selected-cf-apps/).
 
     ```console
     $ cf login -a <YOUR CF API endpoint>
