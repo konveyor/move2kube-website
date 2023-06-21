@@ -75,7 +75,7 @@ Move2Kube provides a set a functions in starlark for filesystem based operations
 
 | Function name in starlark | Purpose | Arguments | Returns |
 | ----------- | ----------- | ----------- | ----------- | 
-| `exists`| Check if the provided file exists or not | filepath as string| boolean |
+| `exists`| Check if the provided file exists or not | filepath as string | boolean |
 | `read`| Reads the given file | filepath as string | string |
 | `read_dir`| Obtain list of files names in a directory | directory path as string | []string | 
 | `is_dir`| Check if the given path is a directory or not | path as string | boolean | 
@@ -103,6 +103,47 @@ basePath = fs.path_base("some/path")
 relativePath = fs.path_rel("base/path", "target/path")
 ```
 
+### Golang Template
+
+See https://pkg.go.dev/text/template
+
+| Function name in starlark | Purpose | Arguments | Returns |
+| ----------- | ----------- | ----------- | ----------- | 
+| `eval_template`| Evaluate and fill the Golang template using some data | Template (string) <br/> Data to fill the template (dict) | string |
+
+Example:
+
+{% raw %}
+```python
+my_template = """
+name: "{{ .Name }}"
+{{- if .EnvVolumes }}
+volumes:
+  {{- range $k, $v := .EnvVolumes}}
+  {{$k}}:
+    {{- range $vk, $vv := $v}}
+    {{$vk}}: "{{$vv}}"
+    {{- end}}
+  {{- end}}
+{{- end}}
+"""
+data = {
+    "Name": "John Doe",
+    "EnvVolumes": {
+        "foo": {
+            "a": "b",
+            "c": "d",
+        },
+        "bar": {
+            "e": "f",
+            "g": "h",
+        },
+    },
+}
+filled_template = template.eval_template(my_template, data)
+print(filled_template)
+```
+{% endraw %}
 
 ### Cryptography
 Move2Kube provides a set a functions in starlark for Cryptography. The functions are packaged within `crypto` package and they should be invoked with the package name.
