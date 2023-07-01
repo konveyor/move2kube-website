@@ -1,6 +1,6 @@
 # Move2Kube GitHub pages repo
 
-This repository holds the code that generates the [Move2Kube Project's web page](https://movekube.konveyor.io/).
+This repository holds the code that generates the [Move2Kube Project's web page](https://move2kube.konveyor.io/).
 
 ## Contributing
 

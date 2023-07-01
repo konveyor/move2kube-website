@@ -13,4 +13,4 @@ We also have a [VSCode extension](/installation/vscode-extension)
 
 ![Move2Kube Installation]({{ site.baseurl }}/assets/images/install.png)
 
-You can try out Move2Kube in [Katacoda](https://www.katacoda.com/move2kube).
+You can try out Move2Kube in [Katacoda](https://move2kube.konveyor.io).
