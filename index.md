@@ -17,7 +17,7 @@ Move2Kube is a tool that uses source files such as Docker Compose files or Cloud
 
 ## A quick start with Move2Kube
 
-With Move2Kube, generating the Kubernetes/OpenShift deployment files for your source platform files is now simple. You can try out Move2Kube in [Katacoda](https://www.katacoda.com/move2kube) or follow the steps mentioned below for trying out Move2Kube on your local machine.
+With Move2Kube, generating the Kubernetes/OpenShift deployment files for your source platform files is now simple. You can follow the steps mentioned below for trying out Move2Kube on your local machine.
 
 
 1. Install Move2Kube

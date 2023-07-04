@@ -12,5 +12,3 @@ Move2Kube can be consumed as a [command line tool](/installation/cli) or as a [w
 We also have a [VSCode extension](/installation/vscode-extension)
 
 ![Move2Kube Installation]({{ site.baseurl }}/assets/images/install.png)
-
-You can try out Move2Kube in [Katacoda](https://www.katacoda.com/move2kube).
