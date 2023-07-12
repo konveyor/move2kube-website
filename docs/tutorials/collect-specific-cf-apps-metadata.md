@@ -3,7 +3,7 @@ layout: default
 title: "Collecting only selected Cloud Foundry applications metadata"
 permalink: /tutorials/collect-selected-cf-apps/
 parent: Tutorials
-nav_order: 6
+nav_order: 7
 ---
 
 # Using Move2Kube Collect to collect only selected Cloud Foundry application(s) metadata

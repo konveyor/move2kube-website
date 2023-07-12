@@ -3,7 +3,8 @@ layout: default
 title: "Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes"
 permalink: /tutorials/dotnet/
 parent: Tutorials
-nav_order: 9
+# Using 91, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 91
 ---
 
 # Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes
