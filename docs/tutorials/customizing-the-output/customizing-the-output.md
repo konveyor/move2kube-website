@@ -3,8 +3,8 @@ layout: default
 title: "Customizing the output"
 permalink: /tutorials/customizing-the-output
 parent: Tutorials
-# Using 92, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
-nav_order: 92
+# Using 95, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 95
 has_children: true
 ---
 

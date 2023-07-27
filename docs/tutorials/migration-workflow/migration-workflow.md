@@ -3,8 +3,8 @@ layout: default
 title: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 permalink: /tutorials/migration-workflow
 parent: Tutorials
-# Using 91, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
-nav_order: 91
+# Using 94, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 94
 has_children: true
 ---
 
