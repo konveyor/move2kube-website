@@ -52,4 +52,6 @@ Follow the same steps as above, but instead of `v0.3.0`, use `latest`
 
 Move2Kube can also be installed as a Helm Chart from [ArtifactHub](https://artifacthub.io/packages/helm/move2kube/move2kube/0.3.0?modal=install)
 
-Also, for Helm Chart and Operator checkout [Move2Kube Operator](https://github.com/konveyor/move2kube-operator).
+Also checkout
+   - Helm Chart https://github.com/konveyor/move2kube-ui/tree/main/helm-charts/move2kube
+   - Operator https://github.com/konveyor/move2kube-ui/tree/main/operator

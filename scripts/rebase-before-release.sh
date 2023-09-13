@@ -30,10 +30,6 @@ cd move2kube-ui
 myrebase
 cd -
 
-cd move2kube-operator
-myrebase
-cd -
-
 cd move2kube-tests
 myrebase
 cd -
