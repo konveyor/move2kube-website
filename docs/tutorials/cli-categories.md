@@ -82,3 +82,16 @@ The Move2Kube CLI lets you disable certain categories of questions, or *only* en
 1. Questions in Move2Kube are categorized according to the [manifest file](https://raw.githubusercontent.com/konveyor/move2kube/efd1bdcccbd921457b09e21f1bd9a1b39bd7b06d/assets/built-in/qa/qamappings.yaml). It maps category names to a list of question IDs belonging to the category. It also provides a handy way of viewing all questions belonging to a certain category.
 
 1. Questions with **dynamic IDs** (for example, question IDs containing the name of a service) are represented as globs in the manifest. `move2kube.services.*.enable` refers to any questions of the form `move2kube.services.[CATEGORY NAME].enable`.
+
+## Usage with External Transformers
+
+By default, questions prompted by Starlark transformer are categorized as `external`. To add your own category to them, pass it to the `categories` attribute of the `m2k.query` method like so:
+
+```
+                    useStatefulSet = m2k.query({"id": "move2kube."+name +".statefulSet",
+                                                "type": "Select",
+                                                "options": ["Yes", "No"],
+                                                "description": "Use StatefulSet instead of Deployment for the "+ name + " service : ",
+                                                "categories": ["statefulset"]})
+
+```
