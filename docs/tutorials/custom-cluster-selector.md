@@ -3,8 +3,8 @@ layout: default
 title: "Customizing Kubernetes YAMLs to target specific cluster"
 permalink: /tutorials/customize-cluster-selector
 parent: Tutorials
-# Using 92, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
-nav_order: 92
+# Using 93, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 93
 ---
 
 # Customizing Kubernetes YAMLs to target specific cluster
