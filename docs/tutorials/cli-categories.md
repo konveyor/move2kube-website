@@ -1,16 +1,16 @@
 ---
 layout: default
-title: "Move2Kube CLI Categories"
-permalink: /tutorials/cli-categories
+title: "Enabling/disabling questions categories in Move2Kube CLI"
+permalink: /tutorials/qa-categorization
 parent: Tutorials
-nav_order: 1
+nav_order: 5
 ---
 
-# Enabling and disabling entire categories of questions
+# Enabling or disabling entire categories of questions
 
 ## Description
 
-This document will teach you how to skip questions you commonly skip or leave default by using the comprehensive category system in the Move2Kube CLI.
+This document will teach you how to disable the questions you commonly skip answering or leave default, by using the comprehensive questions category system in the Move2Kube CLI.
 
 ### TLDR
 
@@ -75,7 +75,7 @@ The Move2Kube CLI lets you disable certain categories of questions, or *only* en
 
 1. You can enable multiple categories by repeating the --qa-enable flag, similar to --qa-disable.
 
-**Note**: --qa-disable and --qa-enable are mutually exclusive: they _cannot_ be used in conjunction.
+**Note**: --qa-disable and --qa-enable are mutually exclusive: they *cannot* be used in conjunction.
 
 ## Category Manifest file
 

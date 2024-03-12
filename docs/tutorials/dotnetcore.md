@@ -3,7 +3,8 @@ layout: default
 title: "Migrating and deploying .NET Core apps to Kubernetes"
 permalink: /tutorials/netcore/
 parent: Tutorials
-nav_order: 9
+# Using 91, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 91
 ---
 
 # Migrating and deploying .NET Core applications to Kubernetes

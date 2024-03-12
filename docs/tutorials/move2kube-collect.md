@@ -3,7 +3,7 @@ layout: default
 title: "Using Move2Kube Collect for collecting the metadata"
 permalink: /tutorials/move2kube-collect/
 parent: Tutorials
-nav_order: 6
+nav_order: 7
 ---
 
 # Using Move2Kube Collect for collecting the metadata of Cloud Foundry applications, Kubernetes clusters and images

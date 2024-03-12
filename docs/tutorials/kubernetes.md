@@ -3,8 +3,8 @@ layout: default
 title: "Creating Helm-charts, Kustomize overlays from Kubernetes Yamls"
 permalink: /tutorials/parameterizing-kubernetes-yamls
 parent: Tutorials
-# Using 93, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
-nav_order: 93
+# Using 94, since nav_order is sorted as a string. The series to follow is 1..9, 91..99,991..999,..
+nav_order: 94
 ---
 
 # Creating Helm-charts, Kustomize overlays from Kubernetes Yamls
