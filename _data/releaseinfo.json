@@ -1,7 +1,7 @@
 {
     "current": {
-        "release": "v0.3.12",
-        "release_url": "https://github.com/konveyor/move2kube/releases/tag/v0.3.12",
+        "release": "v0.3.13",
+        "release_url": "https://github.com/konveyor/move2kube/releases/tag/v0.3.13",
         "prerelease": "v0.3.13-rc.0",
         "prerelease_url": "https://github.com/konveyor/move2kube/releases/tag/v0.3.13-rc.0"
     },
