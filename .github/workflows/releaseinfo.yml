@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: info
-        uses: konveyor/get-release-info@v1
+        uses: konveyor/move2kube-get-release-info@v1
         with:
           owner: konveyor
           repo: move2kube
